@@ -14,12 +14,16 @@ public class Player extends Sprite implements InputProcessor {
     //movement velocity - Vector2 stores 2 values, for x and y
     private Vector2 velocity = new Vector2();
     private float speed = 200;
-
+    boolean leftMove;
+    boolean rightMove;
+    boolean downMove;
+    boolean upMove;
     private TiledMapTileLayer collisionLayer;
 
     /**
      * Instantiate Player object
-     * @param playerSprite player sprite
+     *
+     * @param playerSprite   player sprite
      * @param collisionLayer the layer of the Tiled map where collision information is stored
      */
     public Player(Sprite playerSprite, TiledMapTileLayer collisionLayer) {
@@ -31,6 +35,7 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Return the layer of the tilemap where collision information is stored
+     *
      * @return collisionLayer
      */
     public TiledMapTileLayer getCollisionLayer() {
@@ -39,6 +44,7 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Draw is called to draw the Player to the screen
+     *
      * @param spritebatch the Batch of the renderer responsible for drawing the Player
      */
     public void draw(Batch spritebatch) {
@@ -48,53 +54,67 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Update is called once per frame
+     *
      * @param delta the time since last update()
      */
     public void update(float delta) {
+        // set velocity
+        updateMotion();
 
         //**********************
         //  COLLISION DETECTION
         //**********************
 
-        //save old x,y positions
-        float oldX = getX();
-        float oldY = getY();
+        int newX;
+        if (velocity.x > 0) {newX = (int) ((getX() + this.getWidth() + velocity.x * delta)/16);
+        int newY; = (int) ((getY() + this.getHeight() / 3 + velocity.y * delta)/16);
 
-        //variables to say if we're colliding with something
-        boolean collision = true;
-
-        //map tile properties
-        float tileWidth = collisionLayer.getTileWidth();
-        float tileHeight = collisionLayer.getTileHeight();
-
-        // determine new position
-        float newX = oldX + velocity.x * delta;
-        float newY = oldY + velocity.y * delta;
-
-        int cellX = (int) (Math.floor(newX + this.getWidth()/2) / tileWidth);
-        int cellY = (int) (Math.floor(newY + this.getHeight()/2) / tileHeight);
-
-        TiledMapTileLayer.Cell cell;
-        // convert the coordinates into cell number, bottom left is 0, 0
-        try {
-            cell = collisionLayer.getCell(cellX, cellY);
-            // try upper bound
-            if (cell.getTile().getProperties().containsKey("collision")) {
-                collision = true;
-            } else { collision = false; }
-        } catch (Exception e) {
-            // Catch the null exception - no tile exists there
-            collision = false;
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(newX, newY);
+        if (cell != null && !cell.getTile().getProperties().containsKey("collision")) {
+            System.out.println("Free to move");
+            setX(getX() + velocity.x * delta);
+            setY(getY() + velocity.y * delta);
         }
 
-        // don't move player
-        if (collision) {
-            velocity.x = 0;
-            velocity.y = 0;
-        } else {
-            setX(newX);
-            setY(newY);
-        }
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
+
+    public void updateMotion() {
+        if (leftMove) {velocity.x = -speed;}
+        else if (rightMove) {velocity.x = speed;}
+        else {velocity.x = 0;}
+
+        if (upMove) {velocity.y = speed;}
+        else if (downMove) {velocity.y = -speed;}
+        else {velocity.y = 0;}
+    }
+
+    public void setLeftMove(boolean t)
+    {
+        if(rightMove && t) rightMove = false;
+        leftMove = t;
+    }
+    public void setRightMove(boolean t)
+    {
+        if(leftMove && t) leftMove = false;
+        rightMove = t;
+    }
+    public void setUpMove(boolean t)
+    {
+        if(downMove && t) downMove = false;
+        upMove = t;
+    }
+    public void setDownMove(boolean t)
+    {
+        if(upMove && t) upMove = false;
+        downMove = t;
     }
 
     ////////////////////
@@ -105,16 +125,20 @@ public class Player extends Sprite implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.W:
-                velocity.y = speed;
+            case Input.Keys.UP:
+                setUpMove(true);
                 break;
             case Input.Keys.A:
-                velocity.x = -speed;
+            case Input.Keys.LEFT:
+                setLeftMove(true);
                 break;
             case Input.Keys.S:
-                velocity.y = -speed;
+            case Input.Keys.DOWN:
+                setDownMove(true);
                 break;
             case Input.Keys.D:
-                velocity.x = speed;
+            case Input.Keys.RIGHT:
+                setRightMove(true);
                 break;
         }
         return true;
@@ -123,18 +147,25 @@ public class Player extends Sprite implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Input.Keys.A:
-            case Input.Keys.D:
-                velocity.x = 0;
-                break;
             case Input.Keys.W:
+            case Input.Keys.UP:
+                setUpMove(false);
+                break;
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                setLeftMove(false);
+                break;
             case Input.Keys.S:
-                velocity.y = 0;
+            case Input.Keys.DOWN:
+                setDownMove(false);
+                break;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                setRightMove(false);
                 break;
         }
         return true;
     }
-
     //DON'T NEED ANY OF THE REST OF THESE METHODS
 
     @Override
@@ -171,12 +202,4 @@ public class Player extends Sprite implements InputProcessor {
     public boolean scrolled(float a, float b) {
         return false;
     }
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
-    }
-
 }
