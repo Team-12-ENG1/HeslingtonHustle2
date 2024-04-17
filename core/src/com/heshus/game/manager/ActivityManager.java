@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.engine.Play;
 import com.heshus.game.entities.Player;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -23,7 +21,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class ActivityManager {
 
-    private final TiledMapTileLayer collisionLayer;
+    private final TiledMapTileLayer layer;
     private Player player;
 
     private String activityText = "";
@@ -33,10 +31,10 @@ public class ActivityManager {
 
     /**
      * Constructor for ActivityManager
-     * @param collisionLayer layer that controls collision and activity logic
+     * @param layer layer that controls collision and activity logic
      */
-    public ActivityManager(TiledMapTileLayer collisionLayer) {
-        this.collisionLayer = collisionLayer;
+    public ActivityManager(TiledMapTileLayer layer) {
+        this.layer = layer;
     }
 
 
@@ -52,13 +50,10 @@ public class ActivityManager {
         int x = (int) avatarX;
         int y = (int) avatarY;
         // checking for the property tag
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(x/collisionLayer.getTileWidth() + 1, y/collisionLayer.getTileHeight() + 1);
-        if (cell != null && cell.getTile() != null) {
+        TiledMapTileLayer.Cell cell = layer.getCell(x/ layer.getTileWidth(), y/ layer.getTileHeight());
+        if (cell != null) {
             if (cell.getTile().getProperties().containsKey("eat") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-
-
                 performEatingActivity();
-              
             } else if (cell.getTile().getProperties().containsKey("study") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
                 performStudyingActivity();
             } else if (cell.getTile().getProperties().containsKey("recreation") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {

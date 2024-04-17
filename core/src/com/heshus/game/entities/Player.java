@@ -65,13 +65,11 @@ public class Player extends Sprite implements InputProcessor {
         //  COLLISION DETECTION
         //**********************
 
-        int newX;
-        if (velocity.x > 0) {newX = (int) ((getX() + this.getWidth() + velocity.x * delta)/16);
-        int newY; = (int) ((getY() + this.getHeight() / 3 + velocity.y * delta)/16);
+        int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
+        int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(newX, newY);
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
         if (cell != null && !cell.getTile().getProperties().containsKey("collision")) {
-            System.out.println("Free to move");
             setX(getX() + velocity.x * delta);
             setY(getY() + velocity.y * delta);
         }
