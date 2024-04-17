@@ -14,12 +14,16 @@ public class Player extends Sprite implements InputProcessor {
     //movement velocity - Vector2 stores 2 values, for x and y
     private Vector2 velocity = new Vector2();
     private float speed = 200;
-
+    boolean leftMove;
+    boolean rightMove;
+    boolean downMove;
+    boolean upMove;
     private TiledMapTileLayer collisionLayer;
 
     /**
      * Instantiate Player object
-     * @param playerSprite player sprite
+     *
+     * @param playerSprite   player sprite
      * @param collisionLayer the layer of the Tiled map where collision information is stored
      */
     public Player(Sprite playerSprite, TiledMapTileLayer collisionLayer) {
@@ -31,6 +35,7 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Return the layer of the tilemap where collision information is stored
+     *
      * @return collisionLayer
      */
     public TiledMapTileLayer getCollisionLayer() {
@@ -39,6 +44,7 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Draw is called to draw the Player to the screen
+     *
      * @param spritebatch the Batch of the renderer responsible for drawing the Player
      */
     public void draw(Batch spritebatch) {
@@ -48,123 +54,65 @@ public class Player extends Sprite implements InputProcessor {
 
     /**
      * Update is called once per frame
+     *
      * @param delta the time since last update()
      */
     public void update(float delta) {
+        // set velocity
+        updateMotion();
 
         //**********************
         //  COLLISION DETECTION
         //**********************
 
-        //save old x,y positions
-        float oldX = getX();
-        float oldY = getY();
-        //variables to say if we're colliding with something
-        boolean collisionX = false, collisionY = false;
-        //map tile properties
-        float tileWidth = collisionLayer.getTileWidth();
-        float tileHeight = collisionLayer.getTileHeight();
+        int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
+        int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
-        //update x position
-        setX(getX() + velocity.x * delta);
-
-        //do the collision detection
-        if (velocity.x < 0) {
-            //player moving left
-            //want to check the tiles to the left, up/left and down/left
-
-            //top left
-            collisionX = collisionLayer.getCell((int)(getX() / tileWidth), (int)((getY() + getHeight()) / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-            //disgusting line
-            //get the cell at the player's top-left, get the tile at that cell, get that tile's properties, if it contains "blocked" then true
-
-            //middle left
-            if (!collisionX) { //if no collision yet
-                collisionX = collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + (getHeight() / 2)) / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-            //bottom left
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-        } else if (velocity.x > 0) {
-            //player moving right
-
-            //top right
-            collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight()) / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-
-            //middle right
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight() / 2) / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-            //bottom right
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
+        if (cell != null && !cell.getTile().getProperties().containsKey("collision")) {
+            setX(getX() + velocity.x * delta);
+            setY(getY() + velocity.y * delta);
         }
 
-        //correct x-axis movement
-        if (collisionX) {
-            setX(oldX);
-            velocity.x = 0;
-        } //could put an else here to fix bug where colliding with something stops all movement in that direction
+    }
 
-        //repeat for y position
-        setY(getY() + velocity.y * delta);
+    public Vector2 getVelocity() {
+        return velocity;
+    }
 
-        if (velocity.y < 0) {
-            //player moving downwards
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
 
-            //bottom left
-            collisionY = collisionLayer.getCell((int)((getX())/ tileWidth), (int)(getY() / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
+    public void updateMotion() {
+        if (leftMove) {velocity.x = -speed;}
+        else if (rightMove) {velocity.x = speed;}
+        else {velocity.x = 0;}
 
-            //bottom middle
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth() / 2)/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
+        if (upMove) {velocity.y = speed;}
+        else if (downMove) {velocity.y = -speed;}
+        else {velocity.y = 0;}
+    }
 
-            //bottom right
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-        } else if (velocity.y > 0) {
-            //player moving upwards
-            //THIS NEEDS FIXING
-
-            //top left
-            collisionY = collisionLayer.getCell((int)((getX())/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-
-            //top middle
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth() / 2)/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-            //top right
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-        }
-
-        //react to y collision
-        if (collisionY) {
-            setY(oldY);
-            velocity.y = 0;
-        }
-
+    public void setLeftMove(boolean t)
+    {
+        if(rightMove && t) rightMove = false;
+        leftMove = t;
+    }
+    public void setRightMove(boolean t)
+    {
+        if(leftMove && t) leftMove = false;
+        rightMove = t;
+    }
+    public void setUpMove(boolean t)
+    {
+        if(downMove && t) downMove = false;
+        upMove = t;
+    }
+    public void setDownMove(boolean t)
+    {
+        if(upMove && t) upMove = false;
+        downMove = t;
     }
 
     ////////////////////
@@ -175,16 +123,20 @@ public class Player extends Sprite implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.W:
-                velocity.y = speed;
+            case Input.Keys.UP:
+                setUpMove(true);
                 break;
             case Input.Keys.A:
-                velocity.x = -speed;
+            case Input.Keys.LEFT:
+                setLeftMove(true);
                 break;
             case Input.Keys.S:
-                velocity.y = -speed;
+            case Input.Keys.DOWN:
+                setDownMove(true);
                 break;
             case Input.Keys.D:
-                velocity.x = speed;
+            case Input.Keys.RIGHT:
+                setRightMove(true);
                 break;
         }
         return true;
@@ -193,18 +145,25 @@ public class Player extends Sprite implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Input.Keys.A:
-            case Input.Keys.D:
-                velocity.x = 0;
-                break;
             case Input.Keys.W:
+            case Input.Keys.UP:
+                setUpMove(false);
+                break;
+            case Input.Keys.A:
+            case Input.Keys.LEFT:
+                setLeftMove(false);
+                break;
             case Input.Keys.S:
-                velocity.y = 0;
+            case Input.Keys.DOWN:
+                setDownMove(false);
+                break;
+            case Input.Keys.D:
+            case Input.Keys.RIGHT:
+                setRightMove(false);
                 break;
         }
         return true;
     }
-
     //DON'T NEED ANY OF THE REST OF THESE METHODS
 
     @Override
@@ -241,12 +200,4 @@ public class Player extends Sprite implements InputProcessor {
     public boolean scrolled(float a, float b) {
         return false;
     }
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(Vector2 velocity) {
-        this.velocity = velocity;
-    }
-
 }

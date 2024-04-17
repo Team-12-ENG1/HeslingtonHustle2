@@ -357,6 +357,7 @@ public class Play implements Screen {
         // Load the map and set up the renderer
         map = new TmxMapLoader().load("MapRelated/testmap.tmx");
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
+
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
 
         // Set up the player
