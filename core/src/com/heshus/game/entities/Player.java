@@ -59,112 +59,42 @@ public class Player extends Sprite implements InputProcessor {
         //save old x,y positions
         float oldX = getX();
         float oldY = getY();
+
         //variables to say if we're colliding with something
-        boolean collisionX = false, collisionY = false;
+        boolean collision = true;
+
         //map tile properties
         float tileWidth = collisionLayer.getTileWidth();
         float tileHeight = collisionLayer.getTileHeight();
 
-        //update x position
-        setX(getX() + velocity.x * delta);
+        // determine new position
+        float newX = oldX + velocity.x * delta;
+        float newY = oldY + velocity.y * delta;
 
-        //do the collision detection
-        if (velocity.x < 0) {
-            //player moving left
-            //want to check the tiles to the left, up/left and down/left
+        int cellX = (int) (Math.floor(newX + this.getWidth()/2) / tileWidth);
+        int cellY = (int) (Math.floor(newY + this.getHeight()/2) / tileHeight);
 
-            //top left
-            collisionX = collisionLayer.getCell((int)(getX() / tileWidth), (int)((getY() + getHeight()) / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-            //disgusting line
-            //get the cell at the player's top-left, get the tile at that cell, get that tile's properties, if it contains "blocked" then true
-
-            //middle left
-            if (!collisionX) { //if no collision yet
-                collisionX = collisionLayer.getCell((int) (getX() / tileWidth), (int) ((getY() + (getHeight() / 2)) / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-            //bottom left
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int) (getX() / tileWidth), (int) (getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-        } else if (velocity.x > 0) {
-            //player moving right
-
-            //top right
-            collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight()) / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-
-            //middle right
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight() / 2) / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-            //bottom right
-            if (!collisionX) {
-                collisionX = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
+        TiledMapTileLayer.Cell cell;
+        // convert the coordinates into cell number, bottom left is 0, 0
+        try {
+            cell = collisionLayer.getCell(cellX, cellY);
+            // try upper bound
+            if (cell.getTile().getProperties().containsKey("collision")) {
+                collision = true;
+            } else { collision = false; }
+        } catch (Exception e) {
+            // Catch the null exception - no tile exists there
+            collision = false;
         }
 
-        //correct x-axis movement
-        if (collisionX) {
-            setX(oldX);
+        // don't move player
+        if (collision) {
             velocity.x = 0;
-        } //could put an else here to fix bug where colliding with something stops all movement in that direction
-
-        //repeat for y position
-        setY(getY() + velocity.y * delta);
-
-        if (velocity.y < 0) {
-            //player moving downwards
-
-            //bottom left
-            collisionY = collisionLayer.getCell((int)((getX())/ tileWidth), (int)(getY() / tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-
-            //bottom middle
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth() / 2)/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-            //bottom right
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)(getY() / tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-        } else if (velocity.y > 0) {
-            //player moving upwards
-            //THIS NEEDS FIXING
-
-            //top left
-            collisionY = collisionLayer.getCell((int)((getX())/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                    .getTile().getProperties().containsKey("collision");
-
-            //top middle
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth() / 2)/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-
-            //top right
-            if (!collisionY) {
-                collisionY = collisionLayer.getCell((int)((getX() + getWidth())/ tileWidth), (int)((getY() + getHeight())/ tileHeight))
-                        .getTile().getProperties().containsKey("collision");
-            }
-        }
-
-        //react to y collision
-        if (collisionY) {
-            setY(oldY);
             velocity.y = 0;
+        } else {
+            setX(newX);
+            setY(newY);
         }
-
     }
 
     ////////////////////
