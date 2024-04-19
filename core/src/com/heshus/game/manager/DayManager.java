@@ -7,11 +7,11 @@ import java.util.Hashtable;
  * Manages how the current day is changed and whether the game has finished
  */
 public class DayManager {
-    public static Day currentDay;
+    public Day currentDay;
     public static boolean gameOver = false;
-    public static int overallEatScore = 0;
-    public static int overallStudyScore = 0;
-    public static int overallRecreationalScore = 0;
+    public int overallEatScore = 0;
+    public int overallStudyScore = 0;
+    public int overallRecreationalScore = 0;
 
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 

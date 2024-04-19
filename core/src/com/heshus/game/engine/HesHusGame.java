@@ -52,6 +52,8 @@ public class HesHusGame extends Game {
 	 */
 	public BitmapFont font;
 
+	public DayManager dayManager;
+
 	/**
 	 * The Preferences is a hash map that holds certain value
 	 */
@@ -69,7 +71,7 @@ public class HesHusGame extends Game {
 		Gdx.graphics.setWindowedMode(settings.getInteger("windowWidth"), settings.getInteger("windowHeight"));
 		// setting to the MainMenuScreen
 		this.setScreen(new MainMenuScreen(this));
-
+		this.dayManager = new DayManager();
 	}
 	/**
 	 * the render method is called by the game loop from the application
