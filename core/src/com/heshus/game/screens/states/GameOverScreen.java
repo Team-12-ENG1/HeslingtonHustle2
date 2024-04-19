@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.heshus.game.engine.HesHusGame;
-import com.heshus.game.engine.Play;
 import com.heshus.game.manager.Day;
 import com.heshus.game.manager.DayManager;
 
@@ -38,12 +37,12 @@ public class GameOverScreen implements Screen {
 
         //Resets variables to default when a new game can be played
         if (Gdx.input.isTouched()) {
-            DayManager.gameOver = false;
+            game.dayManager.setGameOver(false);
             game.setScreen(new MainMenuScreen(game));
-            DayManager.currentDay = new Day(1, 8, 100);
-            DayManager.overallEatScore = 0;
-            DayManager.overallRecreationalScore = 0;
-            DayManager.overallStudyScore = 0;
+            game.dayManager.currentDay = new Day(1, 8, 100);
+            game.dayManager.overallEatScore = 0;
+            game.dayManager.overallRecreationalScore = 0;
+            game.dayManager.overallStudyScore = 0;
             dispose();
         }
     }

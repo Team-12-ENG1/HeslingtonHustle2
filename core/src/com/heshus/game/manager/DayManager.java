@@ -8,7 +8,7 @@ import java.util.Hashtable;
  */
 public class DayManager {
     public Day currentDay;
-    public static boolean gameOver = false;
+    public boolean gameOver;
     public int overallEatScore = 0;
     public int overallStudyScore = 0;
     public int overallRecreationalScore = 0;
@@ -18,13 +18,14 @@ public class DayManager {
     public DayManager(){
         currentDay = new Day(1, 8, 100);
         statsByDay = new Hashtable<Integer,Dictionary<String,Integer>>();
+        gameOver = false;
     }
     /**
      * Controls what happens at the end of the day
      * If the current day is less than 7 then reset relevant variables
      * If the current day is 7 or greater, the game is over
      */
-    public static void incrementDay(){
+    public void incrementDay(){
         if(currentDay.getDayNumber() <= 7){
             int dayNum = currentDay.getDayNumber();
             statsByDay.put(dayNum, currentDay.summariseDay());
@@ -38,5 +39,6 @@ public class DayManager {
         }
     }
 
-
+    public boolean getGameOver() { return this.gameOver; }
+    public void setGameOver(boolean state) { this.gameOver = state; }
 }

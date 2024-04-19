@@ -17,23 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.heshus.game.entities.Player;
 import com.heshus.game.manager.ActivityManager;
-import com.heshus.game.manager.Day;
-import com.heshus.game.manager.DayManager;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.audio.Sound;
-
-import java.awt.*;
 
 import com.heshus.game.screens.states.GameOverScreen;
 import com.heshus.game.screens.states.PauseMenu;
 import com.heshus.game.screens.states.SettingsMenu;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-
-import static com.heshus.game.engine.HesHusGame.settings;
 
 public class Play implements Screen {
 
@@ -117,7 +109,6 @@ public class Play implements Screen {
     public Play(HesHusGame game, Texture playerSpriteSelection) {
         this.game = game;
         this.playerTexture = playerSpriteSelection;
-
     }
     /**
      * Renders the game world, player, and UI elements. This method is called every frame.
@@ -334,7 +325,7 @@ public class Play implements Screen {
             isWalking = false;
         }
 
-        if(DayManager.gameOver){
+        if(game.dayManager.getGameOver()){
             game.setScreen(new GameOverScreen(game));
         }
 
@@ -371,7 +362,7 @@ public class Play implements Screen {
         //Gdx.input.setInputProcessor(player);
 
         // Set up the activity manager
-        activityManager = new ActivityManager(collisionLayer);
+        activityManager = new ActivityManager(collisionLayer, game.dayManager);
         activityManager.setPlayer(player);
 
         // Set up the font

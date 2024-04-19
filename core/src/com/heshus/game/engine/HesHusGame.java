@@ -1,38 +1,14 @@
 package com.heshus.game.engine;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 //import com.heshus.game.manager.ActivityManager;
-import com.heshus.game.entities.Player;
 import com.heshus.game.manager.DayManager;
 
 //LUKE IMPORTS
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.heshus.game.entities.Player;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.heshus.game.screens.states.MainMenuScreen;
 
 /**
