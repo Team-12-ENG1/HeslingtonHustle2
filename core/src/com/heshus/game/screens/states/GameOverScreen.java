@@ -37,12 +37,8 @@ public class GameOverScreen implements Screen {
 
         //Resets variables to default when a new game can be played
         if (Gdx.input.isTouched()) {
-            game.dayManager.setGameOver(false);
+            game.dayManager = new DayManager();
             game.setScreen(new MainMenuScreen(game));
-            game.dayManager.currentDay = new Day(1, 8, 100);
-            game.dayManager.overallEatScore = 0;
-            game.dayManager.overallRecreationalScore = 0;
-            game.dayManager.overallStudyScore = 0;
             dispose();
         }
     }

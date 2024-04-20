@@ -44,7 +44,6 @@ public class Play implements Screen {
     private static BitmapFont font;
     private TiledMapTileLayer collisionLayer;
     private ActivityManager activityManager;
-    // private Game game;
     private float volume = 0.5f;
 
     private Sprite blankTexture, textBubble, dimTexture;

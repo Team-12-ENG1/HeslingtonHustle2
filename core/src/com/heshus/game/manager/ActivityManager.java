@@ -159,12 +159,6 @@ public class ActivityManager {
             // if the game is not over the avatar will move to the next day and reset their energy
             if (!dayManager.getGameOver()) {
                 dayManager.incrementDay();
-
-
-    // increments time by a setTime parameter
-   
-
-                
             }
         }
     }

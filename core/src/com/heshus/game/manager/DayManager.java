@@ -32,10 +32,10 @@ public class DayManager {
             overallEatScore += currentDay.getEatScore();
             overallRecreationalScore += currentDay.getRecreationalScore();
             overallStudyScore += currentDay.getStudyScore();
-            currentDay = new Day(dayNum++,8,100);
+            currentDay = new Day(dayNum+1,8,100);
         }
         else{
-            gameOver = true;
+            this.setGameOver(true);
         }
     }
 
