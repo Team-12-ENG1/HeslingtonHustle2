@@ -17,23 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.heshus.game.entities.Player;
 import com.heshus.game.manager.ActivityManager;
-import com.heshus.game.manager.Day;
-import com.heshus.game.manager.DayManager;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.audio.Sound;
-
-import java.awt.*;
 
 import com.heshus.game.screens.states.GameOverScreen;
 import com.heshus.game.screens.states.PauseMenu;
 import com.heshus.game.screens.states.SettingsMenu;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-
-import static com.heshus.game.engine.HesHusGame.settings;
 
 public class Play implements Screen {
 
@@ -52,7 +44,6 @@ public class Play implements Screen {
     private static BitmapFont font;
     private TiledMapTileLayer collisionLayer;
     private ActivityManager activityManager;
-    // private Game game;
     private float volume = 0.5f;
 
     private Sprite blankTexture, textBubble, dimTexture;
@@ -117,7 +108,6 @@ public class Play implements Screen {
     public Play(HesHusGame game, Texture playerSpriteSelection) {
         this.game = game;
         this.playerTexture = playerSpriteSelection;
-
     }
     /**
      * Renders the game world, player, and UI elements. This method is called every frame.
@@ -178,7 +168,7 @@ public class Play implements Screen {
                 renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth, 14);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 3, (camera.position.y - camera.viewportHeight/2) + 3, 204, 44);
                 renderer.getBatch().setColor(Color.YELLOW);
-                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) DayManager.currentDay.getEnergy() /100), 12);
+                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) game.dayManager.currentDay.getEnergy() /100), 12);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 5, (camera.position.y - camera.viewportHeight/2) + 5, 200 * ((float) DayManager.currentDay.getEnergy() /100), 40);
 
                 renderer.getBatch().setColor(Color.WHITE);
@@ -205,7 +195,7 @@ public class Play implements Screen {
                 }
 
                 //Dims screen when energy lost
-                dimTexture.setAlpha((float)0.4 + DayManager.currentDay.getEnergy());
+                dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
                 dimTexture.draw(renderer.getBatch());
 
 
@@ -243,12 +233,12 @@ public class Play implements Screen {
 
                 // draw the player's score for the three activites
 
-                font.draw(renderer.getBatch(), String.valueOf(DayManager.overallEatScore), counterBoxX + 43, firstRowY+18);
-                font.draw(renderer.getBatch(), String.valueOf(DayManager.overallStudyScore), counterBoxX + 43, secondRowY+27);
-                font.draw(renderer.getBatch(), String.valueOf(DayManager.overallRecreationalScore), counterBoxX + 43, thirdRowY+36);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallEatScore), counterBoxX + 43, firstRowY+18);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallStudyScore), counterBoxX + 43, secondRowY+27);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallRecreationalScore), counterBoxX + 43, thirdRowY+36);
 
                 // Draw the Day icon in the first row
-                for (int i = 0; i < DayManager.currentDay.getDayNumber(); i++) {
+                for (int i = 0; i < game.dayManager.currentDay.getDayNumber(); i++) {
                     renderer.getBatch().draw(verticalBarSprite, verticalBarStartX+15 + (5 + iconSpacingX) * i, verticalBarStartY, 5, 20);
                 }
                 //End of main renderer
@@ -259,7 +249,7 @@ public class Play implements Screen {
                 break;
                 case (GAME_PAUSED):
                     //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + DayManager.currentDay.getEnergy());
+                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
                     dimTexture.draw(renderer.getBatch());
 
                     //Pause menu
@@ -269,7 +259,7 @@ public class Play implements Screen {
                     break;
                 case (GAME_SETTINGS):
                     //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + DayManager.currentDay.getEnergy());
+                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
                     dimTexture.draw(renderer.getBatch());
 
                     //Settings menu
@@ -334,7 +324,7 @@ public class Play implements Screen {
             isWalking = false;
         }
 
-        if(DayManager.gameOver){
+        if(game.dayManager.getGameOver()){
             game.setScreen(new GameOverScreen(game));
         }
 
@@ -371,7 +361,7 @@ public class Play implements Screen {
         //Gdx.input.setInputProcessor(player);
 
         // Set up the activity manager
-        activityManager = new ActivityManager(collisionLayer);
+        activityManager = new ActivityManager(collisionLayer, game.dayManager);
         activityManager.setPlayer(player);
 
         // Set up the font

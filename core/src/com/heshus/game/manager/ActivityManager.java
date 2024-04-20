@@ -23,6 +23,7 @@ public class ActivityManager {
 
     private final TiledMapTileLayer layer;
     private Player player;
+    private DayManager dayManager;
 
     private String activityText = "";
     private Vector2 textPosition = new Vector2();
@@ -33,8 +34,9 @@ public class ActivityManager {
      * Constructor for ActivityManager
      * @param layer layer that controls collision and activity logic
      */
-    public ActivityManager(TiledMapTileLayer layer) {
+    public ActivityManager(TiledMapTileLayer layer, DayManager dayManager) {
         this.layer = layer;
+        this.dayManager = dayManager;
     }
 
 
@@ -72,10 +74,10 @@ public class ActivityManager {
      */
     private void performEatingActivity() {
 
-        if(!(DayManager.currentDay.getEnergy() <= 0) && !(DayManager.currentDay.getTime() >= 24)) {
+        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
             decrementEnergy(10);
             incrementTime(2);
-            DayManager.currentDay.incrementEatScore();
+            dayManager.currentDay.incrementEatScore();
 
             //Holds the message to be displayed
 
@@ -96,10 +98,10 @@ public class ActivityManager {
      */
     private void performStudyingActivity() {
 
-        if(!(DayManager.currentDay.getEnergy() <= 0) && !(DayManager.currentDay.getTime() >= 24)) {
+        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
             decrementEnergy(20);
             incrementTime(4);
-            DayManager.currentDay.incrementStudyScore();
+            dayManager.currentDay.incrementStudyScore();
 
             //Holds the message to be displayed
 
@@ -121,11 +123,11 @@ public class ActivityManager {
      */
     private void performRecreationalActivity() {
 
-        if(!(DayManager.currentDay.getEnergy() <= 0) && !(DayManager.currentDay.getTime() >= 24)){
+        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)){
 
             decrementEnergy(20);
             incrementTime(3);
-            DayManager.currentDay.incrementRecreationalScore();
+            dayManager.currentDay.incrementRecreationalScore();
 
             //Holds the message to be displayed
 
@@ -148,21 +150,15 @@ public class ActivityManager {
 
     private void performSleepingActivity() {
         // decided to define day over with reaching 840 time
-        if (DayManager.currentDay.getTime() >= 24 || DayManager.currentDay.getEnergy() <= 0) {
+        if (dayManager.currentDay.getTime() >= 24 || dayManager.currentDay.getEnergy() <= 0) {
             //Holds the message to be displayed
             String holdText = "You feel well rested";
             layout.setText(Play.getFont(), holdText);
             setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width/2), Math.round(player.getY() / 16) * 16);
 
             // if the game is not over the avatar will move to the next day and reset their energy
-            if (!DayManager.gameOver) {
-                DayManager.incrementDay();
-
-
-    // increments time by a setTime parameter
-   
-
-                
+            if (!dayManager.getGameOver()) {
+                dayManager.incrementDay();
             }
         }
     }
@@ -175,7 +171,7 @@ public class ActivityManager {
      * @param energy value to decrease energy by
      */
     private void decrementEnergy(int energy) {
-        DayManager.currentDay.setEnergy(Math.max(0, DayManager.currentDay.getEnergy() - energy));
+        dayManager.currentDay.setEnergy(Math.max(0, dayManager.currentDay.getEnergy() - energy));
     }
 
     /**
@@ -183,11 +179,11 @@ public class ActivityManager {
      * @param setTime value to increase time by
      */
     private void incrementTime(int setTime) {
-        float newTime = DayManager.currentDay.getTime() + setTime;
+        float newTime = dayManager.currentDay.getTime() + setTime;
         if (newTime >= 24) {
             //"You need to sleep" we display a message to the player, move to next day
         } else {
-            DayManager.currentDay.setTime(newTime);
+            dayManager.currentDay.setTime(newTime);
         }
     }
 
@@ -249,5 +245,4 @@ public class ActivityManager {
         layout.setText(Play.getFont(), holdText);
         setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width/2), Math.round(player.getY() / 16) * 16);
     }
-
 }

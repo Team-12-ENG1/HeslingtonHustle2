@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.heshus.game.manager.DayManager;
 
 public class Player extends Sprite implements InputProcessor {
     //movement velocity - Vector2 stores 2 values, for x and y
