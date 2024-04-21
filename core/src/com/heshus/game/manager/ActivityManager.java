@@ -4,6 +4,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
@@ -48,25 +53,57 @@ public class ActivityManager {
         float avatarX = player.getX();
         float avatarY = player.getY();
 
-        // Convert avatar position to tile coordinates
-        int x = (int) avatarX;
-        int y = (int) avatarY;
-        // checking for the property tag
-        TiledMapTileLayer.Cell cell = layer.getCell(x/ layer.getTileWidth(), y/ layer.getTileHeight());
-        if (cell != null) {
-            if (cell.getTile().getProperties().containsKey("eat") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                performEatingActivity();
-            } else if (cell.getTile().getProperties().containsKey("study") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                performStudyingActivity();
-            } else if (cell.getTile().getProperties().containsKey("recreation") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                performRecreationalActivity();
-            } else if (cell.getTile().getProperties().containsKey("sleep") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                performSleepingActivity();
+//        // Convert avatar position to tile coordinates
+//        int x = (int) avatarX;
+//        int y = (int) avatarY;
+//        // checking for the property tag
+//        TiledMapTileLayer.Cell cell = layer.getCell(x/ layer.getTileWidth(), y/ layer.getTileHeight());
+//        if (cell != null) {
+//            if (cell.getTile().getProperties().containsKey("eat") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                performEatingActivity();
+//            } else if (cell.getTile().getProperties().containsKey("study") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                performStudyingActivity();
+//            } else if (cell.getTile().getProperties().containsKey("recreation") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                performRecreationalActivity();
+//            } else if (cell.getTile().getProperties().containsKey("sleep") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                performSleepingActivity();
+//            }
+//        }
+
+        // Check all activities
+        MapObjects objects = layer.getObjects();
+        for (int i = 0; i < objects.getCount(); i++) {
+            RectangleMapObject rectActivity = (RectangleMapObject) objects.get(i);
+            // In activity area and they press E
+            if (player.getBoundingRectangle().overlaps(rectActivity.getRectangle()) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                MapProperties activityProperties = rectActivity.getProperties();
+                if (activityProperties.get("activity", String.class) == "sleep") {
+                    performSleepingActivity();
+                } else { performActivity(activityProperties); }
             }
         }
     }
 
-
+    private void performActivity(MapProperties activityProperties) {
+        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
+            decrementEnergy(activityProperties.get("energy", int.class));
+            incrementTime(activityProperties.get("time", int.class));
+            switch (activityProperties.get("activity", String.class)) {
+                case "eat":
+                    dayManager.currentDay.incrementEatScore();
+                    break;
+                case "study":
+                    dayManager.currentDay.incrementStudyScore();
+                    break;
+                case "recreation":
+                    dayManager.currentDay.incrementRecreationalScore();
+                    break;
+            }
+            String holdText = "You " + activityProperties.get("description", String.class);
+            layout.setText(Play.getFont(), holdText);
+            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
+        } else { noEnergyOrSleep(); }
+    }
 
 
     /**
@@ -83,7 +120,7 @@ public class ActivityManager {
 
             String holdText = "You feel refreshed";
             layout.setText(Play.getFont(), holdText);
-            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
+
         }
         else{
             noEnergyOrSleep();
