@@ -22,8 +22,8 @@ public class DayManager {
     }
     /**
      * Controls what happens at the end of the day
-     * If the current day is less than 7 then reset relevant variables
-     * If the current day is 7 or greater, the game is over
+     * If the current day is less than or equal to 7 then reset relevant variables
+     * Else, the game is over
      */
     public void incrementDay(){
         if(currentDay.getDayNumber() <= 7){

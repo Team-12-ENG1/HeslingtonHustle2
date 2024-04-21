@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
 import com.heshus.game.entities.Player;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+
+import java.util.Objects;
 
 /**
 
@@ -26,7 +29,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 public class ActivityManager {
 
-    private final TiledMapTileLayer layer;
+    private final MapLayer layer;
     private Player player;
     private DayManager dayManager;
 
@@ -39,7 +42,7 @@ public class ActivityManager {
      * Constructor for ActivityManager
      * @param layer layer that controls collision and activity logic
      */
-    public ActivityManager(TiledMapTileLayer layer, DayManager dayManager) {
+    public ActivityManager(MapLayer layer, DayManager dayManager) {
         this.layer = layer;
         this.dayManager = dayManager;
     }
@@ -53,39 +56,20 @@ public class ActivityManager {
         float avatarX = player.getX();
         float avatarY = player.getY();
 
-//        // Convert avatar position to tile coordinates
-//        int x = (int) avatarX;
-//        int y = (int) avatarY;
-//        // checking for the property tag
-//        TiledMapTileLayer.Cell cell = layer.getCell(x/ layer.getTileWidth(), y/ layer.getTileHeight());
-//        if (cell != null) {
-//            if (cell.getTile().getProperties().containsKey("eat") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//                performEatingActivity();
-//            } else if (cell.getTile().getProperties().containsKey("study") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//                performStudyingActivity();
-//            } else if (cell.getTile().getProperties().containsKey("recreation") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//                performRecreationalActivity();
-//            } else if (cell.getTile().getProperties().containsKey("sleep") && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//                performSleepingActivity();
-//            }
-//        }
-
         // Check all activities
         MapObjects objects = layer.getObjects();
-        for (int i = 0; i < objects.getCount(); i++) {
-            RectangleMapObject rectActivity = (RectangleMapObject) objects.get(i);
-            // In activity area and they press E
+        // In activity area and they press E
+        for (RectangleMapObject rectActivity : objects.getByType(RectangleMapObject.class)) {
             if (player.getBoundingRectangle().overlaps(rectActivity.getRectangle()) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
                 MapProperties activityProperties = rectActivity.getProperties();
-                if (activityProperties.get("activity", String.class) == "sleep") {
-                    performSleepingActivity();
-                } else { performActivity(activityProperties); }
+                performActivity(activityProperties);
             }
         }
     }
 
     private void performActivity(MapProperties activityProperties) {
-        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
+        String holdText = "";
+        if(validActivity(activityProperties)) {
             decrementEnergy(activityProperties.get("energy", int.class));
             incrementTime(activityProperties.get("time", int.class));
             switch (activityProperties.get("activity", String.class)) {
@@ -98,106 +82,26 @@ public class ActivityManager {
                 case "recreation":
                     dayManager.currentDay.incrementRecreationalScore();
                     break;
+                case "sleep":
+                    // if the game is not over the avatar will move to the next day and reset their energy
+                    if (!dayManager.getGameOver()) {
+                        dayManager.incrementDay();
+                    }
+                    break;
             }
-            String holdText = "You " + activityProperties.get("description", String.class);
-            layout.setText(Play.getFont(), holdText);
-            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
-        } else { noEnergyOrSleep(); }
+            holdText = "You " + activityProperties.get("description", String.class);
+        } else if (dayManager.currentDay.getEnergy() - activityProperties.get("energy", int.class) < 0) {
+            holdText = "You're too tired for that, you should sleep";
+        } else if (dayManager.currentDay.getTime() + activityProperties.get("time", int.class) > 24) {
+            holdText = "It's getting late, you should go to bed";
+        } else { holdText = "You should get some sleep"; }
+        layout.setText(Play.getFont(), holdText);
+        setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
     }
 
-
-    /**
-     * If available, controls variables indicating eating has been performed
-     */
-    private void performEatingActivity() {
-
-        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
-            decrementEnergy(10);
-            incrementTime(2);
-            dayManager.currentDay.incrementEatScore();
-
-            //Holds the message to be displayed
-
-            String holdText = "You feel refreshed";
-            layout.setText(Play.getFont(), holdText);
-
-        }
-        else{
-            noEnergyOrSleep();
-        }
-    }
-
-    // incrementing each property tag activity, if time and have not run out it will decrement energy with 20 from 100 and increment time with 4
-  
-
-    /**
-     * If available, controls variables indicating studying has been performed
-     */
-    private void performStudyingActivity() {
-
-        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)) {
-            decrementEnergy(20);
-            incrementTime(4);
-            dayManager.currentDay.incrementStudyScore();
-
-            //Holds the message to be displayed
-
-            String holdText = "You feel smarter";
-            layout.setText(Play.getFont(), holdText);
-            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
-        }
-        else{
-            noEnergyOrSleep();
-        }
-    }
-
-
-    // incrementing each property tag activity, if time and have not run out it will decrement energy with 20 from 100 and increment time with 3
-    
-
-    /**
-     * If available, controls variables indicating recreation has been performed
-     */
-    private void performRecreationalActivity() {
-
-        if(!(dayManager.currentDay.getEnergy() <= 0) && !(dayManager.currentDay.getTime() >= 24)){
-
-            decrementEnergy(20);
-            incrementTime(3);
-            dayManager.currentDay.incrementRecreationalScore();
-
-            //Holds the message to be displayed
-
-            String holdText = "You have recreationed";
-            layout.setText(Play.getFont(), holdText);
-            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width/2), Math.round(player.getY() / 16) * 16);
-        }
-        else{
-            noEnergyOrSleep();
-        }
-
-    }
-
-
-    // incrementing each property tag activity, the player can only sleep when they have ran out of energy
-
-    /**
-     * Checks whether the player can sleep and if so, creates a new day
-     */
-
-    private void performSleepingActivity() {
-        // decided to define day over with reaching 840 time
-        if (dayManager.currentDay.getTime() >= 24 || dayManager.currentDay.getEnergy() <= 0) {
-            //Holds the message to be displayed
-            String holdText = "You feel well rested";
-            layout.setText(Play.getFont(), holdText);
-            setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width/2), Math.round(player.getY() / 16) * 16);
-
-            // if the game is not over the avatar will move to the next day and reset their energy
-            if (!dayManager.getGameOver()) {
-                dayManager.incrementDay();
-            }
-        }
+    private boolean validActivity(MapProperties activityProperties) {
+        return (dayManager.currentDay.getEnergy() - activityProperties.get("energy", int.class) >= 0) &&
+                (dayManager.currentDay.getTime() + activityProperties.get("time", int.class) <= 24);
     }
 
     /**
@@ -208,7 +112,7 @@ public class ActivityManager {
      * @param energy value to decrease energy by
      */
     private void decrementEnergy(int energy) {
-        dayManager.currentDay.setEnergy(Math.max(0, dayManager.currentDay.getEnergy() - energy));
+        dayManager.currentDay.setEnergy(dayManager.currentDay.getEnergy() - energy);
     }
 
     /**
@@ -217,11 +121,7 @@ public class ActivityManager {
      */
     private void incrementTime(int setTime) {
         float newTime = dayManager.currentDay.getTime() + setTime;
-        if (newTime >= 24) {
-            //"You need to sleep" we display a message to the player, move to next day
-        } else {
-            dayManager.currentDay.setTime(newTime);
-        }
+        dayManager.currentDay.setTime(newTime);
     }
 
 
@@ -271,15 +171,5 @@ public class ActivityManager {
         font.setColor(new Color(Color.BLACK));
         font.draw(batch, activityText, textPosition.x, textPosition.y + 37);
         font.setColor(new Color(Color.WHITE));
-    }
-
-
-    /**
-     * Manages text when no energy or time is available
-     */
-    public void noEnergyOrSleep(){
-        String holdText = "You should get some sleep";
-        layout.setText(Play.getFont(), holdText);
-        setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width/2), Math.round(player.getY() / 16) * 16);
     }
 }

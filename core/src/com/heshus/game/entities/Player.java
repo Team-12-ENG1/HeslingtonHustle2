@@ -68,7 +68,7 @@ public class Player extends Sprite implements InputProcessor {
         int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
-        if (cell != null && !cell.getTile().getProperties().containsKey("collision")) {
+        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
             setX(getX() + velocity.x * delta);
             setY(getY() + velocity.y * delta);
         }
