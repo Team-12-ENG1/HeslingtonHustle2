@@ -21,7 +21,7 @@ public class HesHusGame extends Game {
 	 */
 	// we can use the HesHusGame as a second central game class for our screens/states
 	public SpriteBatch batch;
-
+	public double score;
 	/**
 	 *  The font used to write text on the screen with LibGDX's Arial font as
 	 *  default

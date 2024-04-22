@@ -35,14 +35,6 @@ public class Day {
     public int getDayNumber() {
         return this.dayNumber;
     }
-
-    /**
-     * +1 to current day counter
-     */
-    public void incrementDayNumber() {
-        this.dayNumber += 1;
-    }
-
     /**
      * +1 to eat counter
      */
@@ -72,24 +64,6 @@ public class Day {
     public int getRecreationalScore(){
         return this.recreationalScore;
     }
-
-
-    /**
-     * reset current days time to 8am
-     */
-
-    public void resetTime() {
-        this.time = 8;
-    }
-
-    /**
-     * reset current days energy to 100
-     */
-    public void resetEnergy() {
-        this.energy = 100;
-    }
-
-
     /**
      *
      * @return current day's game time
@@ -122,13 +96,6 @@ public class Day {
      * @param time
      */
     public void setTime(float time) { this.time = time; }
-
-    /**
-     * Resets current day's day number for new game
-     */
-    public void resetDay() {
-        this.dayNumber = 0;
-    }
 
     public Dictionary<String, Integer> summariseDay(){
         Dictionary<String, Integer> summary= new Hashtable<>();
