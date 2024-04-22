@@ -38,7 +38,27 @@ public class DayManager {
             this.setGameOver(true);
         }
     }
-
+    public void incrementStudyScore(){
+        currentDay.incrementStudyScore();
+    }
+    public void incrementRecreationalScore(){
+        currentDay.incrementRecreationalScore();
+    }
+    public void incrementEatScore(){
+        currentDay.incrementEatScore();
+    }
+    public void setTime(float time) {
+        currentDay.setTime(time);
+    }
+    public void setEnergy(int energy){
+        currentDay.setEnergy(energy);
+    }
+    public int getEnergy(){
+        return currentDay.getEnergy();
+    }
+    public float getTime(){
+        return currentDay.getTime();
+    }
     public boolean getGameOver() { return this.gameOver; }
     public void setGameOver(boolean state) { this.gameOver = state; }
 }
