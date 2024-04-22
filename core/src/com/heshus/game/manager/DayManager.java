@@ -49,21 +49,23 @@ public class DayManager {
         }
     }
     public double calculateScore(){
-        double eat = 0;
+        if(fail){
+            return 0.0;
+        }
+        double eat = 3 * overallEatCount;
         double study = 0;
-        double rec = 0;
+        double rec = 8 * overallRecreationalCount;
 
         eat = applyEatPen(eat);
         study = applyStudyPen(study);
         rec = applyRecPen(rec);
 
-        double score = (eat + rec + study)/3;
-        if(fail){
-            return 0.0;
-        }
-        return score;
+        return (eat + rec + study)/3;
     }
     private double applyEatPen(double eat){
+        if(overallEatCount == 21){
+            eat = eat + 10;
+        }
         return eat;
     }
     private double applyStudyPen(double study){
@@ -73,6 +75,9 @@ public class DayManager {
         return study * 0.8;
     }
     private double applyRecPen(double rec){
+        if(rec > 9){
+            rec = rec * 0.8;
+        }
         return rec;
     }
 
