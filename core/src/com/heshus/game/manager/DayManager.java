@@ -48,16 +48,43 @@ public class DayManager {
             this.setGameOver(true);
         }
     }
-    public double calculateScore(){
-        int score = 70;
-        if(fail){
-            return 0;
-        }
-        if(overallStudyCount>=8 && overallStudyCount<=10){
-            return score * 1.1;
-        }
-        return score * 0.8;
+    public double endGame(){
+        //Logic to endgame and save to leaderboard here 
+        return calculateScore();
     }
+    public double calculateScore(){
+        if(fail){
+            return 0.0;
+        }
+        double eat = 3 * overallEatCount;
+        double study = 0;
+        double rec = 8 * overallRecreationalCount;
+
+        eat = applyEatPen(eat);
+        study = applyStudyPen(study);
+        rec = applyRecPen(rec);
+
+        return (eat + rec + study)/3;
+    }
+    private double applyEatPen(double eat){
+        if(overallEatCount == 21){
+            eat = eat + 20;
+        }
+        return eat;
+    }
+    private double applyStudyPen(double study){
+        if(overallStudyCount>=8 && overallStudyCount<=10){
+            return study * 1.1;
+        }
+        return study * 0.8;
+    }
+    private double applyRecPen(double rec){
+        if(rec > 9){
+            rec = rec * 0.8;
+        }
+        return rec;
+    }
+
     public void incrementStudyScore(){
         overallStudyCount++;
         currentDay.incrementStudyScore();
