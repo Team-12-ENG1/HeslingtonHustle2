@@ -325,6 +325,7 @@ public class Play implements Screen {
         }
 
         if(game.dayManager.getGameOver()){
+            game.score = game.dayManager.calculateScore();
             game.setScreen(new GameOverScreen(game));
         }
 
