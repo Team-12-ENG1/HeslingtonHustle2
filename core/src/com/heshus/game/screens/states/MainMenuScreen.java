@@ -45,12 +45,14 @@ public class MainMenuScreen implements Screen {
     BitmapFont font;
     TextButton settingsButton;
     TextButton quitButton;
+    TextButton leaderboardButton;
     TextButton newButton;
     private Stage stage;
     private Table mainTable;
     private TextButton.TextButtonStyle textButtonStyle;
     private TextButton.TextButtonStyle newGameTextButtonStyle;
     private SettingsMenu settingsMenu;
+    private LeaderboardScreen leaderboardScreen;
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
@@ -93,6 +95,10 @@ public class MainMenuScreen implements Screen {
         settingsButton.padBottom(7);//center text in graphic
         settingsButton.setScale(1F);
 
+        //Leaderboard button:
+        leaderboardButton = new TextButton("LEADERBOARD", textButtonStyle); //Set the button up
+        leaderboardButton.padBottom(6);//center text in graphic
+
         //Quit button:
         quitButton = new TextButton("QUIT :(", textButtonStyle); //Set the button up
         quitButton.padBottom(6);
@@ -110,8 +116,9 @@ public class MainMenuScreen implements Screen {
 
         //Add everything to a table!
         mainTable = new Table();
-        mainTable.add(newButton).colspan(2).padBottom(3);
+        mainTable.add(newButton).colspan(3).padBottom(3);
         mainTable.row();
+        mainTable.add(leaderboardButton).padRight(3);
         mainTable.add(settingsButton).padRight(3);
         mainTable.add(quitButton);
         mainTable.setFillParent(true);
@@ -119,6 +126,7 @@ public class MainMenuScreen implements Screen {
         stage.addActor(mainTable);
         //We draw this instead of mainTable when settingsButton is clicked
         settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);
+        leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
     }
 
     /**
@@ -151,6 +159,7 @@ public class MainMenuScreen implements Screen {
                 return false;
             }
         });
+
         //SETTINGS BUTTON: sets state to settings if clicked!
         settingsButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -159,6 +168,16 @@ public class MainMenuScreen implements Screen {
                 return false;
             }
         });
+
+        //LEADERBOARD BUTTON: sets state to leaderboard if clicked!
+        leaderboardButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
+                state = GAME_LEADERBOARD;
+                return false;
+            }
+        });
+
         //GOTITBUTTON: confirms player knows controls
         gotItButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -168,6 +187,7 @@ public class MainMenuScreen implements Screen {
                 return false;
             }
         });
+
     }
 
     /**
@@ -233,6 +253,9 @@ public class MainMenuScreen implements Screen {
                 case(GAME_SETTINGS):
                     //draws and updates settingsMenu
                     settingsMenu.update();
+                    break;
+                case (GAME_LEADERBOARD):
+                    leaderboardScreen.update();
                     break;
             }
 

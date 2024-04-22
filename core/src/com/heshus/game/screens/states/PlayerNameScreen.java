@@ -7,28 +7,25 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
-import com.heshus.game.entities.Player;
-
-import java.awt.*;
 
 public class PlayerNameScreen implements Screen {
     private Stage stage;
     private HesHusGame game;
     private OrthographicCamera camera;
     private Skin skin;
+    BitmapFont font;
+    TextButton test;
 
     public PlayerNameScreen(HesHusGame game, OrthographicCamera camera) {
         this.game = game;
@@ -45,9 +42,9 @@ public class PlayerNameScreen implements Screen {
 
         skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
 
-        BitmapFont font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
-        font.getData().setScale(1.5F);
-        font.setColor(Color.BLACK);
+        this.font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        this.font.getData().setScale(1.5F);
+        this.font.setColor(Color.BLACK);
 
         Label title = new Label("Enter your player name", skin);
         title.setFontScale(2f);
@@ -59,7 +56,7 @@ public class PlayerNameScreen implements Screen {
         Texture buttonTexture = new Texture("UI/button_up.png");
         TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font);
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
         TextButton btn = new TextButton("PLAY", textButtonStyle);
 
         // Arrange table
@@ -113,5 +110,6 @@ public class PlayerNameScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        this.font.dispose();
     }
 }

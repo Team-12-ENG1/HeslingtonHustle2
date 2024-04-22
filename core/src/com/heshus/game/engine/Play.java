@@ -33,7 +33,8 @@ public class Play implements Screen {
     public static final int GAME_PAUSED = 1;
     public static final int GAME_SETTINGS = 2;
     public static final int GAME_OVER = 3;
-    public static final int GAME_MAINMENU =4;
+    public static final int GAME_MAINMENU = 4;
+    public static final int GAME_LEADERBOARD = 5;
 
     public static int state;
     private final HesHusGame game;
@@ -247,27 +248,28 @@ public class Play implements Screen {
                 stage.act(Gdx.graphics.getDeltaTime());
                 stage.draw();
                 break;
-                case (GAME_PAUSED):
-                    //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
-                    dimTexture.draw(renderer.getBatch());
+            case (GAME_PAUSED):
+                //Dims screen when energy lost
+                dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                dimTexture.draw(renderer.getBatch());
 
-                    //Pause menu
-                    renderer.getBatch().end();
-                    pauseMenu.update(camera);
-                    pauseMenu.draw();
-                    break;
-                case (GAME_SETTINGS):
-                    //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
-                    dimTexture.draw(renderer.getBatch());
+                //Pause menu
+                renderer.getBatch().end();
+                pauseMenu.update(camera);
+                pauseMenu.draw();
+                break;
+            case (GAME_SETTINGS):
+                //Dims screen when energy lost
+                dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                dimTexture.draw(renderer.getBatch());
 
-                    //Settings menu
-                    renderer.getBatch().end();
-                    settingsMenu.update();
-                    break;
-
-                }
+                //Settings menu
+                renderer.getBatch().end();
+                settingsMenu.update();
+                break;
+            case (GAME_LEADERBOARD):
+                break;
+        }
 
         // updates and draws the stage
         // the stage is a container for all the actors
@@ -306,6 +308,7 @@ public class Play implements Screen {
                 player.update(Gdx.graphics.getDeltaTime());
                 break;
             case (GAME_SETTINGS)://we do the same settings or paused
+            case (GAME_LEADERBOARD):
             case (GAME_PAUSED):
                 player.update(0);
                 player.setVelocity(new Vector2(0,0));
@@ -380,6 +383,7 @@ public class Play implements Screen {
         //setup menu
         pauseMenu = new PauseMenu(extendViewport, camera);
         settingsMenu = new SettingsMenu(GAME_PAUSED,camera,extendViewport,2);
+
         //set state
         state = GAME_RUNNING;
         // Set up the counter and counter components
