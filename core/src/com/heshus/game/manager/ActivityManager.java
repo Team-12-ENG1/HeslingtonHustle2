@@ -66,7 +66,7 @@ public class ActivityManager {
             }
         }
     }
-
+    //We can also use this to tinker with different locations having different effects
     private void performActivity(MapProperties activityProperties) {
         String holdText = "";
         if(validActivity(activityProperties)) {
@@ -74,13 +74,13 @@ public class ActivityManager {
             incrementTime(activityProperties.get("time", int.class));
             switch (activityProperties.get("activity", String.class)) {
                 case "eat":
-                    dayManager.currentDay.incrementEatScore();
+                    dayManager.incrementEatScore();
                     break;
                 case "study":
-                    dayManager.currentDay.incrementStudyScore();
+                    dayManager.incrementStudyScore();
                     break;
                 case "recreation":
-                    dayManager.currentDay.incrementRecreationalScore();
+                    dayManager.incrementRecreationalScore();
                     break;
                 case "sleep":
                     // if the game is not over the avatar will move to the next day and reset their energy
@@ -90,9 +90,9 @@ public class ActivityManager {
                     break;
             }
             holdText = "You " + activityProperties.get("description", String.class);
-        } else if (dayManager.currentDay.getEnergy() - activityProperties.get("energy", int.class) < 0) {
+        } else if (dayManager.getEnergy() - activityProperties.get("energy", int.class) < 0) {
             holdText = "You're too tired for that, you should sleep";
-        } else if (dayManager.currentDay.getTime() + activityProperties.get("time", int.class) > 24) {
+        } else if (dayManager.getTime() + activityProperties.get("time", int.class) > 24) {
             holdText = "It's getting late, you should go to bed";
         } else { holdText = "You should get some sleep"; }
         layout.setText(Play.getFont(), holdText);
@@ -100,8 +100,8 @@ public class ActivityManager {
     }
 
     private boolean validActivity(MapProperties activityProperties) {
-        return (dayManager.currentDay.getEnergy() - activityProperties.get("energy", int.class) >= 0) &&
-                (dayManager.currentDay.getTime() + activityProperties.get("time", int.class) <= 24);
+        return (dayManager.getEnergy() - activityProperties.get("energy", int.class) >= 0) &&
+                (dayManager.getTime() + activityProperties.get("time", int.class) <= 24);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ActivityManager {
      * @param energy value to decrease energy by
      */
     private void decrementEnergy(int energy) {
-        dayManager.currentDay.setEnergy(dayManager.currentDay.getEnergy() - energy);
+        dayManager.setEnergy(dayManager.getEnergy() - energy);
     }
 
     /**
@@ -120,8 +120,8 @@ public class ActivityManager {
      * @param setTime value to increase time by
      */
     private void incrementTime(int setTime) {
-        float newTime = dayManager.currentDay.getTime() + setTime;
-        dayManager.currentDay.setTime(newTime);
+        float newTime = dayManager.getTime() + setTime;
+        dayManager.setTime(newTime);
     }
 
 

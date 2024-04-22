@@ -168,7 +168,7 @@ public class Play implements Screen {
                 renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth, 14);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 3, (camera.position.y - camera.viewportHeight/2) + 3, 204, 44);
                 renderer.getBatch().setColor(Color.YELLOW);
-                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) game.dayManager.currentDay.getEnergy() /100), 12);
+                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) game.dayManager.getEnergy() /100), 12);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 5, (camera.position.y - camera.viewportHeight/2) + 5, 200 * ((float) DayManager.currentDay.getEnergy() /100), 40);
 
                 renderer.getBatch().setColor(Color.WHITE);
@@ -195,7 +195,7 @@ public class Play implements Screen {
                 }
 
                 //Dims screen when energy lost
-                dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                 dimTexture.draw(renderer.getBatch());
 
 
@@ -233,12 +233,12 @@ public class Play implements Screen {
 
                 // draw the player's score for the three activity types
 
-                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallEatScore), counterBoxX + 43, firstRowY+18);
-                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallStudyScore), counterBoxX + 43, secondRowY+27);
-                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallRecreationalScore), counterBoxX + 43, thirdRowY+36);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallEatCount), counterBoxX + 43, firstRowY+18);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallStudyCount), counterBoxX + 43, secondRowY+27);
+                font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallRecreationalCount), counterBoxX + 43, thirdRowY+36);
 
                 // Draw the Day icon in the first row
-                for (int i = 0; i < game.dayManager.currentDay.getDayNumber(); i++) {
+                for (int i = 0; i < game.dayManager.getDayNumber(); i++) {
                     renderer.getBatch().draw(verticalBarSprite, verticalBarStartX+15 + (5 + iconSpacingX) * i, verticalBarStartY, 5, 20);
                 }
                 //End of main renderer
@@ -249,7 +249,7 @@ public class Play implements Screen {
                 break;
                 case (GAME_PAUSED):
                     //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                    dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                     dimTexture.draw(renderer.getBatch());
 
                     //Pause menu
@@ -259,7 +259,7 @@ public class Play implements Screen {
                     break;
                 case (GAME_SETTINGS):
                     //Dims screen when energy lost
-                    dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                    dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                     dimTexture.draw(renderer.getBatch());
 
                     //Settings menu

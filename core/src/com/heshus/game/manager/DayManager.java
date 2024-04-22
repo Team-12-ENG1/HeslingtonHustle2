@@ -7,11 +7,11 @@ import java.util.Hashtable;
  * Manages how the current day is changed and whether the game has finished
  */
 public class DayManager {
-    public Day currentDay;
+    private Day currentDay;
     public boolean gameOver;
-    public int overallEatScore = 0;
-    public int overallStudyScore = 0;
-    public int overallRecreationalScore = 0;
+    public int overallEatCount = 0;
+    public int overallStudyCount = 0;
+    public int overallRecreationalCount = 0;
 
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
@@ -29,9 +29,9 @@ public class DayManager {
         if(currentDay.getDayNumber() <= 7){
             int dayNum = currentDay.getDayNumber();
             statsByDay.put(dayNum, currentDay.summariseDay());
-            overallEatScore += currentDay.getEatScore();
-            overallRecreationalScore += currentDay.getRecreationalScore();
-            overallStudyScore += currentDay.getStudyScore();
+            overallEatCount += currentDay.getEatScore();
+            overallRecreationalCount += currentDay.getRecreationalScore();
+            overallStudyCount += currentDay.getStudyScore();
             currentDay = new Day(dayNum+1,8,100);
         }
         else{
@@ -39,12 +39,15 @@ public class DayManager {
         }
     }
     public void incrementStudyScore(){
+        overallStudyCount++;
         currentDay.incrementStudyScore();
     }
     public void incrementRecreationalScore(){
+        overallRecreationalCount++;
         currentDay.incrementRecreationalScore();
     }
     public void incrementEatScore(){
+        overallEatCount++;
         currentDay.incrementEatScore();
     }
     public void setTime(float time) {
@@ -61,4 +64,8 @@ public class DayManager {
     }
     public boolean getGameOver() { return this.gameOver; }
     public void setGameOver(boolean state) { this.gameOver = state; }
+
+    public int getDayNumber() {
+        return currentDay.getDayNumber();
+    }
 }
