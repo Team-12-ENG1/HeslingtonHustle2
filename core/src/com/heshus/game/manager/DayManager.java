@@ -13,6 +13,9 @@ public class DayManager {
     public int overallStudyCount = 0;
     public int overallRecreationalCount = 0;
 
+    private int daysOfNoStudy = 0;
+    private boolean fail = false;
+
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
     public DayManager(){
@@ -28,15 +31,30 @@ public class DayManager {
     public void incrementDay(){
         if(currentDay.getDayNumber() <= 7){
             int dayNum = currentDay.getDayNumber();
-            statsByDay.put(dayNum, currentDay.summariseDay());
-            overallEatCount += currentDay.getEatScore();
-            overallRecreationalCount += currentDay.getRecreationalScore();
-            overallStudyCount += currentDay.getStudyScore();
+            Dictionary<String,Integer> summary = currentDay.summariseDay();
+
+            if(summary.get("study") == 0){
+                daysOfNoStudy++;
+            }
+            if(daysOfNoStudy > 1){
+                fail = true;
+            }
+            statsByDay.put(dayNum, summary);
             currentDay = new Day(dayNum+1,8,100);
         }
         else{
             this.setGameOver(true);
         }
+    }
+    public double calculateScore(){
+        int score = 70;
+        if(fail){
+            return 0;
+        }
+        if(overallStudyCount>=8 && overallStudyCount<=10){
+            return score * 1.1;
+        }
+        return score * 0.8;
     }
     public void incrementStudyScore(){
         overallStudyCount++;
