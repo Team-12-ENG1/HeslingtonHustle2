@@ -48,6 +48,10 @@ public class DayManager {
             this.setGameOver(true);
         }
     }
+    public double endGame(){
+        //Logic to endgame and save to leaderboard here 
+        return calculateScore();
+    }
     public double calculateScore(){
         if(fail){
             return 0.0;
@@ -64,7 +68,7 @@ public class DayManager {
     }
     private double applyEatPen(double eat){
         if(overallEatCount == 21){
-            eat = eat + 10;
+            eat = eat + 20;
         }
         return eat;
     }
