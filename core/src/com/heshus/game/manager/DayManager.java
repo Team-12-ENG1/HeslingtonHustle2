@@ -29,12 +29,14 @@ public class DayManager {
      * Else, the game is over
      */
     public void incrementDay(){
-        if(currentDay.getDayNumber() <= 7){
+        if(currentDay.getDayNumber() < 7){
             int dayNum = currentDay.getDayNumber();
             Dictionary<String,Integer> summary = currentDay.summariseDay();
 
             if(summary.get("study") == 0){
                 daysOfNoStudy++;
+            }else{
+                daysOfNoStudy = 0;
             }
             if(daysOfNoStudy > 1){
                 fail = true;

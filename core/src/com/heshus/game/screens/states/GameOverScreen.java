@@ -31,8 +31,8 @@ public class GameOverScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "Game Over :(", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to go to the main menu!"+ game.score, 100, 100);
+        game.font.draw(game.batch, "GAME OVER! Your score was " + game.score, 100, 150);
+        game.font.draw(game.batch, "Tap anywhere to go to the main menu!", 100, 100);
         game.batch.end();
 
         //Resets variables to default when a new game can be played
