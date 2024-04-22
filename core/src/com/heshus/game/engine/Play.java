@@ -129,7 +129,7 @@ public class Play implements Screen {
         //CAMERA
         int cameraSmoothness = 4; //higher looks smoother! makes it take longer for camera to reach player pos
         camera.position.set(((player.getX() + player.getWidth() / 2)+(camera.position.x *(cameraSmoothness-1)))/cameraSmoothness, ((player.getY() + player.getHeight() / 2)+(camera.position.y *(cameraSmoothness-1)))/cameraSmoothness, 0);
-        lockCameraInTiledMapLayer(camera,(TiledMapTileLayer) map.getLayers().get(1)); //locks camera position so it cannot show out of bounds
+        lockCameraInTiledMapLayer(camera,(TiledMapTileLayer) map.getLayers().get(2)); //locks camera position so it cannot show out of bounds
         camera.position.set(Math.round(camera.position.x) ,Math.round(camera.position.y),0);//This is needed to stop black lines between tiles. I think something to do with the tilemaprenderer and floats causes this
         camera.viewportWidth = Math.round(camera.viewportWidth);
         camera.viewportHeight = Math.round(camera.viewportHeight);
@@ -231,7 +231,7 @@ public class Play implements Screen {
                 float secondRowY = firstRowY - iconSize - iconSpacingY;
                 float thirdRowY = secondRowY - iconSize - iconSpacingY;
 
-                // draw the player's score for the three activites
+                // draw the player's score for the three activity types
 
                 font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallEatScore), counterBoxX + 43, firstRowY+18);
                 font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallStudyScore), counterBoxX + 43, secondRowY+27);
@@ -361,7 +361,8 @@ public class Play implements Screen {
         //Gdx.input.setInputProcessor(player);
 
         // Set up the activity manager
-        activityManager = new ActivityManager(collisionLayer, game.dayManager);
+
+        activityManager = new ActivityManager(map.getLayers().get("Activities"), game.dayManager);
         activityManager.setPlayer(player);
 
         // Set up the font
