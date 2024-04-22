@@ -163,7 +163,7 @@ public class MainMenuScreen implements Screen {
         gotItButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 clickSound.play();
-                game.setScreen(new CustomiseSprite(game, camera));
+                game.setScreen(new PlayerNameScreen(game, camera));
                 dispose();
                 return false;
             }
