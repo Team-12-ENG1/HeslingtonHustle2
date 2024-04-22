@@ -49,15 +49,33 @@ public class DayManager {
         }
     }
     public double calculateScore(){
-        int score = 70;
+        double eat = 0;
+        double study = 0;
+        double rec = 0;
+
+        eat = applyEatPen(eat);
+        study = applyStudyPen(study);
+        rec = applyRecPen(rec);
+
+        double score = (eat + rec + study)/3;
         if(fail){
-            return 0;
+            return 0.0;
         }
-        if(overallStudyCount>=8 && overallStudyCount<=10){
-            return score * 1.1;
-        }
-        return score * 0.8;
+        return score;
     }
+    private double applyEatPen(double eat){
+        return eat;
+    }
+    private double applyStudyPen(double study){
+        if(overallStudyCount>=8 && overallStudyCount<=10){
+            return study * 1.1;
+        }
+        return study * 0.8;
+    }
+    private double applyRecPen(double rec){
+        return rec;
+    }
+
     public void incrementStudyScore(){
         overallStudyCount++;
         currentDay.incrementStudyScore();
