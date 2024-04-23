@@ -21,6 +21,7 @@ public class HesHusGame extends Game {
 	 */
 	// we can use the HesHusGame as a second central game class for our screens/states
 	public SpriteBatch batch;
+	public String playerName;
 	public double score;
 	/**
 	 *  The font used to write text on the screen with LibGDX's Arial font as
@@ -48,6 +49,7 @@ public class HesHusGame extends Game {
 		// setting to the MainMenuScreen
 		this.setScreen(new MainMenuScreen(this));
 		this.dayManager = new DayManager();
+		playerName = "";
 	}
 	/**
 	 * the render method is called by the game loop from the application

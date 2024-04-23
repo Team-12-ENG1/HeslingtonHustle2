@@ -45,12 +45,18 @@ public class MainMenuScreen implements Screen {
     BitmapFont font;
     TextButton settingsButton;
     TextButton quitButton;
+    TextButton leaderboardButton;
     TextButton newButton;
+    Label gameTitle;
+    Label howToTitle;
+    Label instructions;
     private Stage stage;
     private Table mainTable;
+    private Table howToTable;
     private TextButton.TextButtonStyle textButtonStyle;
     private TextButton.TextButtonStyle newGameTextButtonStyle;
     private SettingsMenu settingsMenu;
+    private LeaderboardScreen leaderboardScreen;
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
@@ -93,6 +99,10 @@ public class MainMenuScreen implements Screen {
         settingsButton.padBottom(7);//center text in graphic
         settingsButton.setScale(1F);
 
+        //Leaderboard button:
+        leaderboardButton = new TextButton("LEADERBOARD", textButtonStyle); //Set the button up
+        leaderboardButton.padBottom(6);//center text in graphic
+
         //Quit button:
         quitButton = new TextButton("QUIT :(", textButtonStyle); //Set the button up
         quitButton.padBottom(6);
@@ -105,20 +115,45 @@ public class MainMenuScreen implements Screen {
         gotItButton = new TextButton("Got it!", textButtonStyle); //Set the button up
         gotItButton.padBottom(6);
 
+        // Game Title label
+        gameTitle = new Label("Heslington Hustle", new Label.LabelStyle(font, Color.WHITE));
+
         //set logic
         buttonsOnClickLogic();
 
-        //Add everything to a table!
+        //Add everything to a table! (the main menu table)
         mainTable = new Table();
-        mainTable.add(newButton).colspan(2).padBottom(3);
+        mainTable.add(gameTitle).colspan(3).padBottom(6);
         mainTable.row();
+        mainTable.add(newButton).colspan(3).padBottom(3);
+        mainTable.row();
+        mainTable.add(leaderboardButton).padRight(3);
         mainTable.add(settingsButton).padRight(3);
-        mainTable.add(quitButton);
+        mainTable.row();
+        mainTable.add(quitButton).padTop(3).colspan(3);
         mainTable.setFillParent(true);
         stage = new Stage(extendViewport);
         stage.addActor(mainTable);
+
         //We draw this instead of mainTable when settingsButton is clicked
         settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);
+        leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
+
+        // Make a how to play table
+        howToTable = new Table();
+
+        howToTitle = new Label("How to play:", new Label.LabelStyle(font, Color.WHITE));
+        instructions = new Label("P or Esc to pause,E to interact\nWASD or Arrowkeys to move", new Label.LabelStyle(font, Color.WHITE));
+
+        // Arrange table
+        howToTable.add(howToTitle).padBottom(6);
+        howToTable.row();
+        howToTable.add(instructions).center().padBottom(6);
+        howToTable.row();
+        howToTable.add(gotItButton).center();
+        howToTable.setFillParent(true);
+        howToTable.setVisible(false);
+        stage.addActor(howToTable);
     }
 
     /**
@@ -151,6 +186,7 @@ public class MainMenuScreen implements Screen {
                 return false;
             }
         });
+
         //SETTINGS BUTTON: sets state to settings if clicked!
         settingsButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -159,15 +195,26 @@ public class MainMenuScreen implements Screen {
                 return false;
             }
         });
+
+        //LEADERBOARD BUTTON: sets state to leaderboard if clicked!
+        leaderboardButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
+                state = GAME_LEADERBOARD;
+                return false;
+            }
+        });
+
         //GOTITBUTTON: confirms player knows controls
         gotItButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 clickSound.play();
-                game.setScreen(new CustomiseSprite(game, camera));
+                game.setScreen(new PlayerNameScreen(game, camera));
                 dispose();
                 return false;
             }
         });
+
     }
 
     /**
@@ -214,16 +261,12 @@ public class MainMenuScreen implements Screen {
                     game.batch.begin();
                     if (isNewGameClicked) {
                         //Display controls (doesn't actually center text, just gets kinda close)
-                        font.draw(game.batch, "P or Esc to pause,E to interact ", camera.position.x- camera.viewportWidth/2 +camera.viewportWidth/6 , camera.position.y );
-                        font.draw(game.batch, "   WASD or Arrowkeys to move    ", camera.position.x- camera.viewportWidth/2 +camera.viewportWidth/6 , camera.position.y +font.getCapHeight()*2 );
-
                         mainTable.setVisible(false);
-                        stage.addActor(gotItButton);
-                        gotItButton.setPosition(camera.position.x -gotItButton.getWidth()/2, camera.position.y - camera.viewportHeight / 2 + gotItButton.getHeight());
+                        howToTable.setPosition(camera.position.x - camera.viewportWidth / 2, camera.position.y - camera.viewportHeight / 2);
+                        howToTable.setVisible(true);
                         stage.draw();
                     }
                     else {
-                        font.draw(game.batch, "Welcome to HeslingtonHustle!!! ", camera.position.x - camera.viewportWidth / 2, camera.position.y + camera.viewportHeight / 2);
                         //update position of table to middle of screen and draw
                         mainTable.setPosition(camera.position.x - camera.viewportWidth / 2, camera.position.y - camera.viewportHeight / 2);
                         stage.draw();//draws all buttons!
@@ -233,6 +276,9 @@ public class MainMenuScreen implements Screen {
                 case(GAME_SETTINGS):
                     //draws and updates settingsMenu
                     settingsMenu.update();
+                    break;
+                case (GAME_LEADERBOARD):
+                    leaderboardScreen.update();
                     break;
             }
 
