@@ -29,19 +29,18 @@ public class DayManager {
      * Else, the game is over
      */
     public void incrementDay(){
-        if(currentDay.getDayNumber() < 7){
-            int dayNum = currentDay.getDayNumber();
-            Dictionary<String,Integer> summary = currentDay.summariseDay();
-
-            if(summary.get("study") == 0){
-                daysOfNoStudy++;
-            }else{
-                daysOfNoStudy = 0;
-            }
-            if(daysOfNoStudy > 1){
-                fail = true;
-            }
-            statsByDay.put(dayNum, summary);
+        int dayNum = currentDay.getDayNumber();
+        Dictionary<String,Integer> summary = currentDay.summariseDay();
+        if(summary.get("study") == 0){
+            daysOfNoStudy++;
+        }else{
+            daysOfNoStudy = 0;
+        }
+        if(daysOfNoStudy > 1){
+            fail = true;
+        }
+        statsByDay.put(dayNum, summary);
+        if(dayNum < 7){
             currentDay = new Day(dayNum+1,8,100);
         }
         else{
