@@ -1,4 +1,4 @@
-package com.heshus.game.manager;
+package com.heshus.tests.manager;
 
 //import static org.junit.jupiter.api.Assertions.*;
 
