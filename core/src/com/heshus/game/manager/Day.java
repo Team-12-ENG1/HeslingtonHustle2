@@ -8,8 +8,11 @@ import java.util.Hashtable;
  * Constructor can include the 3 unused variables to count the scores for the current day and overall scores separately
  */
 public class Day {
-    private int dayNumber, studyScore, eatScore, energy, recreationalScore;
+    private int  studyScore, eatScore, energy, recreationalScore;
+    private final int dayNumber;
     private float time;
+
+    private Dictionary<String,Integer> studyDict;
 
 
     /**
@@ -27,6 +30,7 @@ public class Day {
         this.studyScore = 0;
         this.eatScore = 0;
         this.recreationalScore = 0;
+        this.studyDict = new Hashtable<>();
     }
 
     /**
@@ -48,8 +52,14 @@ public class Day {
     /**
      * +1 to study counter
      */
-    public void incrementStudyScore() {
+    public void incrementStudyScore(String place) {
         this.studyScore++;
+        if(this.studyDict.get(place) == null){
+            this.studyDict.put(place,1);
+        }else{
+            int currentValue = this.studyDict.get(place);
+            this.studyDict.put(place,currentValue++);
+        }
     }
     public int getStudyScore(){
         return this.studyScore;
