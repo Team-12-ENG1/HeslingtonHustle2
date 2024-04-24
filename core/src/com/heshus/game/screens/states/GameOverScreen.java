@@ -6,21 +6,34 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.manager.DayManager;
+import com.heshus.game.manager.Save;
+import com.heshus.game.manager.Score;
+import static com.heshus.game.manager.Save.gd;
 
 public class GameOverScreen implements Screen {
 
     final HesHusGame game;
     OrthographicCamera camera;
+    private Score playerScore;
+
 
     public GameOverScreen(final HesHusGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
+
+        // Create an instance of Score for the player
+        playerScore = new Score(game.playerName, game.dayManager.calculateScore());
     }
 
     @Override
     public void show() {
-
+        // TODO: Make layout a table using Scene2D
+        if (gd.isHighScore(playerScore)) {
+            gd.addHighScore(playerScore);
+            Save.save();
+            // Make a new label saying "you're on the leaderboard!"
+        }
     }
 
     @Override
@@ -30,7 +43,7 @@ public class GameOverScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, "GAME OVER! Your score was " + game.score, 100, 150);
+        game.font.draw(game.batch, "GAME OVER! Your score was " + game.dayManager.calculateScore(), 100, 150);
         game.font.draw(game.batch, "Tap anywhere to go to the main menu!", 100, 100);
         game.batch.end();
 

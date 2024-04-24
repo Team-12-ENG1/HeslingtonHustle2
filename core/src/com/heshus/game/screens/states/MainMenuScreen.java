@@ -127,6 +127,7 @@ public class MainMenuScreen implements Screen {
         mainTable.row();
         mainTable.add(newButton).colspan(3).padBottom(3);
         mainTable.row();
+        // Added leaderboard button
         mainTable.add(leaderboardButton).padRight(3);
         mainTable.add(settingsButton).padRight(3);
         mainTable.row();
@@ -249,7 +250,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
             ScreenUtils.clear(0, 0.2f, 0, 1);
-            //only one inputprocessor-buttton input listeners won't work without this (but you could multiplex it if needed)
+            //only one input processor-button input listeners won't work without this (but you could multiplex it if needed)
             Gdx.input.setInputProcessor(stage);
 
             //draws tilemap

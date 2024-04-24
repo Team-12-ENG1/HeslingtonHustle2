@@ -250,7 +250,7 @@ public class Play implements Screen {
                 break;
             case (GAME_PAUSED):
                 //Dims screen when energy lost
-                dimTexture.setAlpha((float)0.4 + game.dayManager.currentDay.getEnergy());
+                dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                 dimTexture.draw(renderer.getBatch());
    
                 //Pause menu
