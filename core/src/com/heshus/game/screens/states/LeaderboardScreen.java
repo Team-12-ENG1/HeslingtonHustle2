@@ -17,18 +17,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.heshus.game.manager.Save;
+import com.heshus.game.manager.Score;
+
 import static com.heshus.game.engine.Play.state;
+import static com.heshus.game.manager.Save.gd;
 
 
 import java.util.Scanner;
 
 public class LeaderboardScreen {
-    BitmapFont font;
+    private BitmapFont font;
     private Stage stage;
     private Camera camera;
-    Table table;
+    private Table table;
     private Sound clickSound;
     private final int returnState;
+    private Texture buttonTexture;
+    private TextureRegion buttonTextureRegion;
+    private TextureRegionDrawable buttonTextureRegionDrawable;
+    private TextButton.TextButtonStyle textButtonStyle;
+    private Label title;
+    private TextButton backBtn;
+    private Score[] highScores;
+
 
     public LeaderboardScreen(int returnState, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
@@ -36,39 +48,42 @@ public class LeaderboardScreen {
         this.returnState = returnState;
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
 
-
-        FileHandle handle = Gdx.files.internal("data/scores.csv");
-        Scanner scanner = new Scanner(handle.read());
+        // Load the save file
+        Save.load();
+        highScores = gd.getScores();
 
         // Set up font
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(.5F);
         font.setColor(Color.BLACK);
 
-        Label title = new Label("Leaderboard:", new Label.LabelStyle(font, Color.WHITE));
+        title = new Label("Leaderboard:", new Label.LabelStyle(font, Color.WHITE));
 
-        // Set TextButtonStyle
-        Texture buttonTexture = new Texture("UI/button_up.png");
-        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
-        TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
-        TextButton backBtn = new TextButton("BACK", textButtonStyle);
+        setButtonStyle();
+        backBtn = new TextButton("BACK", textButtonStyle);
 
         table = new Table();
         stage.addActor(table);
 
         // Layout the leaderboard
-        table.add(title).fillX().colspan(2);
+        table.add(title).colspan(3).center();
 
-        while (scanner.hasNextLine()) {
+        for (int i = 0; i < highScores.length; i++) {
+            Label rankLabel = new Label(String.valueOf(i+1), new Label.LabelStyle(font, Color.WHITE));
+            Label playerLabel = new Label(highScores[i].getName(), new Label.LabelStyle(font, Color.WHITE));
+            Label scoreLabel = new Label(String.valueOf(highScores[i].getScore()), new Label.LabelStyle(font, Color.WHITE));
+            playerLabel.setFontScale(0.3f);
+            scoreLabel.setFontScale(0.3f);
+            rankLabel.setFontScale(0.3f);
+
             table.row().pad(3, 0, 0, 0);
-            String[] values = scanner.nextLine().split(",");
-            table.add(new Label(values[0], new Label.LabelStyle(font, Color.WHITE))).center();
-            table.add(new Label(String.valueOf(values[1]), new Label.LabelStyle(font, Color.WHITE))).center();
+            table.add(rankLabel).left();
+            table.add(playerLabel).center();
+            table.add(scoreLabel).right();
         }
 
         table.row().padTop(6);
-        table.add(backBtn).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight()).colspan(2);
+        table.add(backBtn).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight()).colspan(3);
 
         backBtn.addListener(new InputListener() {
             @Override
@@ -78,6 +93,13 @@ public class LeaderboardScreen {
                 return false;
             }
         });
+    }
+
+    private void setButtonStyle() {
+        buttonTexture = new Texture("UI/button_up.png");
+        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
+        buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
+        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
     }
 
     public void update() {
