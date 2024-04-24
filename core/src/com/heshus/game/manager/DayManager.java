@@ -47,13 +47,13 @@ public class DayManager {
             this.setGameOver(true);
         }
     }
-    public double endGame(){
-        //Logic to endgame and save to leaderboard here 
+    public int endGame(){
+        //Logic to endgame and save to leaderboard here
         return calculateScore();
     }
-    public double calculateScore(){
+    public int calculateScore(){
         if(fail){
-            return 0.0;
+            return 0;
         }
         double eat = 3 * overallEatCount;
         double study = 0;
@@ -63,7 +63,7 @@ public class DayManager {
         study = applyStudyPen(study);
         rec = applyRecPen(rec);
 
-        return (eat + rec + study)/3;
+        return (int) (eat + rec + study)/3;
     }
     private double applyEatPen(double eat){
         if(overallEatCount == 21){

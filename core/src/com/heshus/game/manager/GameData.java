@@ -30,12 +30,9 @@ public class GameData {
 
     public boolean isHighScore(Score score) { return score.getScore() > scores[MAX_SCORES-1].getScore(); }
 
-    public void addHighScore(long score, String name) {
-        Score newScore = new Score(name, score);
-        if (isHighScore(newScore)) {
-            scores[MAX_SCORES-1] = newScore;
-            // Get a descending scores array
-            Arrays.sort(scores);
-        }
+    public void addHighScore(Score score) {
+        scores[MAX_SCORES-1] = score;
+        // Get a descending scores array
+        Arrays.sort(scores);
     }
 }
