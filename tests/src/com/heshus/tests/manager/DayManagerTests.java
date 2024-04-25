@@ -1,6 +1,6 @@
 package com.heshus.tests.manager;
 
-import com.heshus.game.manager.Day;
+
 import com.heshus.game.manager.DayManager;
 import org.junit.Test;
 
