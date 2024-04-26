@@ -127,8 +127,11 @@ public class Day {
     public Dictionary<String, Integer> summariseDay(){
         Dictionary<String, Integer> summary= new Hashtable<>();
         summary.put("eat",this.getEatScore());
+        summary.put("uniqueEatingTimes",eatingTimes.size());
         summary.put("study",this.getStudyScore());
+        summary.put("uniqueStudyPlaces",studyPlaces.size());
         summary.put("rec",this.getRecreationalScore());
+        summary.put("uniqueRecPlaces",recPlaces.size());
         return summary;
     }
 }
