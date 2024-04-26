@@ -21,6 +21,8 @@ public class HesHusGame extends Game {
 	 */
 	// we can use the HesHusGame as a second central game class for our screens/states
 	public SpriteBatch batch;
+
+	// New: added public attributes storing the player's name and their eventual score
 	public String playerName;
 	public double score;
 	/**
@@ -29,6 +31,7 @@ public class HesHusGame extends Game {
 	 */
 	public BitmapFont font;
 
+	// New: Added the day manager into the base game class so it can be accessed through the game attributes
 	public DayManager dayManager;
 
 	/**
@@ -48,6 +51,7 @@ public class HesHusGame extends Game {
 		Gdx.graphics.setWindowedMode(settings.getInteger("windowWidth"), settings.getInteger("windowHeight"));
 		// setting to the MainMenuScreen
 		this.setScreen(new MainMenuScreen(this));
+		// New: create an instance of the dayManager for the game's attribute as well as set the player's name blank
 		this.dayManager = new DayManager();
 		playerName = "";
 	}

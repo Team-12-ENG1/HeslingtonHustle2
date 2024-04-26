@@ -1,5 +1,9 @@
 package com.heshus.game.manager;
 
+/**
+ * A class that holds a player's name and score, where both attributes can be accessed
+ * and as it implements {@link Comparable}, allows for the comparison of instances.
+ */
 public class Score implements Comparable<Score> {
     private String name;
     private double score;
@@ -15,11 +19,11 @@ public class Score implements Comparable<Score> {
         this.score = score;
     }
 
+    // Getters and setters for the attributes
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
 
     public double getScore() {return score;}
-    public void setScore(int score) {this.score = score;}
 
     // This is used when sorting all the scores created in the game
     @Override

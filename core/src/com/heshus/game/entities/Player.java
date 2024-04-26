@@ -64,6 +64,8 @@ public class Player extends Sprite implements InputProcessor {
         //  COLLISION DETECTION
         //**********************
 
+        // todo: Modification - Improved the collision detection, making it simpler and easier to understand
+
         int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
         int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
@@ -72,7 +74,6 @@ public class Player extends Sprite implements InputProcessor {
             setX(getX() + velocity.x * delta);
             setY(getY() + velocity.y * delta);
         }
-
     }
 
     public Vector2 getVelocity() {
@@ -83,6 +84,10 @@ public class Player extends Sprite implements InputProcessor {
         this.velocity = velocity;
     }
 
+    // todo: Addition/Modification - improved readability of code and accounted for different directional keys pressed
+    /**
+     * Update the players motion (velocity) depending on their movement direction
+     */
     public void updateMotion() {
         if (leftMove) {velocity.x = -speed;}
         else if (rightMove) {velocity.x = speed;}
@@ -93,21 +98,38 @@ public class Player extends Sprite implements InputProcessor {
         else {velocity.y = 0;}
     }
 
+    // todo: Addition - created directional movement states to control multi-input requests
+    /**
+     * Set the player's movement direction to left, cancelling the right movement if true
+     * @param t player's moving left state
+     */
     public void setLeftMove(boolean t)
     {
         if(rightMove && t) rightMove = false;
         leftMove = t;
     }
+    /**
+     * Set the player's movement direction to right, cancelling the left movement if true
+     * @param t player's moving right state
+     */
     public void setRightMove(boolean t)
     {
         if(leftMove && t) leftMove = false;
         rightMove = t;
     }
+    /**
+     * Set the player's movement direction to up, cancelling the down movement if true
+     * @param t player's moving up state
+     */
     public void setUpMove(boolean t)
     {
         if(downMove && t) downMove = false;
         upMove = t;
     }
+    /**
+     * Set the player's movement direction to down, cancelling the up movement if true
+     * @param t player's moving down state
+     */
     public void setDownMove(boolean t)
     {
         if(upMove && t) upMove = false;
@@ -118,6 +140,13 @@ public class Player extends Sprite implements InputProcessor {
     //INPUT HANDLING
     ///////////////////
 
+    // todo: Modification - accounted for arrow keys being pressed
+    /**
+     * This sets a players movement when a key is pressed down
+     *
+     * @param keycode The keyboard key inputted
+     * @return true
+     */
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -141,6 +170,13 @@ public class Player extends Sprite implements InputProcessor {
         return true;
     }
 
+    // todo: Modification - accounted for arrow keys being pressed
+    /**
+     * This sets a players movement when a key is pressed down
+     *
+     * @param keycode The keyboard key inputted
+     * @return true
+     */
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {

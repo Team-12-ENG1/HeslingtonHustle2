@@ -5,18 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
 import com.heshus.game.entities.Player;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-
-import java.util.Objects;
 
 /**
 
@@ -47,7 +42,7 @@ public class ActivityManager {
         this.dayManager = dayManager;
     }
 
-
+    // todo: Modification - method now checks the newly added activities layer and gets a selected activity's properties
     /**
      * Checks whether and which activity is performed based on location of player
      */
