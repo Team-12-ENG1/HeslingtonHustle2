@@ -110,6 +110,5 @@ public class LeaderboardScreen {
         font.dispose();
         buttonTexture.dispose();
         clickSound.dispose();
-
     }
 }

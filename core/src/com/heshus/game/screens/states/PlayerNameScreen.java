@@ -16,9 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
 
@@ -34,12 +32,10 @@ public class PlayerNameScreen {
     private HesHusGame game;
     private final Skin skin;
 
-    private final MainMenuScreen menu;
-
-    public PlayerNameScreen(MainMenuScreen menu, Camera camera, ExtendViewport viewport) {
+    public PlayerNameScreen(HesHusGame game, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
         this.stage = new Stage(viewport);
-        this.menu = menu;
+        this.game = game;
 
         skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
@@ -49,25 +45,26 @@ public class PlayerNameScreen {
         Label title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
         TextButton button = new TextButton("PLAY", textButtonStyle);
         enterName = new TextField("", skin);
-        enterName.setMessageText("No more than 10 characters");
-        enterName.setScale(1.5f);
+        enterName.setMessageText("Max 10 characters");
+        enterName.setScale(0.8f);
 
         table = new Table();
-        table.setFillParent(true);
         stage.addActor(table);
 
         // Arrange table
         table.add(title).fillX().center();
         table.row().pad(10, 0, 10, 0);
-        table.add(enterName).fill();
+        table.add(enterName).center();
         table.row().pad(0, 0, 10, 0);
-        table.add(button).center().width(buttonTexture.getWidth()*1.5f).height(buttonTexture.getHeight()*1.5f);
+        table.add(button).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight());
 
         button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!enterName.getText().isEmpty() && enterName.getText().length() <= 10) {
+                clickSound.play();
+                if ((!enterName.getText().isEmpty()) && (enterName.getText().length() <= 10)) {
                     game.playerName = enterName.getText();
+                    game.setScreen(new CustomiseSprite(game, (OrthographicCamera) camera));
                     dispose();
                     return true;
                 } else { return false; }

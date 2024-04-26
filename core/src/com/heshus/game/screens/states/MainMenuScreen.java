@@ -36,10 +36,10 @@ import static com.heshus.game.engine.Play.*;
 public class MainMenuScreen implements Screen {
 
     final HesHusGame game;
-    private ExtendViewport extendViewport;
-    private OrthographicCamera camera;
-    private OrthogonalTiledMapRenderer renderer;
-    private TiledMap map;
+    private final ExtendViewport extendViewport;
+    private final OrthographicCamera camera;
+    private final OrthogonalTiledMapRenderer renderer;
+    private final TiledMap map;
     int mapPixelWidth;
     int mapPixelHeight;
     BitmapFont font;
@@ -50,17 +50,19 @@ public class MainMenuScreen implements Screen {
     Label gameTitle;
     Label howToTitle;
     Label instructions;
-    private Stage stage;
-    private Table mainTable;
-    private Table howToTable;
+    private final Stage stage;
+    private final Table mainTable;
+    private final Table howToTable;
     private TextButton.TextButtonStyle textButtonStyle;
     private TextButton.TextButtonStyle newGameTextButtonStyle;
-    private SettingsMenu settingsMenu;
-    private LeaderboardScreen leaderboardScreen;
+    // Different views
+    private final SettingsMenu settingsMenu;
+    private final LeaderboardScreen leaderboardScreen;
+    private final PlayerNameScreen playerNameScreen;
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
-    private TextButton gotItButton;
+    private final TextButton gotItButton;
     private boolean isNewGameClicked;
     /**
     *Constructor initiates variables and sets up listeners for buttons
@@ -71,7 +73,7 @@ public class MainMenuScreen implements Screen {
         state = GAME_MAINMENU;
         //Map for background initialisation
         map = new TmxMapLoader().load("MapRelated/testmap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
+        renderer = new OrthogonalTiledMapRenderer(map, 1);
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
         mapPixelWidth = layer.getWidth() * layer.getTileWidth() ; //just calculate the width and height of tilemap
         mapPixelHeight = layer.getHeight() * layer.getTileHeight();
@@ -139,6 +141,7 @@ public class MainMenuScreen implements Screen {
         //We draw this instead of mainTable when settingsButton is clicked
         settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);
         leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
+        playerNameScreen = new PlayerNameScreen(this.game, camera, extendViewport);
 
         // Make a how to play table
         howToTable = new Table();
@@ -210,7 +213,8 @@ public class MainMenuScreen implements Screen {
         gotItButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 clickSound.play();
-                game.setScreen(new PlayerNameScreen(game, camera));
+                // New: change the play state to player name (change the view)
+                state = GAME_PLAYER_NAME;
                 dispose();
                 return false;
             }
@@ -281,6 +285,8 @@ public class MainMenuScreen implements Screen {
                 case (GAME_LEADERBOARD):
                     leaderboardScreen.update();
                     break;
+                case (GAME_PLAYER_NAME):
+                    playerNameScreen.update();
             }
 
             //moving camera
