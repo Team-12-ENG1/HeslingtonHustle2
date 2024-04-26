@@ -141,6 +141,8 @@ public class MainMenuScreen implements Screen {
         //We draw this instead of mainTable when settingsButton is clicked
         settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);
         leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
+
+        // New: added player name view to the main menu
         playerNameScreen = new PlayerNameScreen(this.game, camera, extendViewport);
 
         // Make a how to play table

@@ -1,7 +1,6 @@
 package com.heshus.game.screens.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -20,6 +19,10 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
 
+/**
+ * Allows the player to enter their name into a {@link TextField},
+ * which will then be used by the leaderboard after.
+ */
 public class PlayerNameScreen {
     private BitmapFont font;
     private final Stage stage;
@@ -29,9 +32,15 @@ public class PlayerNameScreen {
     private Texture buttonTexture;
     private TextButton.TextButtonStyle textButtonStyle;
     private final TextField enterName;
-    private HesHusGame game;
+    private final HesHusGame game;
     private final Skin skin;
 
+    /**
+     * Create a playerNameScreen instance, setting up the table layout also
+     * @param game The base game instance
+     * @param camera The camera used to view the starting main menu
+     * @param viewport The viewport associated with the menu camera
+     */
     public PlayerNameScreen(HesHusGame game, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
         this.stage = new Stage(viewport);
@@ -58,10 +67,12 @@ public class PlayerNameScreen {
         table.row().pad(0, 0, 10, 0);
         table.add(button).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight());
 
+        // Add input listener to the button
         button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 clickSound.play();
+                // Only continue if they have entered a name and it is no more than 10 characters long
                 if ((!enterName.getText().isEmpty()) && (enterName.getText().length() <= 10)) {
                     game.playerName = enterName.getText();
                     game.setScreen(new CustomiseSprite(game, (OrthographicCamera) camera));
@@ -79,18 +90,28 @@ public class PlayerNameScreen {
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
     }
 
+    /**
+     * Set up the font for the UI, with a given scale
+     * @param scale The scale of the font
+     */
     private void setupFont(float scale) {
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(scale);
         font.setColor(Color.BLACK);
     }
 
+    /**
+     * Update the current view to focus on this class' instance
+     */
     public void update() {
         Gdx.input.setInputProcessor(stage);
         table.setPosition(camera.position.x, camera.position.y);
         stage.draw();
     }
 
+    /**
+     * Dispose of all textures
+     */
     public void dispose() {
         stage.dispose();
         skin.dispose();
