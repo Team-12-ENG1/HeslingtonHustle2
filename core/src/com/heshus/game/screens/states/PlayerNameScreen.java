@@ -2,6 +2,8 @@ package com.heshus.game.screens.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,101 +17,88 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
 
-public class PlayerNameScreen implements Screen {
-    private Stage stage;
+public class PlayerNameScreen {
+    private BitmapFont font;
+    private final Stage stage;
+    private final Camera camera;
+    private final Table table;
+    private final Sound clickSound;
+    private Texture buttonTexture;
+    private TextButton.TextButtonStyle textButtonStyle;
+    private final TextField enterName;
     private HesHusGame game;
-    private OrthographicCamera camera;
-    private Skin skin;
-    BitmapFont font;
-    TextButton test;
+    private final Skin skin;
 
-    public PlayerNameScreen(HesHusGame game, OrthographicCamera camera) {
-        this.game = game;
+    private final MainMenuScreen menu;
+
+    public PlayerNameScreen(MainMenuScreen menu, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
-        this.stage = new Stage(new ScreenViewport(camera));
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
+        this.stage = new Stage(viewport);
+        this.menu = menu;
 
         skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        setupFont(.5f);
+        setButtonStyle();
 
-        this.font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
-        this.font.getData().setScale(1.5F);
-        this.font.setColor(Color.BLACK);
+        Label title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
+        TextButton button = new TextButton("PLAY", textButtonStyle);
+        enterName = new TextField("", skin);
+        enterName.setMessageText("No more than 10 characters");
+        enterName.setScale(1.5f);
 
-        Label title = new Label("Enter your player name", skin);
-        title.setFontScale(2f);
-
-        TextField enterName = new TextField("", skin);
-        enterName.scaleBy(2);
-
-        //set TextButtonStyle
-        Texture buttonTexture = new Texture("UI/button_up.png");
-        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
-        TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
-        TextButton btn = new TextButton("PLAY", textButtonStyle);
+        table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
 
         // Arrange table
         table.add(title).fillX().center();
         table.row().pad(10, 0, 10, 0);
         table.add(enterName).fill();
         table.row().pad(0, 0, 10, 0);
-        table.add(btn).center().width(buttonTexture.getWidth()*1.5f).height(buttonTexture.getHeight()*1.5f);
+        table.add(button).center().width(buttonTexture.getWidth()*1.5f).height(buttonTexture.getHeight()*1.5f);
 
-        btn.addListener(new InputListener() {
+        button.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!enterName.getText().isEmpty()) {
+                if (!enterName.getText().isEmpty() && enterName.getText().length() <= 10) {
                     game.playerName = enterName.getText();
                     dispose();
-                    game.setScreen(new CustomiseSprite(game, camera));
                     return true;
                 } else { return false; }
             }
         });
     }
 
-    @Override
-    public void render(float v) {
-        ScreenUtils.clear(0.2f, 0f, 0, 1);
-        stage.act(Gdx.graphics.getDeltaTime());
+    private void setButtonStyle() {
+        buttonTexture = new Texture("UI/button_up.png");
+        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
+        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
+        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
+    }
+
+    private void setupFont(float scale) {
+        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font.getData().setScale(scale);
+        font.setColor(Color.BLACK);
+    }
+
+    public void update() {
+        Gdx.input.setInputProcessor(stage);
+        table.setPosition(camera.position.x, camera.position.y);
         stage.draw();
     }
 
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
     public void dispose() {
         stage.dispose();
         skin.dispose();
-        this.font.dispose();
+        font.dispose();
+        buttonTexture.dispose();
+        clickSound.dispose();
     }
 }

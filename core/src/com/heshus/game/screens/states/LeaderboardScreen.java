@@ -108,5 +108,8 @@ public class LeaderboardScreen {
     public void dispose() {
         stage.dispose();
         font.dispose();
+        buttonTexture.dispose();
+        clickSound.dispose();
+
     }
 }
