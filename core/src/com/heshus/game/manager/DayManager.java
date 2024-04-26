@@ -84,13 +84,13 @@ public class DayManager {
         return rec;
     }
 
-    public void incrementStudyScore(){
+    public void incrementStudyScore(String place){
         overallStudyCount++;
-        currentDay.incrementStudyScore();
+        currentDay.incrementStudyScore(place);
     }
-    public void incrementRecreationalScore(){
+    public void incrementRecreationalScore(String place){
         overallRecreationalCount++;
-        currentDay.incrementRecreationalScore();
+        currentDay.incrementRecreationalScore(place);
     }
     public void incrementEatScore(){
         overallEatCount++;

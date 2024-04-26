@@ -1,7 +1,9 @@
 package com.heshus.game.manager;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Represents the day of the week that the current play through is on
@@ -12,7 +14,9 @@ public class Day {
     private final int dayNumber;
     private float time;
 
-    private Dictionary<String,Integer> studyDict;
+    private List<String> studyPlaces;
+    private List<String> recPlaces;
+    private List<String> eatingTimes;
 
 
     /**
@@ -30,7 +34,9 @@ public class Day {
         this.studyScore = 0;
         this.eatScore = 0;
         this.recreationalScore = 0;
-        this.studyDict = new Hashtable<>();
+        this.studyPlaces = new ArrayList<String>();
+        this.recPlaces = new ArrayList<String>();
+        this.eatingTimes = new ArrayList<String>();
     }
 
     /**
@@ -44,6 +50,10 @@ public class Day {
      */
     public void incrementEatScore() {
         this.eatScore++;
+        String meal = convertTime(time);
+        if(!eatingTimes.contains(meal)){
+            eatingTimes.add(meal);
+        }
     }
     public int getEatScore(){
         return this.eatScore;
@@ -54,11 +64,8 @@ public class Day {
      */
     public void incrementStudyScore(String place) {
         this.studyScore++;
-        if(this.studyDict.get(place) == null){
-            this.studyDict.put(place,1);
-        }else{
-            int currentValue = this.studyDict.get(place);
-            this.studyDict.put(place,currentValue++);
+        if(!studyPlaces.contains(place)){
+            studyPlaces.add(place);
         }
     }
     public int getStudyScore(){
@@ -68,8 +75,11 @@ public class Day {
     /**
      * +1 to recreation counter
      */
-    public void incrementRecreationalScore() {
+    public void incrementRecreationalScore(String place) {
         this.recreationalScore++;
+        if(!recPlaces.contains(place)){
+            recPlaces.add(place);
+        }
     }
     public int getRecreationalScore(){
         return this.recreationalScore;
@@ -100,7 +110,14 @@ public class Day {
             this.energy = 0;
         }
     }
-
+    public String convertTime(Float time){
+        if(time > 8 && time < 12){
+            return "morning";
+        } else if (time > 12 && time < 17) {
+            return "afternoon";
+        }
+        return "evening";
+    }
     /**
      * Sets current day's time to param
      * @param time

@@ -77,10 +77,10 @@ public class ActivityManager {
                     dayManager.incrementEatScore();
                     break;
                 case "study":
-                    dayManager.incrementStudyScore();
+                    dayManager.incrementStudyScore("placeholder"); //Pass in description tile attribute when thats implemented
                     break;
                 case "recreation":
-                    dayManager.incrementRecreationalScore();
+                    dayManager.incrementRecreationalScore("placeholder");
                     break;
                 case "sleep":
                     // if the game is not over the avatar will move to the next day and reset their energy
