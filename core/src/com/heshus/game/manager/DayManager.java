@@ -31,6 +31,8 @@ public class DayManager {
     public void incrementDay(){
         int dayNum = currentDay.getDayNumber();
         Dictionary<String,Integer> summary = currentDay.summariseDay();
+
+        //if statement checks for the fail condition of not studying two days in a row
         if(summary.get("study") == 0){
             daysOfNoStudy++;
         }else{
@@ -39,6 +41,7 @@ public class DayManager {
         if(daysOfNoStudy > 1){
             fail = true;
         }
+        //Adds the output of the summary function into the dictionary containing the summary for each day
         statsByDay.put(dayNum, summary);
         if(dayNum < 7){
             currentDay = new Day(dayNum+1,8,100);
