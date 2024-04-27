@@ -111,9 +111,9 @@ public class Day {
         }
     }
     public String convertTime(Float time){
-        if(time > 8 && time < 12){
+        if(time >= 8 && time < 12){
             return "morning";
-        } else if (time > 12 && time < 17) {
+        } else if (time >= 12 && time < 17) {
             return "afternoon";
         }
         return "evening";
