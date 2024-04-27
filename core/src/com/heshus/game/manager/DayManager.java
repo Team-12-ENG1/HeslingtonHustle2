@@ -36,6 +36,8 @@ public class DayManager {
         // and the new game rules of not studying for two days will result in a fail
         int dayNum = currentDay.getDayNumber();
         Dictionary<String,Integer> summary = currentDay.summariseDay();
+
+        //if statement checks for the fail condition of not studying two days in a row
         if(summary.get("study") == 0){
             daysOfNoStudy++;
         }else{
@@ -44,6 +46,7 @@ public class DayManager {
         if(daysOfNoStudy > 1){
             fail = true;
         }
+        //Adds the output of the summary function into the dictionary containing the summary for each day
         statsByDay.put(dayNum, summary);
         if(dayNum < 7){
             currentDay = new Day(dayNum+1,8,100);
@@ -114,14 +117,15 @@ public class DayManager {
         return rec;
     }
 
+    public void incrementStudyScore(String place){}
     // New: Added functions to increment the player's score for each category
     public void incrementStudyScore(){
         overallStudyCount++;
-        currentDay.incrementStudyScore();
+        currentDay.incrementStudyScore(place);
     }
-    public void incrementRecreationalScore(){
+    public void incrementRecreationalScore(String place){
         overallRecreationalCount++;
-        currentDay.incrementRecreationalScore();
+        currentDay.incrementRecreationalScore(place);
     }
     public void incrementEatScore(){
         overallEatCount++;
