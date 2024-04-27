@@ -85,6 +85,5 @@ public class HesHusGame extends Game {
 		settings.putBoolean("isFullScreen", false);
 		settings.flush();
 	}
-
 }
 

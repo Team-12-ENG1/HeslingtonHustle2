@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.entities.Player;
 import com.heshus.game.manager.ActivityManager;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -35,6 +36,8 @@ public class Play implements Screen {
     public static final int GAME_OVER = 3;
     public static final int GAME_MAINMENU = 4;
     public static final int GAME_LEADERBOARD = 5;
+    public static final int GAME_PLAYER_NAME = 6;
+    public static final int GAME_PLAYER_SELECT = 7;
 
     public static int state;
     private final HesHusGame game;
@@ -118,7 +121,6 @@ public class Play implements Screen {
     @Override
     public void render(float delta) {
         update();
-
         draw();
     }
 
@@ -310,6 +312,7 @@ public class Play implements Screen {
                 break;
             case (GAME_SETTINGS)://we do the same settings or paused
             // New: Modified to include the game leaderboard
+            case (GAME_PLAYER_SELECT):
             case (GAME_LEADERBOARD):
             case (GAME_PAUSED):
                 player.update(0);
