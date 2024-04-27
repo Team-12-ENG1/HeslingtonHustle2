@@ -117,9 +117,8 @@ public class DayManager {
         return rec;
     }
 
-    public void incrementStudyScore(String place){}
+    public void incrementStudyScore(String place){
     // New: Added functions to increment the player's score for each category
-    public void incrementStudyScore(){
         overallStudyCount++;
         currentDay.incrementStudyScore(place);
     }
