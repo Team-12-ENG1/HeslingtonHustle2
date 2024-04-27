@@ -118,6 +118,8 @@ public class Day {
         }
         return "evening";
     }
+
+    // todo: Addition - Day class now summarises each day and states the score achieved
     /**
      * Sets current day's time to param
      * @param time

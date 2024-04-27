@@ -4,9 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
+/**
+ * Manages all reading/writing the leaderboard from/to its JSON file.
+ */
 public class Save {
     public static GameData gd;
 
+    /**
+     * Save the {@link GameData} into the JSON file. It will try to open the file
+     * however if it encounters an error, the game will close.
+     */
     public static void save() {
         try {
             FileHandle out = Gdx.files.local("data/scores.json");
@@ -22,6 +29,9 @@ public class Save {
         }
     }
 
+    /**
+     * Load the data from the JSON file (if it exists) and give it as the {@link GameData}.
+     */
     public static void load() {
         try {
             if (!saveFileExists()) {

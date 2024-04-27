@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.entities.Player;
 import com.heshus.game.manager.ActivityManager;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -35,6 +36,8 @@ public class Play implements Screen {
     public static final int GAME_OVER = 3;
     public static final int GAME_MAINMENU = 4;
     public static final int GAME_LEADERBOARD = 5;
+    public static final int GAME_PLAYER_NAME = 6;
+    public static final int GAME_PLAYER_SELECT = 7;
 
     public static int state;
     private final HesHusGame game;
@@ -118,7 +121,6 @@ public class Play implements Screen {
     @Override
     public void render(float delta) {
         update();
-
         draw();
     }
 
@@ -196,6 +198,7 @@ public class Play implements Screen {
                 }
 
                 //Dims screen when energy lost
+                // New: Modified to include the new game's dayManager attribute
                 dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                 dimTexture.draw(renderer.getBatch());
 
@@ -232,8 +235,8 @@ public class Play implements Screen {
                 float secondRowY = firstRowY - iconSize - iconSpacingY;
                 float thirdRowY = secondRowY - iconSize - iconSpacingY;
 
-                // draw the player's score for the three activity types
-
+                // draw the player's score for the three activity type
+                // New: Modified lines to include the game's dayManager attribute
                 font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallEatCount), counterBoxX + 43, firstRowY+18);
                 font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallStudyCount), counterBoxX + 43, secondRowY+27);
                 font.draw(renderer.getBatch(), String.valueOf(game.dayManager.overallRecreationalCount), counterBoxX + 43, thirdRowY+36);
@@ -250,6 +253,7 @@ public class Play implements Screen {
                 break;
             case (GAME_PAUSED):
                 //Dims screen when energy lost
+                // New: modified to use the game's dayManager
                 dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                 dimTexture.draw(renderer.getBatch());
    
@@ -260,6 +264,7 @@ public class Play implements Screen {
                 break;
             case (GAME_SETTINGS):
                 //Dims screen when energy lost
+                // New: modified to include game's dayManager
                 dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
                 dimTexture.draw(renderer.getBatch());
 
@@ -306,6 +311,8 @@ public class Play implements Screen {
                 player.update(Gdx.graphics.getDeltaTime());
                 break;
             case (GAME_SETTINGS)://we do the same settings or paused
+            // New: Modified to include the game leaderboard
+            case (GAME_PLAYER_SELECT):
             case (GAME_LEADERBOARD):
             case (GAME_PAUSED):
                 player.update(0);
@@ -325,6 +332,7 @@ public class Play implements Screen {
             isWalking = false;
         }
 
+        // New: modified to include the dayManager's new functions/methods
         if(game.dayManager.getGameOver()){
             game.score = game.dayManager.calculateScore();
             game.setScreen(new GameOverScreen(game));
@@ -353,8 +361,6 @@ public class Play implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
 
         // Set up the player
-        //int playerSpriteNumber = 5;
-        //Texture playerTexture = new Texture("Icons/player-" + Integer.toString(playerSpriteNumber) + ".png");
         Sprite playerSprite = new Sprite(playerTexture);
         player = new Player(playerSprite, collisionLayer);
         float startX = 30 * collisionLayer.getTileWidth();
@@ -363,7 +369,7 @@ public class Play implements Screen {
         //Gdx.input.setInputProcessor(player);
 
         // Set up the activity manager
-
+        // New: added the new activity manager for a more intuitive management of the activities the player can do
         activityManager = new ActivityManager(map.getLayers().get("Activities"), game.dayManager);
         activityManager.setPlayer(player);
 

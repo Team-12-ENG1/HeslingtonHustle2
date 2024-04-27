@@ -14,6 +14,7 @@ public class GameOverScreen implements Screen {
 
     final HesHusGame game;
     OrthographicCamera camera;
+    // New: added the player's score as a Score instance
     private Score playerScore;
 
 
@@ -22,13 +23,14 @@ public class GameOverScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-        // Create an instance of Score for the player
+        // New: Create an instance of Score for the player
         playerScore = new Score(game.playerName, game.dayManager.calculateScore());
     }
 
+    // New: modified the show method to save the player's score if it qualifies to be on the leaderboard
     @Override
     public void show() {
-        // TODO: Make layout a table using Scene2D
+        // todo: Make layout a table using Scene2D
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
             Save.save();
@@ -43,13 +45,16 @@ public class GameOverScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        // New: modified text to display the player's score
         game.font.draw(game.batch, "GAME OVER! Your score was " + game.dayManager.calculateScore(), 100, 150);
         game.font.draw(game.batch, "Tap anywhere to go to the main menu!", 100, 100);
         game.batch.end();
 
-        //Resets variables to default when a new game can be played
+        // New: modified to reset the base game's attributes
         if (Gdx.input.isTouched()) {
             game.dayManager = new DayManager();
+            game.score = 0;
+            game.playerName = "";
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
