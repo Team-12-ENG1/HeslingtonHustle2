@@ -57,13 +57,16 @@ public class MainMenuScreen implements Screen {
     private TextButton.TextButtonStyle newGameTextButtonStyle;
     // Different views
     private final SettingsMenu settingsMenu;
-    private final LeaderboardScreen leaderboardScreen;
     private final PlayerNameScreen playerNameScreen;
+    private final CustomiseSprite customiseSprite;
+
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
     private final TextButton gotItButton;
     private boolean isNewGameClicked;
+    private LeaderboardScreen leaderboardScreen;
+
     /**
     *Constructor initiates variables and sets up listeners for buttons
     * @param game instance of central class HesHusGame
@@ -140,11 +143,21 @@ public class MainMenuScreen implements Screen {
 
         //We draw this instead of mainTable when settingsButton is clicked
         settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);
-        leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
 
         // New: added player name view to the main menu
         playerNameScreen = new PlayerNameScreen(this.game, camera, extendViewport);
 
+        // New: added leaderboard view
+        leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);
+
+        // New: added customise sprite view
+        customiseSprite = new CustomiseSprite(this.game, camera, extendViewport);
+
+        howToTable = instructionTable();
+    }
+
+    private Table instructionTable() {
+        final Table howToTable;
         // Make a how to play table
         howToTable = new Table();
 
@@ -160,6 +173,7 @@ public class MainMenuScreen implements Screen {
         howToTable.setFillParent(true);
         howToTable.setVisible(false);
         stage.addActor(howToTable);
+        return howToTable;
     }
 
     /**
@@ -267,7 +281,6 @@ public class MainMenuScreen implements Screen {
                 case (GAME_MAINMENU):
                     game.batch.begin();
                     if (isNewGameClicked) {
-                        //Display controls (doesn't actually center text, just gets kinda close)
                         mainTable.setVisible(false);
                         howToTable.setPosition(camera.position.x - camera.viewportWidth / 2, camera.position.y - camera.viewportHeight / 2);
                         howToTable.setVisible(true);
@@ -289,6 +302,10 @@ public class MainMenuScreen implements Screen {
                     break;
                 case (GAME_PLAYER_NAME):
                     playerNameScreen.update();
+                    break;
+                case (GAME_PLAYER_SELECT):
+                    customiseSprite.update();
+                    break;
             }
 
             //moving camera

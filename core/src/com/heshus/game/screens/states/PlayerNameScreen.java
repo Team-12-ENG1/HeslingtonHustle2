@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
+import com.heshus.game.engine.Play;
 
 /**
  * Allows the player to enter their name into a {@link TextField},
@@ -34,6 +35,8 @@ public class PlayerNameScreen {
     private final TextField enterName;
     private final HesHusGame game;
     private final Skin skin;
+    private Label title;
+    private TextButton button;
 
     /**
      * Create a playerNameScreen instance, setting up the table layout also
@@ -51,8 +54,8 @@ public class PlayerNameScreen {
         setupFont(.5f);
         setButtonStyle();
 
-        Label title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
-        TextButton button = new TextButton("PLAY", textButtonStyle);
+        title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
+        button = new TextButton("PLAY", textButtonStyle);
         enterName = new TextField("", skin);
         enterName.setMessageText("Max 10 characters");
         enterName.setScale(0.8f);
@@ -75,7 +78,7 @@ public class PlayerNameScreen {
                 // Only continue if they have entered a name and it is no more than 10 characters long
                 if ((!enterName.getText().isEmpty()) && (enterName.getText().length() <= 10)) {
                     game.playerName = enterName.getText();
-                    game.setScreen(new CustomiseSprite(game, (OrthographicCamera) camera));
+                    Play.state = Play.GAME_PLAYER_SELECT;
                     dispose();
                     return true;
                 } else { return false; }
