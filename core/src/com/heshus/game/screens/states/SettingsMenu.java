@@ -236,10 +236,12 @@ public class SettingsMenu {
         stage.draw();
     }
     /**
-     * Should be alled to release all resources
+     * Should be called to release all resources
      */
     public void dispose(){
         stage.dispose();
+        font.dispose();
+        clickSound.dispose();
     }
 
 }

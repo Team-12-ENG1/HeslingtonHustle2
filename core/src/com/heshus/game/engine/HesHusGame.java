@@ -24,7 +24,7 @@ public class HesHusGame extends Game {
 
 	// New: added public attributes storing the player's name and their eventual score
 	public String playerName;
-	public double score;
+	public int score;
 	/**
 	 *  The font used to write text on the screen with LibGDX's Arial font as
 	 *  default
