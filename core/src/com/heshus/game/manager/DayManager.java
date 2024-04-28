@@ -98,7 +98,7 @@ public class DayManager {
         if(uniqueTimes >= 14) {
             eat += 15;
         }
-        return eat;
+        return Math.min((int)eat,100);
     }
     /**
      * This applies any penalties relating to the player's studying habits
@@ -115,7 +115,7 @@ public class DayManager {
             study = study * 0.8;
         }
         study = study * (int)(getUniquePlaces("Study")/7);
-        return (int)study;
+        return Math.min((int)study,100);
     }
 
     /**
@@ -128,7 +128,7 @@ public class DayManager {
         if(overallRecreationalCount > 10){
             rec = rec * 0.8;
         }
-        return rec;
+        return Math.min((int)rec,100);
     }
     private int getUniquePlaces(String activity){
         //Returns the number of unique places/times(for eating) a given activity was completed
