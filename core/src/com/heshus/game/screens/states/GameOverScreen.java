@@ -24,7 +24,8 @@ public class GameOverScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
         // New: Create an instance of Score for the player
-        playerScore = new Score(game.playerName, game.dayManager.calculateScore());
+        game.score = game.dayManager.endGame();
+        playerScore = new Score(game.playerName, game.score);
     }
 
     // New: modified the show method to save the player's score if it qualifies to be on the leaderboard

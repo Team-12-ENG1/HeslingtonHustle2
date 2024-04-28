@@ -4,7 +4,7 @@
  <tileset firstgid="487" source="Utils.tsx"/>
  <tileset firstgid="495" source="kenny-tilemap 2.tsx"/>
  <tileset firstgid="981" source="duck.tsx"/>
- <tileset firstgid="982" source="../../../../HeslingtonHustle2-new-main/assets/MapRelated/kenny-tilemap.tsx"/>
+ <tileset firstgid="982" source="../MapRelated/kenny-tilemap.tsx"/>
  <objectgroup id="21" name="Activities" locked="1">
   <object id="478" x="3311.91" y="209.451" width="51.0538" height="13.0907">
    <properties>
