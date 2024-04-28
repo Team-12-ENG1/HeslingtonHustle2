@@ -88,8 +88,15 @@ public class DayManager {
      * @return The new eating section after applying possible penalties
      */
     private double applyEatPen(double eat){
+        int uniqueTimes = getUniquePlaces("Eating");
+        if(uniqueTimes == 21){
+            return 100;
+        }
         if(overallEatCount == 21){
             eat = eat + 20;
+        }
+        if(uniqueTimes >= 14) {
+            eat += 15;
         }
         return eat;
     }
@@ -107,12 +114,8 @@ public class DayManager {
         }else{
             study = study * 0.8;
         }
-        int uniquePlaces = 0;
-        for(int i = 1; i < 7; i++) {
-           uniquePlaces += statsByDay.get(i).get("uniqueStudyPlaces");
-        }
-        study = study * (int)(uniquePlaces/7);
-        return study;
+        study = study * (getUniquePlaces("Study")/7);
+        return (int)study;
     }
 
     /**
@@ -125,6 +128,15 @@ public class DayManager {
             rec = rec * 0.8;
         }
         return rec;
+    }
+    private int getUniquePlaces(String activity){
+        //Returns the number of unique places/times(for eating) a given activity was completed
+        String key = "unique" + activity;
+        int uniquePlaces = 0;
+        for(int i = 1; i < 7; i++) {
+            uniquePlaces += statsByDay.get(i).get(key);
+        }
+        return uniquePlaces;
     }
 
     public void incrementStudyScore(String place){
