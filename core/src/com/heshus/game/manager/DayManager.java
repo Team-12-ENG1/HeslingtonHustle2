@@ -114,7 +114,7 @@ public class DayManager {
         }else{
             study = study * 0.8;
         }
-        study = study * (getUniquePlaces("Study")/7);
+        study = study * (int)(getUniquePlaces("Study")/7);
         return (int)study;
     }
 
@@ -124,7 +124,8 @@ public class DayManager {
      * @return The new recreational section score after applying possible penalties
      */
     private double applyRecPen(double rec){
-        if(rec > 9){
+        rec = rec * getUniquePlaces("Rec")/7 + 0.5;
+        if(overallRecreationalCount > 10){
             rec = rec * 0.8;
         }
         return rec;
