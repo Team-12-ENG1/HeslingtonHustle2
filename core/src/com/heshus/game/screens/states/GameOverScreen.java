@@ -40,7 +40,11 @@ public class GameOverScreen implements Screen {
     private Stage stage;
 
 
-
+    /**
+     * Create an instance of the game over screen
+     *
+     * @param game The base game class
+     */
     public GameOverScreen(final HesHusGame game) {
         this.game = game;
         stage = new Stage(new ExtendViewport(400, 225));
