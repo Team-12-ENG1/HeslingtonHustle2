@@ -87,7 +87,18 @@ public class DayManager {
 
         return (int) (eat + rec + study)/3;
     }
-
+    public boolean checkForStreaks(){
+        int count = 0;
+        for(int i = 1; i < 7; i++) {
+            if(statsByDay.get(i).get("study") > 0){
+                count++;
+            }
+        }
+        if(count == 7){
+            return true;
+        }
+        return false;
+    }
     /**
      * This applies any penalties relating to the player's eating habits
      * @param eat The eating section of the score
