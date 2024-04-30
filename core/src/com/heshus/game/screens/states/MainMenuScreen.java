@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
+import com.heshus.game.engine.Play;
 
 import static com.heshus.game.engine.Play.*;
 
@@ -67,6 +68,11 @@ public class MainMenuScreen implements Screen {
     private boolean isNewGameClicked;
     private LeaderboardScreen leaderboardScreen;
 
+    public final static String FONT = "Fonts/monogram/pixel.fnt";
+    public final static String BUTTON = "UI/button_up.png";
+    public final static String BUTTON_WIDE = "UI/wide_button.png";
+    public final static String CLICK = "Sounds/switch2.ogg";
+
     /**
     *Constructor initiates variables and sets up listeners for buttons
     * @param game instance of central class HesHusGame
@@ -75,7 +81,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         state = GAME_MAINMENU;
         //Map for background initialisation
-        map = new TmxMapLoader().load("MapRelated/testmap.tmx");
+        map = new TmxMapLoader().load(Play.MAP);
         renderer = new OrthogonalTiledMapRenderer(map, 1);
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
         mapPixelWidth = layer.getWidth() * layer.getTileWidth() ; //just calculate the width and height of tilemap
@@ -91,7 +97,7 @@ public class MainMenuScreen implements Screen {
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         //set up font
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(.5F);
         font.setColor(Color.BLACK);
 
@@ -243,12 +249,12 @@ public class MainMenuScreen implements Screen {
      */
     private void initialiseTextButtonStyles() {
         //Setup buttonstyles! (a new TextureRegionDrawable version for down would be nice and would kinda animate them)
-        Texture buttonTexture = new Texture("UI/button_up.png");
+        Texture buttonTexture = new Texture(BUTTON);
         TextureRegion buttonTextureRegion= new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );
         //w i d e  b u t t o n (its wider)
-        Texture newButtonTexture = new Texture("UI/wide_button.png");
+        Texture newButtonTexture = new Texture(BUTTON_WIDE);
         TextureRegion newButtonTextureRegion= new TextureRegion(newButtonTexture, newButtonTexture.getWidth(), newButtonTexture.getHeight());
         TextureRegionDrawable newButtonTextureRegionDrawable =new TextureRegionDrawable(newButtonTextureRegion);
         newGameTextButtonStyle = new TextButton.TextButtonStyle(newButtonTextureRegionDrawable, newButtonTextureRegionDrawable, newButtonTextureRegionDrawable, font );
@@ -259,7 +265,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void show() {
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
     }
 
     /**

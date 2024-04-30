@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Json;
  */
 public class Save {
     public static GameData gd;
+    public static final String SCORES = "data/scores.json"
 
     /**
      * Save the {@link GameData} into the JSON file. It will try to open the file
@@ -16,7 +17,7 @@ public class Save {
      */
     public static void save() {
         try {
-            FileHandle out = Gdx.files.local("data/scores.json");
+            FileHandle out = Gdx.files.local(SCORES);
             Json json = new Json();
             String jsonScores = json.toJson(gd);
             // Don't append, as we will alter the scores themselves and then write back
@@ -38,7 +39,7 @@ public class Save {
                 init();
                 return;
             }
-            FileHandle in = Gdx.files.local("data/scores.json");
+            FileHandle in = Gdx.files.local(SCORES);
             Json json = new Json();
             gd = json.fromJson(GameData.class, in);
         }
@@ -50,7 +51,7 @@ public class Save {
 
     // Just in case
     public static boolean saveFileExists() {
-        return Gdx.files.internal("data/scores.json").exists();
+        return Gdx.files.internal(SCORES).exists();
     }
 
     public static void init() {

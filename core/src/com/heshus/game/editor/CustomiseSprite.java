@@ -33,6 +33,13 @@ public class CustomiseSprite {
     private Label prompt;
     private Table table;
 
+    public static final String CLICK_SOUND = "Sounds/switch2.ogg";
+    public static final String FONT = "Fonts/monogram/pixel.fnt";
+    public static final String LEFT_ARROW = "UI/keyboard_arrow_left_outline.png" ;
+    public static final String RIGHT_ARROW = "UI/keyboard_arrow_right_outline.png" ;
+
+
+
     boolean validPlayer = false;
 
     //this is the default sprite selected
@@ -55,12 +62,12 @@ public class CustomiseSprite {
         this.stage = new Stage(viewport);
 
         Gdx.input.setInputProcessor(stage);
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK_SOUND));
         setupFont(.5f);
 
         //set up arrow key textures
-        leftarrowTexture = new Texture("UI/keyboard_arrow_left_outline.png");
-        rightarrowTexture = new Texture("UI/keyboard_arrow_right_outline.png");
+        leftarrowTexture = new Texture(LEFT_ARROW);
+        rightarrowTexture = new Texture(RIGHT_ARROW);
 
         //add all player textures to the textureList
         for (int i = 0; i < totalPlayerSpriteChoices; i++) {
@@ -94,7 +101,7 @@ public class CustomiseSprite {
      * @param scale The scale of the font
      */
     private void setupFont(float scale) {
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(scale);
     }
 

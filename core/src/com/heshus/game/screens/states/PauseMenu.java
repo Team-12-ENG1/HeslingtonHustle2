@@ -42,17 +42,22 @@ public class PauseMenu{
      * @param viewport
      * @param camera
      */
+
+    public static final String CLICK = "Sounds/switch2.ogg";
+    public static final String FONT = "Fonts/monogram/pixel.fnt";
+    public static final String BUTTON = "UI/button_up.png";
+
     public PauseMenu(ExtendViewport viewport, Camera camera) {
         //set up font
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(1.5F);
         font.setColor(Color.BLACK);
         //sound on click
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
         //BUTTONS
         //set textbuttonstyle
-        buttonTexture = new Texture("UI/button_up.png");
+        buttonTexture = new Texture(BUTTON);
         buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );

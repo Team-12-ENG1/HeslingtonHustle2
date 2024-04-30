@@ -41,6 +41,14 @@ public class SettingsMenu {
     private TextButton rightButton;
     private TextButton resolutionButton;
     private Sound clickSound;
+
+    public static final String CLICK = "Sounds/switch2.ogg";
+    public static final String FONT = "Fonts/monogram/pixel.fnt";
+    public static final String BUTTON_UNCHECKED = "UI/unchecked.png";
+    public static final String BUTTON_CHECKED = "UI/checked.png";
+    public static final String BUTTON = "UI/button_up.png";
+
+
     /**
      * Initialises everything!
      * @param returnState this is the state that gets set when return or apply is clicked!
@@ -52,7 +60,7 @@ public class SettingsMenu {
         this.returnState = returnState;
         this.camera = camera;
         //sound on click
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
         //All resolutions that will be in settings menu
         supportedResolutions = new ArrayList<>();
@@ -63,7 +71,7 @@ public class SettingsMenu {
         resolutionSelectIndex = supportedResolutions.indexOf(new Vector2(settings.getInteger("windowWidth"),settings.getInteger("windowHeight")));//gets index of arraylist matching current resolution
         
         //Set up font
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(.5F*scale);
         font.setColor(Color.BLACK);
 
@@ -182,16 +190,16 @@ public class SettingsMenu {
      */
     private void buttonStyles(){
         //Set basic text button style (the blue one)
-        Texture buttonTexture = new Texture("UI/button_up.png");
+        Texture buttonTexture = new Texture(BUTTON);
         TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );
 
         //Set up a checkboxstyle, unchecked and checked
-        Texture uncheckedBoxTex = new Texture("UI/unchecked.png");//first the drawable of unchecked
+        Texture uncheckedBoxTex = new Texture(BUTTON_UNCHECKED);//first the drawable of unchecked
         TextureRegion uncheckedBoxTextureRegion = new TextureRegion(uncheckedBoxTex, uncheckedBoxTex.getWidth(), uncheckedBoxTex.getHeight());
         TextureRegionDrawable uncheckedBoxTextureRegionDrawable =new TextureRegionDrawable(uncheckedBoxTextureRegion);
-        Texture checkedBoxTex = new Texture("UI/checked.png");//then checked
+        Texture checkedBoxTex = new Texture(BUTTON_CHECKED);//then checked
         TextureRegion checkedBoxTextureRegion = new TextureRegion(checkedBoxTex, checkedBoxTex.getWidth(), checkedBoxTex.getHeight());
         TextureRegionDrawable checkedBoxTextureRegionDrawable =new TextureRegionDrawable(checkedBoxTextureRegion);
         checkBoxStyle = new CheckBox.CheckBoxStyle(uncheckedBoxTextureRegionDrawable, checkedBoxTextureRegionDrawable, font, Color.BLACK );
