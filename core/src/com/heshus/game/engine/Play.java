@@ -205,7 +205,6 @@ public class Play implements Screen {
                     // Get it as a percentage out of 0.6 (the max alpha of black we're allowing
                     // as the player can still just see the game)
                     currentAlpha = currentAlpha * 0.6f;
-                    System.out.println(currentAlpha);
                     dimTexture.setAlpha(currentAlpha);
                     dimTexture.draw(renderer.getBatch());
                 }
@@ -282,9 +281,7 @@ public class Play implements Screen {
             case (GAME_OVER):
                 // Fade to 100% alpha
                 currentAlpha += 1f * delta * 0.6f;
-                System.out.println(currentAlpha);
                 currentAlpha = Float.min(currentAlpha, 1);
-                System.out.println(currentAlpha);
                 dimTexture.setAlpha(currentAlpha);
                 dimTexture.draw(renderer.getBatch());
                 renderer.getBatch().end();
@@ -374,7 +371,7 @@ public class Play implements Screen {
         camera.setToOrtho(false, 800, 450);
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
         // Load the map and set up the renderer
-        map = new TmxMapLoader().load("expandedMap/testmap.tmx");
+        map = new TmxMapLoader().load("MapRelated/gamemap.tmx");
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);

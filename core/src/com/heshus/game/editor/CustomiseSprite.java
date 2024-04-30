@@ -108,11 +108,9 @@ public class CustomiseSprite {
         //left arrow: decrement playerSelection
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             playerSelection = (playerSelection-- <= 0) ? totalPlayerSpriteChoices-1 : playerSelection--;
-            System.out.println(playerSelection);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             //right arrow: increment playerSelection
             playerSelection = (playerSelection++ >= totalPlayerSpriteChoices-1) ? 0 : playerSelection++;
-            System.out.println(playerSelection);
         }
 
         //validate player choice (should always pass but good to be safe)

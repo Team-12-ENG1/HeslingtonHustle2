@@ -100,10 +100,7 @@ public class ActivityManager {
     }
 
     /**
-     /**
-     * @param setTime
-     * accepts as parameter a setTime for different activities
-     * Decreases current day's energy
+     * Decrement the player's energy
      * @param energy value to decrease energy by
      */
     private void decrementEnergy(int energy) {

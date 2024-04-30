@@ -47,7 +47,6 @@ public class HesHusGame extends Game {
 		font = new BitmapFont();
 		setDefaultPreferences();
 		// adjusts the window size according to requirements
-		System.out.println(settings.getInteger("screenWidth"));
 		Gdx.graphics.setWindowedMode(settings.getInteger("windowWidth"), settings.getInteger("windowHeight"));
 		// setting to the MainMenuScreen
 		this.setScreen(new MainMenuScreen(this));

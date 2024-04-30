@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="504">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="50" nextobjectid="532">
  <tileset firstgid="1" source="kenny-tilemap.tsx"/>
  <tileset firstgid="487" source="Utils.tsx"/>
  <tileset firstgid="495" source="kenny-tilemap 2.tsx"/>
  <tileset firstgid="981" source="duck.tsx"/>
- <tileset firstgid="982" source="../MapRelated/kenny-tilemap.tsx"/>
+ <tileset firstgid="982" name="ActivityBanners" tilewidth="237" tileheight="78" tilecount="12" columns="0" objectalignment="topleft" tilerendersize="grid">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0" x="0" y="0" width="215" height="32">
+   <image width="215" height="36" source="labels/accommodation.png"/>
+  </tile>
+  <tile id="1">
+   <image width="97" height="33" source="labels/arcade.png"/>
+  </tile>
+  <tile id="2">
+   <image width="50" height="34" source="labels/bar.png"/>
+  </tile>
+  <tile id="3">
+   <image width="54" height="32" source="labels/cafe.png"/>
+  </tile>
+  <tile id="4">
+   <image width="84" height="78" source="labels/chess.png"/>
+  </tile>
+  <tile id="5">
+   <image width="160" height="22" source="labels/computer-science.png"/>
+  </tile>
+  <tile id="6">
+   <image width="203" height="34" source="labels/feed-ducks.png"/>
+  </tile>
+  <tile id="7">
+   <image width="53" height="34" source="labels/gym.png"/>
+  </tile>
+  <tile id="8">
+   <image width="104" height="36" source="labels/library.png"/>
+  </tile>
+  <tile id="9">
+   <image width="158" height="37" source="labels/restaurant.png"/>
+  </tile>
+  <tile id="10">
+   <image width="137" height="40" source="labels/snack-bar.png"/>
+  </tile>
+  <tile id="11">
+   <image width="200" height="36" source="labels/sports-centre.png"/>
+  </tile>
+ </tileset>
  <objectgroup id="21" name="Activities">
   <object id="482" x="2575.67" y="752.141" width="48.6668" height="15.3268">
    <properties>
@@ -26,7 +64,7 @@
   <object id="494" x="3424" y="752" width="48" height="16">
    <properties>
     <property name="activity" value="study"/>
-    <property name="description" value="made flashcards"/>
+    <property name="description" value="developed algorithms"/>
     <property name="energy" type="int" value="40"/>
     <property name="time" type="int" value="4"/>
    </properties>
@@ -42,7 +80,7 @@
   <object id="496" x="3312" y="208" width="48" height="16">
    <properties>
     <property name="activity" value="eat"/>
-    <property name="description" value="ate"/>
+    <property name="description" value="ate at the cafe"/>
     <property name="energy" type="int" value="10"/>
     <property name="time" type="int" value="1"/>
    </properties>
@@ -50,7 +88,7 @@
   <object id="497" x="2880" y="384" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
-    <property name="description" value="learnt how to play chess"/>
+    <property name="description" value="played chess"/>
     <property name="energy" type="int" value="30"/>
     <property name="time" type="int" value="3"/>
    </properties>
@@ -58,7 +96,7 @@
   <object id="498" x="2656" y="1168" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
-    <property name="description" value="went to the gym"/>
+    <property name="description" value="worked out"/>
     <property name="energy" type="int" value="10"/>
     <property name="time" type="int" value="2"/>
    </properties>
@@ -71,26 +109,26 @@
     <property name="time" type="int" value="4"/>
    </properties>
   </object>
-  <object id="500" x="672" y="224" width="80" height="16">
+  <object id="500" x="688" y="224" width="48" height="16">
    <properties>
     <property name="activity" value="eat"/>
-    <property name="description" value="ate at a restaurant"/>
+    <property name="description" value="had a 3 course meal"/>
     <property name="energy" type="int" value="10"/>
     <property name="time" type="int" value="2"/>
    </properties>
   </object>
-  <object id="501" x="352" y="544" width="96" height="16">
+  <object id="501" x="368" y="544" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
-    <property name="description" value="went to the pub"/>
+    <property name="description" value="played videogames"/>
     <property name="energy" type="int" value="20"/>
     <property name="time" type="int" value="2"/>
    </properties>
   </object>
-  <object id="502" x="624" y="1184" width="80" height="16">
+  <object id="502" x="640" y="1184" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
-    <property name="description" value="went to the gym"/>
+    <property name="description" value="had a drink at the bar"/>
     <property name="energy" type="int" value="20"/>
     <property name="time" type="int" value="2"/>
    </properties>
@@ -832,40 +870,40 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <imagelayer id="10" name="Eat" offsetx="3311.83" offsety="143.167">
-  <image source="eat.png" width="48" height="16"/>
+ <imagelayer id="49" name="Accommodation" offsetx="2529.62" offsety="579.467">
+  <image source="labels/accommodation.png" width="143" height="24"/>
  </imagelayer>
- <imagelayer id="29" name="Copy of Eat" offsetx="691.013" offsety="94.2553">
-  <image source="eat.png" width="48" height="16"/>
+ <imagelayer id="37" name="Chess" offsetx="2878.06" offsety="290.916">
+  <image source="labels/chess2.png" width="52" height="48"/>
  </imagelayer>
- <imagelayer id="28" name="Copy of Eat" offsetx="3106.26" offsety="884.315">
-  <image source="eat.png" width="48" height="16"/>
+ <imagelayer id="39" name="Cafe" offsetx="3310.33" offsety="137.203">
+  <image source="labels/cafe.png" width="54" height="32"/>
  </imagelayer>
- <imagelayer id="11" name="Sleep" offsetx="2575" offsety="621.667">
-  <image source="sleep.png" width="48" height="16"/>
+ <imagelayer id="47" name="Bar" offsetx="640.176" offsety="1138.85">
+  <image source="labels/bar.png" width="50" height="34"/>
  </imagelayer>
- <imagelayer id="12" name="Study" offsetx="3424.67" offsety="622.5">
-  <image source="study.png" width="48" height="16"/>
+ <imagelayer id="48" name="Sports Centre" offsetx="351.94" offsety="1324.83">
+  <image source="labels/sports-centre.png" width="200" height="36"/>
  </imagelayer>
- <imagelayer id="22" name="Study" offsetx="2416.34" offsety="421.257">
-  <image source="study.png" width="48" height="16"/>
+ <imagelayer id="45" name="Restaurant" offsetx="633.885" offsety="46.0723">
+  <image source="labels/restaurant.png" width="158" height="37"/>
  </imagelayer>
- <imagelayer id="13" name="Relax" offsetx="2879" offsety="319.667">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="46" name="Arcade" offsetx="343.178" offsety="443.962">
+  <image source="labels/arcade.png" width="97" height="33"/>
  </imagelayer>
- <imagelayer id="27" name="Copy of Relax" offsetx="425.439" offsety="1408.06">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="40" name="Computer Science" offsetx="3367.7" offsety="582.072">
+  <image source="labels/computer-science.png" width="160" height="22"/>
  </imagelayer>
- <imagelayer id="26" name="Copy of Relax" offsetx="2657.5" offsety="1105.92">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="41" name="Snack Bar" offsetx="3058.37" offsety="843.173">
+  <image source="labels/snack-bar.png" width="137" height="40"/>
  </imagelayer>
- <imagelayer id="25" name="Copy of Relax" offsetx="640.194" offsety="1041.6">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="42" name="Feed Ducks" offsetx="3752.25" offsety="1163.12">
+  <image source="labels/feed-ducks.png" width="203" height="34"/>
  </imagelayer>
- <imagelayer id="24" name="Copy of Relax" offsetx="368.41" offsety="481.759">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="43" name="Gym" offsetx="2653.77" offsety="1066.57">
+  <image source="labels/gym.png" width="53" height="34"/>
  </imagelayer>
- <imagelayer id="23" name="Copy of Relax" locked="1" offsetx="3833.93" offsety="1176.01">
-  <image source="relax.png" width="48" height="16"/>
+ <imagelayer id="44" name="Library" offsetx="2391.15" offsety="375.49">
+  <image source="labels/library.png" width="104" height="36"/>
  </imagelayer>
 </map>
