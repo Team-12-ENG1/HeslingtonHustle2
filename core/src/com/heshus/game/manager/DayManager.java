@@ -1,7 +1,11 @@
 package com.heshus.game.manager;
 
+import com.heshus.game.engine.Play;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
+
+import static com.heshus.game.engine.Play.GAME_OVER;
 
 /**
  * Manages how the current day is changed and whether the game has finished
@@ -53,12 +57,14 @@ public class DayManager {
         }
         else{
             this.setGameOver(true);
+            endGame();
         }
     }
 
     // New: added function to calculate score once the game has ended
     public int endGame(){
-        //Logic to endgame and save to leaderboard here
+        // Logic to endgame
+        Play.state = GAME_OVER;
         return calculateScore();
     }
 
