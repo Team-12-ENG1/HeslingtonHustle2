@@ -375,7 +375,7 @@ public class Play implements Screen {
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
         // Load the map and set up the renderer
         map = new TmxMapLoader().load("expandedMap/testmap.tmx");
-        collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
+        collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
 

@@ -1,35 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="503">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="250" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="504">
  <tileset firstgid="1" source="kenny-tilemap.tsx"/>
  <tileset firstgid="487" source="Utils.tsx"/>
  <tileset firstgid="495" source="kenny-tilemap 2.tsx"/>
  <tileset firstgid="981" source="duck.tsx"/>
  <tileset firstgid="982" source="../MapRelated/kenny-tilemap.tsx"/>
  <objectgroup id="21" name="Activities">
-  <object id="481" x="2842.15" y="546.237"/>
   <object id="482" x="2575.67" y="752.141" width="48.6668" height="15.3268">
    <properties>
     <property name="activity" value="sleep"/>
     <property name="description" value="are well rested"/>
-    <property name="energy" value="0"/>
-    <property name="time" value="0"/>
+    <property name="energy" type="int" value="0"/>
+    <property name="time" type="int" value="0"/>
    </properties>
-  </object>
-  <object id="489" x="320.78" y="1505.49">
-   <properties>
-    <property name="activity" value="recreation"/>
-    <property name="description" value="played badminton"/>
-    <property name="energy" value="30"/>
-    <property name="time" value="3"/>
-   </properties>
-   <polygon points="0,0 254.069,-0.946253 254.069,14.6669 -1.41938,13.7207"/>
   </object>
   <object id="493" x="3712" y="1232">
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="fed the ducks"/>
-    <property name="energy" value="10"/>
-    <property name="time" value="1"/>
+    <property name="energy" type="int" value="10"/>
+    <property name="time" type="int" value="1"/>
    </properties>
    <polygon points="0,0 144,0 144,16 256,16 256,32 128,32 128,16 0,16"/>
   </object>
@@ -37,72 +27,80 @@
    <properties>
     <property name="activity" value="study"/>
     <property name="description" value="made flashcards"/>
-    <property name="energy" value="40"/>
-    <property name="time" value="4"/>
+    <property name="energy" type="int" value="40"/>
+    <property name="time" type="int" value="4"/>
    </properties>
   </object>
-  <object id="495" x="3072" y="944" width="112" height="16">
+  <object id="495" x="3104" y="944" width="48" height="16">
    <properties>
     <property name="activity" value="eat"/>
     <property name="description" value="had a snack"/>
-    <property name="energy" value="10"/>
-    <property name="time" value="1"/>
+    <property name="energy" type="int" value="10"/>
+    <property name="time" type="int" value="1"/>
    </properties>
   </object>
   <object id="496" x="3312" y="208" width="48" height="16">
    <properties>
     <property name="activity" value="eat"/>
     <property name="description" value="ate"/>
-    <property name="energy" value="10"/>
-    <property name="time" value="1"/>
+    <property name="energy" type="int" value="10"/>
+    <property name="time" type="int" value="1"/>
    </properties>
   </object>
   <object id="497" x="2880" y="384" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="learnt how to play chess"/>
-    <property name="energy" value="30"/>
-    <property name="time" value="3"/>
+    <property name="energy" type="int" value="30"/>
+    <property name="time" type="int" value="3"/>
    </properties>
   </object>
-  <object id="498" x="2640" y="1168" width="80" height="16">
+  <object id="498" x="2656" y="1168" width="48" height="16">
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="went to the gym"/>
-    <property name="energy" value="10"/>
-    <property name="time" value="2"/>
+    <property name="energy" type="int" value="10"/>
+    <property name="time" type="int" value="2"/>
    </properties>
   </object>
   <object id="499" x="2400" y="480" width="80" height="16">
    <properties>
     <property name="activity" value="study"/>
     <property name="description" value="went over lecture material"/>
-    <property name="energy" value="40"/>
-    <property name="time" value="4"/>
+    <property name="energy" type="int" value="40"/>
+    <property name="time" type="int" value="4"/>
    </properties>
   </object>
   <object id="500" x="672" y="224" width="80" height="16">
    <properties>
     <property name="activity" value="eat"/>
     <property name="description" value="ate at a restaurant"/>
-    <property name="energy" value="10"/>
-    <property name="time" value="2"/>
+    <property name="energy" type="int" value="10"/>
+    <property name="time" type="int" value="2"/>
    </properties>
   </object>
   <object id="501" x="352" y="544" width="96" height="16">
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="went to the pub"/>
-    <property name="energy" value="20"/>
-    <property name="time" value="2"/>
+    <property name="energy" type="int" value="20"/>
+    <property name="time" type="int" value="2"/>
    </properties>
   </object>
   <object id="502" x="624" y="1184" width="80" height="16">
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="went to the gym"/>
-    <property name="energy" value="20"/>
-    <property name="time" value="2"/>
+    <property name="energy" type="int" value="20"/>
+    <property name="time" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="503" x="416" y="1504" width="64" height="16">
+   <properties>
+    <property name="activity" value="recreation"/>
+    <property name="description" value="played badminton"/>
+    <property name="energy" type="int" value="30"/>
+    <property name="time" type="int" value="3"/>
    </properties>
   </object>
  </objectgroup>
