@@ -374,7 +374,7 @@ public class Play implements Screen {
         camera.setToOrtho(false, 800, 450);
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
         // Load the map and set up the renderer
-        map = new TmxMapLoader().load("MapRelated/testmap.tmx");
+        map = new TmxMapLoader().load("expandedMap/testmap.tmx");
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
@@ -382,7 +382,7 @@ public class Play implements Screen {
         // Set up the player
         Sprite playerSprite = new Sprite(playerTexture);
         player = new Player(playerSprite, collisionLayer);
-        float startX = 30 * collisionLayer.getTileWidth();
+        float startX = 50 * collisionLayer.getTileWidth();
         float startY = (collisionLayer.getHeight() - 26) * collisionLayer.getTileHeight();
         player.setPosition(startX, startY);
         //Gdx.input.setInputProcessor(player);
