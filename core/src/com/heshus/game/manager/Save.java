@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Json;
  */
 public class Save {
     public static GameData gd;
-    public static final String SCORES = "data/scores.json"
+    public static final String SCORES = "data/scores.json";
 
     /**
      * Save the {@link GameData} into the JSON file. It will try to open the file
