@@ -24,7 +24,7 @@ public class HesHusGame extends Game {
 
 	// New: added public attributes storing the player's name and their eventual score
 	public String playerName;
-	public double score;
+	public int score;
 	/**
 	 *  The font used to write text on the screen with LibGDX's Arial font as
 	 *  default
@@ -47,7 +47,6 @@ public class HesHusGame extends Game {
 		font = new BitmapFont();
 		setDefaultPreferences();
 		// adjusts the window size according to requirements
-		System.out.println(settings.getInteger("screenWidth"));
 		Gdx.graphics.setWindowedMode(settings.getInteger("windowWidth"), settings.getInteger("windowHeight"));
 		// setting to the MainMenuScreen
 		this.setScreen(new MainMenuScreen(this));

@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.entities.Player;
 import com.heshus.game.manager.ActivityManager;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -51,6 +50,7 @@ public class Play implements Screen {
     private float volume = 0.5f;
 
     private Sprite blankTexture, textBubble, dimTexture;
+    private float currentAlpha;
     private Texture TblankTexture, textBubbleTexture;
     private ExtendViewport extendViewport;
 
@@ -141,13 +141,13 @@ public class Play implements Screen {
     @Override
     public void render(float delta) {
         update();
-        draw();
+        draw(delta);
     }
 
     /**
      * Draws the game world, including the map, player, and HUD elements.
      */
-    private void draw(){
+    private void draw(float delta){
         ScreenUtils.clear(0,0,0,1);
         //CAMERA
         int cameraSmoothness = 4; //higher looks smoother! makes it take longer for camera to reach player pos
@@ -219,8 +219,15 @@ public class Play implements Screen {
 
                 //Dims screen when energy lost
                 // New: Modified to include the new game's dayManager attribute
-                dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
-                dimTexture.draw(renderer.getBatch());
+                if (state != GAME_OVER) {
+                    // alpha = 1 - energy left%
+                    currentAlpha = 1 - ((float) game.dayManager.getEnergy() /100);
+                    // Get it as a percentage out of 0.6 (the max alpha of black we're allowing
+                    // as the player can still just see the game)
+                    currentAlpha = currentAlpha * 0.6f;
+                    dimTexture.setAlpha(currentAlpha);
+                    dimTexture.draw(renderer.getBatch());
+                }
 
 
                 /**
@@ -264,8 +271,7 @@ public class Play implements Screen {
                 // Draw the Day icon in the first row
                 for (int i = 0; i < game.dayManager.getDayNumber(); i++) {
                     renderer.getBatch().draw(verticalBarSprite, verticalBarStartX+15 + (5 + iconSpacingX) * i, verticalBarStartY, 5, 20);
-                }
-                //End of main renderer
+                }//End of main renderer
                 renderer.getBatch().end();
                 //Draw sound buttons. (currently can't have buttons get input while other menus have input)
                 stage.act(Gdx.graphics.getDeltaTime());
@@ -274,7 +280,7 @@ public class Play implements Screen {
             case (GAME_PAUSED):
                 //Dims screen when energy lost
                 // New: modified to use the game's dayManager
-                dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
+                dimTexture.setAlpha(currentAlpha);
                 dimTexture.draw(renderer.getBatch());
    
                 //Pause menu
@@ -285,12 +291,20 @@ public class Play implements Screen {
             case (GAME_SETTINGS):
                 //Dims screen when energy lost
                 // New: modified to include game's dayManager
-                dimTexture.setAlpha((float)0.4 + game.dayManager.getEnergy());
+                dimTexture.setAlpha(currentAlpha);
                 dimTexture.draw(renderer.getBatch());
 
                 //Settings menu
                 renderer.getBatch().end();
                 settingsMenu.update();
+                break;
+            case (GAME_OVER):
+                // Fade to 100% alpha
+                currentAlpha += 1f * delta * 0.6f;
+                currentAlpha = Float.min(currentAlpha, 1);
+                dimTexture.setAlpha(currentAlpha);
+                dimTexture.draw(renderer.getBatch());
+                renderer.getBatch().end();
                 break;
         }
 
@@ -324,6 +338,7 @@ public class Play implements Screen {
                 state = GAME_RUNNING;
             }
         }
+
         //logic/physics - anything that moves
         switch (state){
             case (GAME_RUNNING):
@@ -339,6 +354,12 @@ public class Play implements Screen {
                 player.setVelocity(new Vector2(0,0));
                 pauseMenu.update(camera);
                 break;
+            // New: add end game logic
+            case (GAME_OVER):
+                if (currentAlpha == 1) {
+                    game.setScreen(new GameOverScreen(game));
+                }
+                break;
         }
 
         // check walking is happening, by first checking if the player has a velocity 0
@@ -352,15 +373,10 @@ public class Play implements Screen {
             isWalking = false;
         }
 
-        // New: modified to include the dayManager's new functions/methods
-        if(game.dayManager.getGameOver()){
-            game.score = game.dayManager.calculateScore();
-            game.setScreen(new GameOverScreen(game));
-        }
-
         playWalkingSound(Gdx.graphics.getDeltaTime());
         stage.act(Gdx.graphics.getDeltaTime());
     }
+
 
     /**
      * Show is called the first time this object is drawn
@@ -375,15 +391,17 @@ public class Play implements Screen {
         camera.setToOrtho(false, 800, 450);
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
         // Load the map and set up the renderer
+
         map = new TmxMapLoader().load(MAP);
-        collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
+        collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
+
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
 
         // Set up the player
         Sprite playerSprite = new Sprite(playerTexture);
         player = new Player(playerSprite, collisionLayer);
-        float startX = 30 * collisionLayer.getTileWidth();
+        float startX = 50 * collisionLayer.getTileWidth();
         float startY = (collisionLayer.getHeight() - 26) * collisionLayer.getTileHeight();
         player.setPosition(startX, startY);
         //Gdx.input.setInputProcessor(player);
@@ -596,6 +614,7 @@ public class Play implements Screen {
         volumeOnTexture.dispose();
         lowerVolumeTexture.dispose();
     }
+
     // checks when to play the walking sound
     private void playWalkingSound(float delta) {
         if (!isWalking || walkingSoundTimer < WALKING_SOUND_DELAY) {

@@ -81,9 +81,11 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         state = GAME_MAINMENU;
         //Map for background initialisation
+
         map = new TmxMapLoader().load(Play.MAP);
+
         renderer = new OrthogonalTiledMapRenderer(map, 1);
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
         mapPixelWidth = layer.getWidth() * layer.getTileWidth() ; //just calculate the width and height of tilemap
         mapPixelHeight = layer.getHeight() * layer.getTileHeight();
 

@@ -1,7 +1,11 @@
 package com.heshus.game.manager;
 
+import com.heshus.game.engine.Play;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
+
+import static com.heshus.game.engine.Play.GAME_OVER;
 
 /**
  * Manages how the current day is changed and whether the game has finished
@@ -53,12 +57,14 @@ public class DayManager {
         }
         else{
             this.setGameOver(true);
+            endGame();
         }
     }
 
     // New: added function to calculate score once the game has ended
     public int endGame(){
-        //Logic to endgame and save to leaderboard here
+        // Logic to endgame
+        Play.state = GAME_OVER;
         return calculateScore();
     }
 
@@ -72,7 +78,7 @@ public class DayManager {
             return 0;
         }
         double eat = 3 * overallEatCount;
-        double study = 0;
+        double study = 5 * overallStudyCount;
         double rec = 8 * overallRecreationalCount;
 
         eat = applyEatPen(eat);
@@ -88,10 +94,17 @@ public class DayManager {
      * @return The new eating section after applying possible penalties
      */
     private double applyEatPen(double eat){
+        int uniqueTimes = getUniquePlaces("Eating");
+        if(uniqueTimes == 21){
+            return 100;
+        }
         if(overallEatCount == 21){
             eat = eat + 20;
         }
-        return eat;
+        if(uniqueTimes >= 14) {
+            eat += 15;
+        }
+        return Math.min((int)eat,100);
     }
     /**
      * This applies any penalties relating to the player's studying habits
@@ -99,10 +112,16 @@ public class DayManager {
      * @return The new studying section score after applying possible penalties
      */
     private double applyStudyPen(double study){
-        if(overallStudyCount>=8 && overallStudyCount<=10){
-            return study * 1.1;
+        if(overallStudyCount < 7){
+            return study;
         }
-        return study * 0.8;
+        if(overallStudyCount>=8 && overallStudyCount<=11){
+            study += 20;
+        }else{
+            study = study * 0.8;
+        }
+        study = study * (int)(getUniquePlaces("Study")/7);
+        return Math.min((int)study,100);
     }
 
     /**
@@ -111,10 +130,20 @@ public class DayManager {
      * @return The new recreational section score after applying possible penalties
      */
     private double applyRecPen(double rec){
-        if(rec > 9){
+        rec = rec * getUniquePlaces("Rec")/7 + 0.5;
+        if(overallRecreationalCount > 10){
             rec = rec * 0.8;
         }
-        return rec;
+        return Math.min((int)rec,100);
+    }
+    private int getUniquePlaces(String activity){
+        //Returns the number of unique places/times(for eating) a given activity was completed
+        String key = "unique" + activity;
+        int uniquePlaces = 0;
+        for(int i = 1; i < 7; i++) {
+            uniquePlaces += statsByDay.get(i).get(key);
+        }
+        return uniquePlaces;
     }
 
     public void incrementStudyScore(String place){
