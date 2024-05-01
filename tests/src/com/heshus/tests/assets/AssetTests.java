@@ -111,7 +111,7 @@ public class AssetTests {
         assertTrue("Passes when BUTTON is present",
                 Gdx.files.internal(PlayerNameScreen.BUTTON).exists());
     }
-    
+
     @Test
     public void settingsAssets(){
         assertTrue("Passes when CLICK is present",

@@ -95,7 +95,7 @@ public class Play implements Screen {
     private Button volumeOnButton;
 
 
-    public static final String MAP = "MapRelated/testmap.tmx";
+    public static final String MAP = "MapRelated/gamemap.tmx";
     public static final String WHITE_SQUARE = "Icons/WhiteSquare.png";
     public static final String TEXT_BUBBLE = "Icons/textBubble.png";
     public static final String COUNTER_BOX = "Icons/counter-box.png";

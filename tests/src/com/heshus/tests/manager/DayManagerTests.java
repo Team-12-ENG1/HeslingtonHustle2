@@ -23,7 +23,7 @@ public class DayManagerTests {
     @Test
     public void gameOverAfterLastDay(){
         DayManager dm = new DayManager();
-        for(int i = 0; i<7;i++){
+        for(int i = 0; i<6;i++){
             dm.incrementDay();
         }
         assertFalse(dm.getGameOver());
