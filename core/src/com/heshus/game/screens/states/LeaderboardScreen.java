@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.heshus.game.manager.Save;
 import com.heshus.game.manager.Score;
+
+import static com.heshus.game.engine.Play.CLICK;
 import static com.heshus.game.engine.Play.state;
 import static com.heshus.game.manager.Save.gd;
 import java.util.Arrays;
@@ -37,12 +39,17 @@ public class LeaderboardScreen {
     private TextButton backBtn;
     private Score[] highScores;
 
+    public static final String CLICK = "Sounds/switch2.ogg";
+    public static final String FONT = "Fonts/monogram/pixel.fnt";
+    public static final String BUTTON = "UI/button_up.png";
+
+
 
     public LeaderboardScreen(int returnState, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
         this.stage = new Stage(viewport);
         this.returnState = returnState;
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
         // Load the save file
         Save.load();
@@ -50,7 +57,7 @@ public class LeaderboardScreen {
         Arrays.sort(highScores, Collections.reverseOrder());
 
         // Set up font
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(.5F);
         font.setColor(Color.BLACK);
 
@@ -93,7 +100,7 @@ public class LeaderboardScreen {
     }
 
     private void setButtonStyle() {
-        buttonTexture = new Texture("UI/button_up.png");
+        buttonTexture = new Texture(BUTTON);
         buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);

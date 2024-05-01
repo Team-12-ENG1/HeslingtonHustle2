@@ -38,6 +38,11 @@ public class PlayerNameScreen {
     private Label title;
     private TextButton button;
 
+    public static final String SKIN = "UI/uiskin.json";
+    public static final String CLICK = "Sounds/switch2.ogg";
+    public static final String BUTTON = "UI/button_up.png";
+    public static final String FONT = "Fonts/monogram/pixel.fnt";
+
     /**
      * Create a playerNameScreen instance, setting up the table layout also
      * @param game The base game instance
@@ -49,8 +54,8 @@ public class PlayerNameScreen {
         this.stage = new Stage(viewport);
         this.game = game;
 
-        skin = new Skin(Gdx.files.internal("UI/uiskin.json"));
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        skin = new Skin(Gdx.files.internal(SKIN));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
         setupFont(.5f);
         setButtonStyle();
 
@@ -87,7 +92,7 @@ public class PlayerNameScreen {
     }
 
     private void setButtonStyle() {
-        buttonTexture = new Texture("UI/button_up.png");
+        buttonTexture = new Texture(BUTTON);
         TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
@@ -98,7 +103,7 @@ public class PlayerNameScreen {
      * @param scale The scale of the font
      */
     private void setupFont(float scale) {
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(scale);
         font.setColor(Color.BLACK);
     }

@@ -95,6 +95,26 @@ public class Play implements Screen {
     private Button volumeOnButton;
 
 
+    public static final String MAP = "MapRelated/testmap.tmx";
+    public static final String WHITE_SQUARE = "Icons/WhiteSquare.png";
+    public static final String TEXT_BUBBLE = "Icons/textBubble.png";
+    public static final String COUNTER_BOX = "Icons/counter-box.png";
+    public static final String VERTICAL_BAR = "Icons/vertical-bar.png";
+
+    public static final String TILE_1 = "Sounds/tile1.mp3";
+    public static final String TILE_2 = "Sounds/tile2.mp3";
+    public static final String TILE_3 = "Sounds/tile3.mp3";
+    public static final String TILE_4 = "Sounds/tile4.mp3";
+
+    public static final String CLICK = "Sounds/switch2.ogg";
+    public static final String VOLUME_UP = "Icons/increase-volume.png";
+    public static final String VOLUME_DOWN = "Icons/lower-volume.png";
+    public static final String VOLUME_OFF = "Icons/volume-off.png";
+    public static final String VOLUME_ON = "Icons/volume-on.png";
+
+
+
+
 
 
 
@@ -371,8 +391,10 @@ public class Play implements Screen {
         camera.setToOrtho(false, 800, 450);
         extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
         // Load the map and set up the renderer
-        map = new TmxMapLoader().load("MapRelated/gamemap.tmx");
+
+        map = new TmxMapLoader().load(MAP);
         collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
+
 
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
 
@@ -394,11 +416,11 @@ public class Play implements Screen {
         font.getData().setScale(2);
 
         // Set up blank texture (used for energy bar)
-        TblankTexture = new Texture("Icons/WhiteSquare.png");
+        TblankTexture = new Texture(WHITE_SQUARE);
         blankTexture = new Sprite(TblankTexture);
 
         // Set up text bubble
-        textBubbleTexture = new Texture("Icons/textBubble.png");
+        textBubbleTexture = new Texture(TEXT_BUBBLE);
         textBubble = new Sprite(textBubbleTexture);
 
         //setup menu
@@ -408,16 +430,16 @@ public class Play implements Screen {
         //set state
         state = GAME_RUNNING;
         // Set up the counter and counter components
-        counterBoxTexture = new Texture("Icons/counter-box.png");
+        counterBoxTexture = new Texture(COUNTER_BOX);
 
         // set up for the vertical bar that counts the days
-        verticalBarTexture = new Texture("Icons/vertical-bar.png");
+        verticalBarTexture = new Texture(VERTICAL_BAR);
         verticalBarSprite = new Sprite(verticalBarTexture);
         // set up and connect the audio for the steps of the player
-        walkingSound1 = Gdx.audio.newSound(Gdx.files.internal("Sounds/tile1.mp3"));
-        walkingSound2 = Gdx.audio.newSound(Gdx.files.internal("Sounds/tile2.mp3"));
-        walkingSound3 = Gdx.audio.newSound(Gdx.files.internal("Sounds/tile3.mp3"));
-        walkingSound4 = Gdx.audio.newSound(Gdx.files.internal("Sounds/tile4.mp3"));
+        walkingSound1 = Gdx.audio.newSound(Gdx.files.internal(TILE_1));
+        walkingSound2 = Gdx.audio.newSound(Gdx.files.internal(TILE_2));
+        walkingSound3 = Gdx.audio.newSound(Gdx.files.internal(TILE_3));
+        walkingSound4 = Gdx.audio.newSound(Gdx.files.internal(TILE_4));
         // set up and connect the audio for the background music to always loop
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Sounds/background-music.mp3"));
         backgroundMusic.setLooping(true);
@@ -428,7 +450,7 @@ public class Play implements Screen {
         dimTexture.setColor(Color.BLACK);
         dimTexture.setSize(collisionLayer.getWidth() * 16, collisionLayer.getHeight() * 16);
         // set up the click sound for the buttons ui
-        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/switch2.ogg"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
 
 
@@ -450,10 +472,10 @@ public class Play implements Screen {
 
 
         // Prepare textures for buttons
-        increaseVolumeTexture = new Texture(Gdx.files.internal("Icons/increase-volume.png"));
-        lowerVolumeTexture = new Texture(Gdx.files.internal("Icons/lower-volume.png"));
-        volumeOffTexture = new Texture(Gdx.files.internal("Icons/volume-off.png"));
-        volumeOnTexture = new Texture(Gdx.files.internal("Icons/volume-on.png"));
+        increaseVolumeTexture = new Texture(Gdx.files.internal(VOLUME_UP));
+        lowerVolumeTexture = new Texture(Gdx.files.internal(VOLUME_DOWN));
+        volumeOffTexture = new Texture(Gdx.files.internal(VOLUME_OFF));
+        volumeOnTexture = new Texture(Gdx.files.internal(VOLUME_ON));
 
 
 
