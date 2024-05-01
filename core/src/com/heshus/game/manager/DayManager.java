@@ -4,6 +4,7 @@ import com.heshus.game.engine.Play;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Objects;
 
 import static com.heshus.game.engine.Play.GAME_OVER;
 
@@ -23,12 +24,17 @@ public class DayManager {
     private int daysOfNoStudy = 0;
     private boolean fail = false;
 
+    private Dictionary<String,Integer> streakTracker;
+
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
     public DayManager(){
         currentDay = new Day(1, 8, 100);
         statsByDay = new Hashtable<Integer,Dictionary<String,Integer>>();
         gameOver = false;
+        streakTracker = new Hashtable<String,Integer>();
+        //Add streaks that are going to be tracked below:
+        streakTracker.put("Gym Rat", 0);
     }
     /**
      * Controls what happens at the end of the day
@@ -87,17 +93,14 @@ public class DayManager {
 
         return (int) (eat + rec + study)/3;
     }
-    public boolean checkForStreaks(){
+    public boolean checkForBookworm(){
         int count = 0;
         for(int i = 1; i < 7; i++) {
             if(statsByDay.get(i).get("study") > 0){
                 count++;
             }
         }
-        if(count == 7){
-            return true;
-        }
-        return false;
+        return count == 7;
     }
     /**
      * This applies any penalties relating to the player's eating habits
@@ -163,6 +166,10 @@ public class DayManager {
         currentDay.incrementStudyScore(place);
     }
     public void incrementRecreationalScore(String place){
+        if(Objects.equals(place, "gym")){
+            int gymCount = streakTracker.get("Gym Rat");
+            streakTracker.put("Gym Rat", gymCount++);
+        }
         overallRecreationalCount++;
         currentDay.incrementRecreationalScore(place);
     }
