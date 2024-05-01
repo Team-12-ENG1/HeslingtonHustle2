@@ -198,11 +198,11 @@ public class Play implements Screen {
                 //Dims screen when energy lost
                 // New: Modified to include the new game's dayManager attribute
                 if (state != GAME_OVER) {
-                    // alpha = 1 - energy left%
-                    currentAlpha = 1 - ((float) game.dayManager.getEnergy() /100);
-                    // Get it as a percentage out of 0.6 (the max alpha of black we're allowing
-                    // as the player can still just see the game)
-                    currentAlpha = currentAlpha * 0.6f;
+                    // alpha = 1 - time left%
+                    // lower alpha makes game brighter
+                    currentAlpha = (game.dayManager.getTime()-8f) / 24;
+                    System.out.println(currentAlpha);
+                    currentAlpha = Float.min(currentAlpha, 0.6f);
                     dimTexture.setAlpha(currentAlpha);
                     dimTexture.draw(renderer.getBatch());
                 }
