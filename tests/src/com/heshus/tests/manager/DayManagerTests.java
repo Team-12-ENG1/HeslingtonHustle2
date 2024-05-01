@@ -13,9 +13,9 @@ public class DayManagerTests {
     @Test
     public void dayIncrements() {
         DayManager dm = new DayManager();
-        int prevDayNum = dm.currentDay.getDayNumber();
+        int prevDayNum = dm.getDayNumber();
         dm.incrementDay();
-        assertEquals(prevDayNum + 1, dm.currentDay.getDayNumber());
+        assertEquals(prevDayNum + 1, dm.getDayNumber());
 
     }
 

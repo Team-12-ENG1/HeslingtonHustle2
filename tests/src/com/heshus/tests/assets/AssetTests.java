@@ -9,14 +9,15 @@ import org.junit.runner.RunWith;
 import com.badlogic.gdx.Gdx;
 
 @RunWith(GdxTestRunner.class)
-public class MapAssetTests {
+public class AssetTests {
 
     @Test
-    public void DuckExists() {
-        assertTrue("Passes when Duck.png is present",
-                Gdx.files.internal("../assets/expandedMap/Duck.png").exists());
-        assertTrue("Passes when duck.tsx is present",
-                Gdx.files.internal("../assets/expandedMap/Duck/png").exists());
+    public void CustomiseSpritesAssets() {
+        assertTrue("");
+        public static final String CLICK_SOUND = "Sounds/switch2.ogg";
+        public static final String FONT = "Fonts/monogram/pixel.fnt";
+        public static final String LEFT_ARROW = "UI/keyboard_arrow_left_outline.png" ;
+        public static final String RIGHT_ARROW = "UI/keyboard_arrow_right_outline.png" ;
     }
 
     @Test

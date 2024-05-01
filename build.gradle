@@ -78,8 +78,6 @@ project(":tests") {
     apply plugin: "jacoco"
 
     sourceSets.test.java.srcDirs = ["src/"]
-    sourceSets.main.resources.srcDirs = ["../assets"]
-    project.ext.assetsDir = new File("../assets")
 
     dependencies {
 
@@ -100,7 +98,7 @@ project(":tests") {
     }
     jacocoTestReport {
         dependsOn test
-        sourceSets project(':core').sourceSets.main
+
         afterEvaluate {
             classDirectories.setFrom(files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: ['**/*Tests.*', '**/GdxTestRunner.*'])
