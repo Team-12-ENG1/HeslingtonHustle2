@@ -60,6 +60,30 @@ public class ActivityManager {
                 performActivity(activityProperties);
             }
         }
+
+        // New: Dev buttons, (m , . /) perform eat/recreation/study/sleep
+        // Eat
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            decrementEnergy(10);
+            dayManager.incrementEatScore();
+            incrementTime(1);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.COMMA)) {
+            // Recreation
+            decrementEnergy(35);
+            dayManager.incrementRecreationalScore("placeholder");
+            incrementTime(2);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
+            // Study
+            decrementEnergy(40);
+            dayManager.incrementStudyScore("placeholder");
+            incrementTime(4);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
+            // Sleep
+            // if the game is not over the avatar will move to the next day and reset their energy
+            if (!dayManager.getGameOver()) {
+                dayManager.incrementDay();
+            }
+        }
     }
     //We can also use this to tinker with different locations having different effects
     private void performActivity(MapProperties activityProperties) {
