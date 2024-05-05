@@ -2,9 +2,7 @@ package com.heshus.game.manager;
 
 import com.heshus.game.engine.Play;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Objects;
+import java.util.*;
 
 import static com.heshus.game.engine.Play.GAME_OVER;
 
@@ -35,6 +33,7 @@ public class DayManager {
         streakTracker = new Hashtable<String,Integer>();
         //Add streaks that are going to be tracked below:
         streakTracker.put("Gym Rat", 0);
+        streakTracker.put("Ducks",0);
     }
     /**
      * Controls what happens at the end of the day
@@ -72,6 +71,19 @@ public class DayManager {
         // Logic to endgame
         Play.state = GAME_OVER;
         return calculateScore();
+    }
+    public List<String> getStreaks(){
+        List<String> streaks = new ArrayList<String>();
+        if(checkForBookworm()){
+            streaks.add("BookWorm.png");
+        }
+        if(streakTracker.get("Gym Rat") >= 5){
+            streaks.add("GymRat.png");
+        }
+        if(streakTracker.get("Ducks") >= 3){
+            streaks.add(("Ducks.png"));
+        }
+        return streaks;
     }
 
     /**
@@ -166,9 +178,12 @@ public class DayManager {
         currentDay.incrementStudyScore(place);
     }
     public void incrementRecreationalScore(String place){
-        if(Objects.equals(place, "gym")){
-            int gymCount = streakTracker.get("Gym Rat");
-            streakTracker.put("Gym Rat", gymCount++);
+        if(Objects.equals(place, "Gym")){
+            int gymCount = streakTracker.get("GymRat");
+            streakTracker.put("GymRat", gymCount++);
+        } else if (Objects.equals(place, "Ducks")){
+            int duckCount = streakTracker.get("Ducks");
+            streakTracker.put("Ducks",duckCount);
         }
         overallRecreationalCount++;
         currentDay.incrementRecreationalScore(place);
