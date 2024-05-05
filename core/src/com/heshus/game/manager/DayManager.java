@@ -2,8 +2,7 @@ package com.heshus.game.manager;
 
 import com.heshus.game.engine.Play;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.*;
 
 import static com.heshus.game.engine.Play.GAME_OVER;
 
@@ -23,12 +22,18 @@ public class DayManager {
     private int daysOfNoStudy = 0;
     private boolean fail = false;
 
+    private Dictionary<String,Integer> streakTracker;
+
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
     public DayManager(){
         currentDay = new Day(1, 8, 100);
         statsByDay = new Hashtable<Integer,Dictionary<String,Integer>>();
         gameOver = false;
+        streakTracker = new Hashtable<String,Integer>();
+        //Add streaks that are going to be tracked below:
+        streakTracker.put("Gym Rat", 0);
+        streakTracker.put("Ducks",0);
     }
     /**
      * Controls what happens at the end of the day
@@ -67,6 +72,19 @@ public class DayManager {
         Play.state = GAME_OVER;
         return calculateScore();
     }
+    public List<String> getStreaks(){
+        List<String> streaks = new ArrayList<String>();
+        if(checkForBookworm()){
+            streaks.add("BookWorm.png");
+        }
+        if(streakTracker.get("Gym Rat") >= 5){
+            streaks.add("GymRat.png");
+        }
+        if(streakTracker.get("Ducks") >= 3){
+            streaks.add(("Ducks.png"));
+        }
+        return streaks;
+    }
 
     /**
      * A function that calculates the player's final score after finishing the game
@@ -87,7 +105,15 @@ public class DayManager {
 
         return (int) (eat + rec + study)/3;
     }
-
+    public boolean checkForBookworm(){
+        int count = 0;
+        for(int i = 1; i < 7; i++) {
+            if(statsByDay.get(i).get("study") > 0){
+                count++;
+            }
+        }
+        return count == 7;
+    }
     /**
      * This applies any penalties relating to the player's eating habits
      * @param eat The eating section of the score
@@ -152,6 +178,13 @@ public class DayManager {
         currentDay.incrementStudyScore(place);
     }
     public void incrementRecreationalScore(String place){
+        if(Objects.equals(place, "Gym")){
+            int gymCount = streakTracker.get("GymRat");
+            streakTracker.put("GymRat", gymCount++);
+        } else if (Objects.equals(place, "Ducks")){
+            int duckCount = streakTracker.get("Ducks");
+            streakTracker.put("Ducks",duckCount);
+        }
         overallRecreationalCount++;
         currentDay.incrementRecreationalScore(place);
     }
