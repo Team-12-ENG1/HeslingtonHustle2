@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,6 +23,10 @@ import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.manager.DayManager;
 import com.heshus.game.manager.Save;
 import com.heshus.game.manager.Score;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.heshus.game.manager.Save.gd;
 
 public class GameOverScreen implements Screen {
@@ -33,11 +39,16 @@ public class GameOverScreen implements Screen {
     private TextButton menuBtn;
     private Label title;
     private Label scoreLabel;
+
+    private Label streaksLabel;
     private Texture buttonTexture;
     private TextureRegion buttonTextureRegion;
     private TextureRegionDrawable buttonTextureRegionDrawable;
     private TextButton.TextButtonStyle textButtonStyle;
     private Stage stage;
+
+    private List<Texture> streakTextures;
+    private List<Image> streakImages;
 
 
     /**
@@ -49,10 +60,22 @@ public class GameOverScreen implements Screen {
         this.game = game;
         stage = new Stage(new ExtendViewport(400, 225));
 
+        System.out.println("1");
         // New: Create an instance of Score for the player
-        game.score = game.dayManager.endGame();
+        List<String> scoreAndStreaks = game.dayManager.endGame();
+        game.score = Integer.parseInt(scoreAndStreaks.get(0));
+        scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
-
+        System.out.println("2");
+        this.streakTextures = new ArrayList<>();
+        for(String scoreAndStreak : scoreAndStreaks) {
+            streakTextures.add(new Texture("Icons/" + scoreAndStreak));
+        }
+        this.streakImages = new ArrayList<>();
+        for(Texture streakTexture: streakTextures){
+            streakImages.add(new Image(streakTexture));
+        }
+        System.out.println("3");
         // Set up font
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(.5F);
@@ -60,7 +83,11 @@ public class GameOverScreen implements Screen {
 
         title = new Label("Game Over!", new Label.LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("Score: " + playerScore.getScore(), new Label.LabelStyle(font, Color.WHITE));
-
+        if(!streakImages.isEmpty()){
+            streaksLabel = new Label("You achieved some streaks!:", new Label.LabelStyle(font, Color.WHITE));
+        }else{
+            streaksLabel = new Label("You didn't achieve any streaks!", new Label.LabelStyle(font, Color.WHITE));
+        }
         setButtonStyle();
         menuBtn = new TextButton("Main Menu", textButtonStyle);
 
@@ -74,7 +101,14 @@ public class GameOverScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         table.add(title).center();
-        table.row().pad(20, 0, 10, 0);
+        table.row().pad(5, 0, 0, 0);
+        table.add(streaksLabel).center();
+        table.row().pad(5, 0, 5, 0);
+        for(Image streak : streakImages){
+            table.add(streak).size(30,30).colspan(1);
+            table.row().pad(5,0,0,0);
+        }
+        table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
             Save.save();
@@ -82,7 +116,7 @@ public class GameOverScreen implements Screen {
             table.add(highScore).center();
         }
         table.add(scoreLabel).center();
-        table.row().pad(20, 0, 10, 0);
+        table.row().pad(5, 0, 10, 0);
         table.add(menuBtn).center();
 
         menuBtn.addListener(new ChangeListener() {
@@ -135,5 +169,8 @@ public class GameOverScreen implements Screen {
         font.dispose();
         buttonTexture.dispose();
         stage.dispose();
+        for(Texture streak: streakTextures){
+            streak.dispose();
+        }
     }
 }

@@ -67,10 +67,17 @@ public class DayManager {
     }
 
     // New: added function to calculate score once the game has ended
-    public int endGame(){
+    public List<String> endGame(){
         // Logic to endgame
+        List<String> scoreAndStreaks = new ArrayList<String>();
+        Integer score = calculateScore();
+        scoreAndStreaks.add(String.valueOf(score));
+        scoreAndStreaks.addAll(getStreaks());
+       // scoreAndStreaks.add("test.png");
+        //scoreAndStreaks.add("test.png");
+        //scoreAndStreaks.add("test.png");
         Play.state = GAME_OVER;
-        return calculateScore();
+        return scoreAndStreaks;
     }
     public List<String> getStreaks(){
         List<String> streaks = new ArrayList<String>();
