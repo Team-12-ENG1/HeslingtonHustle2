@@ -64,7 +64,7 @@ public class GameOverScreen implements Screen {
         System.out.println("1");
         // New: Create an instance of Score for the player
         this.scoreAndStreaks = game.dayManager.endGame();
-        game.score = Integer.parseInt(scoreAndStreaks.get(0)[0]);
+        game.score = Integer.parseInt(this.scoreAndStreaks.get(0)[0]);
         this.scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
         System.out.println("2");

@@ -82,12 +82,15 @@ public class DayManager {
     public List<String[]> getStreaks(){
         List<String[]> streaks = new ArrayList<String[]>();
         if(checkForBookworm()){
+            System.out.println("Bookworm achieved");
             streaks.add(new String[] {"Bookworm","BookWorm.png"});
         }
         if(streakTracker.get("Gym Rat") >= 5){
+            System.out.println("Gym Rat");
             streaks.add(new String[]{"Gym Rat", "GymRat.png"});
         }
         if(streakTracker.get("Ducks") >= 3){
+            System.out.println("Ducks");
             streaks.add(new String[] {"Duck Duck Go!" , "Ducks.png"});
         }
         return streaks;
