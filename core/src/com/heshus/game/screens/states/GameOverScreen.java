@@ -88,7 +88,6 @@ public class GameOverScreen implements Screen {
         }else{
             streaksLabel = new Label("You didn't achieve any streaks!", new Label.LabelStyle(font, Color.WHITE));
         }
-        streaksLabel = new Label("You achieved some steaks!:", new Label.LabelStyle(font, Color.WHITE));
         setButtonStyle();
         menuBtn = new TextButton("Main Menu", textButtonStyle);
 
@@ -102,14 +101,14 @@ public class GameOverScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         table.add(title).center();
-        table.row().pad(20, 0, 5, 0);
+        table.row().pad(5, 0, 0, 0);
         table.add(streaksLabel).center();
-        table.row().pad(20, 0, 5, 0);
+        table.row().pad(5, 0, 5, 0);
         for(Image streak : streakImages){
-            table.add(streak).size(30,30).center().padRight(3);
-            System.out.println("5");
+            table.add(streak).size(30,30).colspan(1);
+            table.row().pad(5,0,0,0);
         }
-        table.row().pad(20, 0, 5, 0);
+        table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
             Save.save();
@@ -117,7 +116,7 @@ public class GameOverScreen implements Screen {
             table.add(highScore).center();
         }
         table.add(scoreLabel).center();
-        table.row().pad(20, 0, 5, 0);
+        table.row().pad(5, 0, 10, 0);
         table.add(menuBtn).center();
 
         menuBtn.addListener(new ChangeListener() {

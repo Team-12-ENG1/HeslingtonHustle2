@@ -73,9 +73,9 @@ public class DayManager {
         Integer score = calculateScore();
         scoreAndStreaks.add(String.valueOf(score));
         scoreAndStreaks.addAll(getStreaks());
-        scoreAndStreaks.add("test.png");
-        scoreAndStreaks.add("test.png");
-        scoreAndStreaks.add("test.png");
+       // scoreAndStreaks.add("test.png");
+        //scoreAndStreaks.add("test.png");
+        //scoreAndStreaks.add("test.png");
         Play.state = GAME_OVER;
         return scoreAndStreaks;
     }
