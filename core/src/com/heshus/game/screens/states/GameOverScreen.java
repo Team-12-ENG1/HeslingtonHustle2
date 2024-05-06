@@ -49,6 +49,7 @@ public class GameOverScreen implements Screen {
 
     private List<Texture> streakTextures;
     private List<Image> streakImages;
+    private List<String[]> scoreAndStreaks;
 
 
     /**
@@ -62,14 +63,16 @@ public class GameOverScreen implements Screen {
 
         System.out.println("1");
         // New: Create an instance of Score for the player
-        List<String> scoreAndStreaks = game.dayManager.endGame();
-        game.score = Integer.parseInt(scoreAndStreaks.get(0));
-        scoreAndStreaks.remove(0);
+        this.scoreAndStreaks = game.dayManager.endGame();
+        game.score = Integer.parseInt(scoreAndStreaks.get(0)[0]);
+        this.scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
         System.out.println("2");
         this.streakTextures = new ArrayList<>();
-        for(String scoreAndStreak : scoreAndStreaks) {
-            streakTextures.add(new Texture("Icons/" + scoreAndStreak));
+        for(String[] scoreAndStreak : this.scoreAndStreaks) {
+            System.out.println(scoreAndStreak[0]);
+            System.out.println(scoreAndStreak[1]);
+            streakTextures.add(new Texture("Icons/" + scoreAndStreak[1]));
         }
         this.streakImages = new ArrayList<>();
         for(Texture streakTexture: streakTextures){
@@ -114,9 +117,21 @@ public class GameOverScreen implements Screen {
             Save.save();
             Label highScore = new Label("High Score!", new Label.LabelStyle(font, Color.WHITE));
             table.add(highScore).center();
+            table.row().pad(5, 0, 5, 0);
         }
         table.add(scoreLabel).center();
-        table.row().pad(5, 0, 10, 0);
+        table.row().pad(5, 0, 5, 0);
+
+        // Add Streaks
+        table.add(streaksLabel).center();
+        if (!streakImages.isEmpty()) {
+            for (int i = 0; i < streakImages.size(); i++) {
+                table.row().pad(5,0,5,0);
+                table.add(streakImages.get(i)).size(30,30);
+                table.add(this.scoreAndStreaks.get(i)[0]).center();
+            }
+        }
+        table.row().pad(5,0,5,0);
         table.add(menuBtn).center();
 
         menuBtn.addListener(new ChangeListener() {

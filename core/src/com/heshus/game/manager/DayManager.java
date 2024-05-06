@@ -67,11 +67,11 @@ public class DayManager {
     }
 
     // New: added function to calculate score once the game has ended
-    public List<String> endGame(){
+    public List<String[]> endGame(){
         // Logic to endgame
-        List<String> scoreAndStreaks = new ArrayList<String>();
+        List<String[]> scoreAndStreaks = new ArrayList<String[]>();
         Integer score = calculateScore();
-        scoreAndStreaks.add(String.valueOf(score));
+        scoreAndStreaks.add(new String[] {String.valueOf(score)});
         scoreAndStreaks.addAll(getStreaks());
        // scoreAndStreaks.add("test.png");
         //scoreAndStreaks.add("test.png");
@@ -79,16 +79,16 @@ public class DayManager {
         Play.state = GAME_OVER;
         return scoreAndStreaks;
     }
-    public List<String> getStreaks(){
-        List<String> streaks = new ArrayList<String>();
+    public List<String[]> getStreaks(){
+        List<String[]> streaks = new ArrayList<String[]>();
         if(checkForBookworm()){
-            streaks.add("BookWorm.png");
+            streaks.add(new String[] {"Bookworm","BookWorm.png"});
         }
         if(streakTracker.get("Gym Rat") >= 5){
-            streaks.add("GymRat.png");
+            streaks.add(new String[]{"Gym Rat", "GymRat.png"});
         }
         if(streakTracker.get("Ducks") >= 3){
-            streaks.add(("Ducks.png"));
+            streaks.add(new String[] {"Duck Duck Go!" , "Ducks.png"});
         }
         return streaks;
     }
