@@ -44,7 +44,8 @@ public class GameOverScreen implements Screen {
     private TextButton.TextButtonStyle textButtonStyle;
     private Stage stage;
 
-    private List<Image> streaks;
+    private List<Texture> streakTextures;
+    private List<Image> streakImages;
 
 
     /**
@@ -63,9 +64,12 @@ public class GameOverScreen implements Screen {
         scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
         System.out.println("2");
-        this.streaks = new ArrayList<>();
+        this.streakTextures= new ArrayList<>();
         for(String scoreAndStreak : scoreAndStreaks) {
-            streaks.add(new Image(new Texture("Icons/" + scoreAndStreak)));
+            streakTextures.add(new Texture("Icons/" + scoreAndStreak));
+        }
+        for(Texture streakTexture: streakTextures){
+            streakImages.add(new Image(streakTexture));
         }
         System.out.println("3");
         // Set up font
@@ -90,8 +94,8 @@ public class GameOverScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         table.add(title).center();
         table.row().pad(20, 0, 10, 0);
-        for(Image streak : streaks){
-            table.add(streak).size(20,20);
+        for(Image streak : streakImages){
+            table.add(streak).size(30,30);
             System.out.println("5");
         }
         table.row().pad(20, 0, 10, 0);
@@ -155,5 +159,8 @@ public class GameOverScreen implements Screen {
         font.dispose();
         buttonTexture.dispose();
         stage.dispose();
+        for(Texture streak: streakTextures){
+            streak.dispose();
+        }
     }
 }
