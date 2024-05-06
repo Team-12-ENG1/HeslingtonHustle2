@@ -7,7 +7,7 @@
  <tileset firstgid="982" name="ActivityBanners" tilewidth="237" tileheight="78" tilecount="12" columns="0" objectalignment="topleft" tilerendersize="grid">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0" x="0" y="0" width="215" height="32">
-   <image width="215" height="36" source="labels/accommodation.png"/>
+   <image width="143" height="24" source="labels/accommodation.png"/>
   </tile>
   <tile id="1">
    <image width="97" height="33" source="labels/arcade.png"/>
@@ -97,7 +97,7 @@
    <properties>
     <property name="activity" value="recreation"/>
     <property name="description" value="worked out"/>
-    <property name="energy" type="int" value="10"/>
+    <property name="energy" type="int" value="35"/>
     <property name="time" type="int" value="2"/>
    </properties>
   </object>
