@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,6 +22,10 @@ import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.manager.DayManager;
 import com.heshus.game.manager.Save;
 import com.heshus.game.manager.Score;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.heshus.game.manager.Save.gd;
 
 public class GameOverScreen implements Screen {
@@ -39,6 +44,8 @@ public class GameOverScreen implements Screen {
     private TextButton.TextButtonStyle textButtonStyle;
     private Stage stage;
 
+    private List<Image> streaks;
+
 
     /**
      * Create an instance of the game over screen
@@ -49,10 +56,18 @@ public class GameOverScreen implements Screen {
         this.game = game;
         stage = new Stage(new ExtendViewport(400, 225));
 
+        System.out.println("1");
         // New: Create an instance of Score for the player
-        game.score = game.dayManager.endGame();
+        List<String> scoreAndStreaks = game.dayManager.endGame();
+        game.score = Integer.parseInt(scoreAndStreaks.get(0));
+        scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
-
+        System.out.println("2");
+        this.streaks = new ArrayList<>();
+        for(String scoreAndStreak : scoreAndStreaks) {
+            streaks.add(new Image(new Texture("Icons/" + scoreAndStreak)));
+        }
+        System.out.println("3");
         // Set up font
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(.5F);
@@ -74,6 +89,11 @@ public class GameOverScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         table.add(title).center();
+        table.row().pad(20, 0, 10, 0);
+        for(Image streak : streaks){
+            table.add(streak).size(20,20);
+            System.out.println("5");
+        }
         table.row().pad(20, 0, 10, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
