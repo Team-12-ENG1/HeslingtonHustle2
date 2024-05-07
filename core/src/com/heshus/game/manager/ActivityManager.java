@@ -70,12 +70,12 @@ public class ActivityManager {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.COMMA)) {
             // Recreation
             decrementEnergy(35);
-            dayManager.incrementRecreationalScore("placeholder");
+            dayManager.incrementRecreationalScore("Gym");
             incrementTime(2);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
             // Study
             decrementEnergy(40);
-            dayManager.incrementStudyScore("placeholder");
+            dayManager.incrementStudyScore("Library");
             incrementTime(4);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
             // Sleep
