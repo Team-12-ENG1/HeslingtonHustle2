@@ -221,7 +221,6 @@ public class Play implements Screen {
                     // alpha = 1 - time left%
                     // lower alpha makes game brighter
                     currentAlpha = (game.dayManager.getTime()-8f) / 24;
-                    System.out.println(currentAlpha);
                     currentAlpha = Float.min(currentAlpha, 0.6f);
                     dimTexture.setAlpha(currentAlpha);
                     dimTexture.draw(renderer.getBatch());
@@ -556,10 +555,6 @@ public class Play implements Screen {
         stage.addActor(lowerVolumeButton);
         stage.addActor(volumeOffButton);
         stage.addActor(volumeOnButton);
-
-
-
-
     }
     @Override
     public void hide() {

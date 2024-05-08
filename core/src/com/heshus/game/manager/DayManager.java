@@ -32,8 +32,9 @@ public class DayManager {
         gameOver = false;
         streakTracker = new Hashtable<String,Integer>();
         //Add streaks that are going to be tracked below:
-        streakTracker.put("Gym Rat", 0);
+        streakTracker.put("GymRat", 0);
         streakTracker.put("Ducks",0);
+        streakTracker.put("Bookworm", 0);
     }
     /**
      * Controls what happens at the end of the day
@@ -67,28 +68,25 @@ public class DayManager {
     }
 
     // New: added function to calculate score once the game has ended
-    public List<String> endGame(){
+    public List<String[]> endGame(){
         // Logic to endgame
-        List<String> scoreAndStreaks = new ArrayList<String>();
+        List<String[]> scoreAndStreaks = new ArrayList<String[]>();
         Integer score = calculateScore();
-        scoreAndStreaks.add(String.valueOf(score));
+        scoreAndStreaks.add(new String[] {String.valueOf(score)});
         scoreAndStreaks.addAll(getStreaks());
-       // scoreAndStreaks.add("test.png");
-        //scoreAndStreaks.add("test.png");
-        //scoreAndStreaks.add("test.png");
         Play.state = GAME_OVER;
         return scoreAndStreaks;
     }
-    public List<String> getStreaks(){
-        List<String> streaks = new ArrayList<String>();
-        if(checkForBookworm()){
-            streaks.add("BookWorm.png");
+    public List<String[]> getStreaks(){
+        List<String[]> streaks = new ArrayList<String[]>();
+        if(this.streakTracker.get("Bookworm") >= 4){
+            streaks.add(new String[] {"Bookworm","BookWorm.png"});
         }
-        if(streakTracker.get("Gym Rat") >= 5){
-            streaks.add("GymRat.png");
+        if(this.streakTracker.get("GymRat") >= 5){
+            streaks.add(new String[]{"Gym Rat", "GymRat.png"});
         }
-        if(streakTracker.get("Ducks") >= 3){
-            streaks.add(("Ducks.png"));
+        if(this.streakTracker.get("Ducks") >= 3){
+            streaks.add(new String[] {"Duck Duck Go!" , "Ducks.png"});
         }
         return streaks;
     }
@@ -111,15 +109,6 @@ public class DayManager {
         rec = applyRecPen(rec);
 
         return (int) (eat + rec + study)/3;
-    }
-    public boolean checkForBookworm(){
-        int count = 0;
-        for(int i = 1; i < 7; i++) {
-            if(statsByDay.get(i).get("study") > 0){
-                count++;
-            }
-        }
-        return count == 7;
     }
     /**
      * This applies any penalties relating to the player's eating habits
@@ -151,7 +140,7 @@ public class DayManager {
         if(overallStudyCount>=8 && overallStudyCount<=11){
             study += 20;
         }else{
-            study = study * 0.8;
+            study *= 0.7;
         }
         study = study * (int)(getUniquePlaces("Study")/7);
         return Math.min((int)study,100);
@@ -180,22 +169,27 @@ public class DayManager {
     }
 
     public void incrementStudyScore(String place){
-    // New: Added functions to increment the player's score for each category
+        // New: Added functions to increment the player's score for each category
         overallStudyCount++;
+        if (place.equals("library")) {
+            int bookWormCount = this.streakTracker.get("Bookworm");
+            this.streakTracker.put("Bookworm", bookWormCount+1);
+        }
         currentDay.incrementStudyScore(place);
     }
+
     public void incrementRecreationalScore(String place){
-        if(Objects.equals(place, "Gym")){
-            int gymCount = streakTracker.get("GymRat");
-            streakTracker.put("GymRat", gymCount++);
-        } else if (Objects.equals(place, "Ducks")){
-            int duckCount = streakTracker.get("Ducks");
-            streakTracker.put("Ducks",duckCount);
+        if(Objects.equals(place, "gym")){
+            int gymCount = this.streakTracker.get("GymRat");
+            this.streakTracker.put("GymRat", gymCount+1);
+        } else if (Objects.equals(place, "ducks")){
+            int duckCount = this.streakTracker.get("Ducks");
+            this.streakTracker.put("Ducks",duckCount+1);
         }
         overallRecreationalCount++;
         currentDay.incrementRecreationalScore(place);
     }
-    public void incrementEatScore(){
+    public void incrementEatScore(String place){
         overallEatCount++;
         currentDay.incrementEatScore();
     }

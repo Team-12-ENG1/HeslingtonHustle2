@@ -49,6 +49,7 @@ public class GameOverScreen implements Screen {
 
     private List<Texture> streakTextures;
     private List<Image> streakImages;
+    private List<String[]> scoreAndStreaks;
 
 
     /**
@@ -59,23 +60,19 @@ public class GameOverScreen implements Screen {
     public GameOverScreen(final HesHusGame game) {
         this.game = game;
         stage = new Stage(new ExtendViewport(400, 225));
-
-        System.out.println("1");
         // New: Create an instance of Score for the player
-        List<String> scoreAndStreaks = game.dayManager.endGame();
-        game.score = Integer.parseInt(scoreAndStreaks.get(0));
-        scoreAndStreaks.remove(0);
+        this.scoreAndStreaks = game.dayManager.endGame();
+        game.score = Integer.parseInt(this.scoreAndStreaks.get(0)[0]);
+        this.scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
-        System.out.println("2");
         this.streakTextures = new ArrayList<>();
-        for(String scoreAndStreak : scoreAndStreaks) {
-            streakTextures.add(new Texture("Icons/" + scoreAndStreak));
+        for(String[] scoreAndStreak : this.scoreAndStreaks) {
+            streakTextures.add(new Texture("Icons/" + scoreAndStreak[1]));
         }
         this.streakImages = new ArrayList<>();
         for(Texture streakTexture: streakTextures){
             streakImages.add(new Image(streakTexture));
         }
-        System.out.println("3");
         // Set up font
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(.5F);
@@ -84,7 +81,7 @@ public class GameOverScreen implements Screen {
         title = new Label("Game Over!", new Label.LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("Score: " + playerScore.getScore(), new Label.LabelStyle(font, Color.WHITE));
         if(!streakImages.isEmpty()){
-            streaksLabel = new Label("You achieved some streaks!:", new Label.LabelStyle(font, Color.WHITE));
+            streaksLabel = new Label("You achieved some streaks!", new Label.LabelStyle(font, Color.WHITE));
         }else{
             streaksLabel = new Label("You didn't achieve any streaks!", new Label.LabelStyle(font, Color.WHITE));
         }
@@ -100,24 +97,29 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        table.add(title).center();
-        table.row().pad(5, 0, 0, 0);
-        table.add(streaksLabel).center();
-        table.row().pad(5, 0, 5, 0);
-        for(Image streak : streakImages){
-            table.add(streak).size(30,30).colspan(1);
-            table.row().pad(5,0,0,0);
-        }
+        table.add(title).center().colspan(2);
         table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
             Save.save();
             Label highScore = new Label("High Score!", new Label.LabelStyle(font, Color.WHITE));
-            table.add(highScore).center();
+            table.add(highScore).center().colspan(2);
+            table.row().pad(5, 0, 0, 0);
         }
-        table.add(scoreLabel).center();
-        table.row().pad(5, 0, 10, 0);
-        table.add(menuBtn).center();
+        table.add(scoreLabel).center().colspan(2);
+        table.row().pad(5, 0, 0, 0);
+
+        // Add Streaks
+        table.add(streaksLabel).center().colspan(2);
+        if (!streakImages.isEmpty()) {
+            for (int i = 0; i < streakImages.size(); i++) {
+                table.row().pad(5,0,0,0);
+                table.add(streakImages.get(i)).size(30,30).right();
+                table.add(new Label(this.scoreAndStreaks.get(i)[0], new Label.LabelStyle(font, Color.WHITE))).center();
+            }
+        }
+        table.row().pad(5,0,0,0);
+        table.add(menuBtn).center().colspan(2);
 
         menuBtn.addListener(new ChangeListener() {
             @Override
