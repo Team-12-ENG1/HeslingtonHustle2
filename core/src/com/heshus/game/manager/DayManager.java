@@ -32,7 +32,7 @@ public class DayManager {
         gameOver = false;
         streakTracker = new Hashtable<String,Integer>();
         //Add streaks that are going to be tracked below:
-        streakTracker.put("Gym Rat", 0);
+        streakTracker.put("GymRat", 0);
         streakTracker.put("Ducks",0);
     }
     /**
@@ -82,7 +82,7 @@ public class DayManager {
             System.out.println("Bookworm achieved");
             streaks.add(new String[] {"Bookworm","BookWorm.png"});
         }
-        if(streakTracker.get("Gym Rat") >= 5){
+        if(streakTracker.get("GymRat") >= 5){
             System.out.println("Gym Rat");
             streaks.add(new String[]{"Gym Rat", "GymRat.png"});
         }
@@ -115,7 +115,7 @@ public class DayManager {
     public boolean checkForBookworm(){
         int count = 0;
         for(int i = 1; i < 7; i++) {
-            if(statsByDay.get(i).get("study") > 0){
+            if(statsByDay.get(i).get("Study") > 0){
                 count++;
             }
         }
