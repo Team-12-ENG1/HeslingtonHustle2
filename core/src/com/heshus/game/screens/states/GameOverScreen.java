@@ -67,8 +67,6 @@ public class GameOverScreen implements Screen {
         playerScore = new Score(game.playerName, game.score);
         this.streakTextures = new ArrayList<>();
         for(String[] scoreAndStreak : this.scoreAndStreaks) {
-            System.out.println(scoreAndStreak[0]);
-            System.out.println(scoreAndStreak[1]);
             streakTextures.add(new Texture("Icons/" + scoreAndStreak[1]));
         }
         this.streakImages = new ArrayList<>();
@@ -83,7 +81,7 @@ public class GameOverScreen implements Screen {
         title = new Label("Game Over!", new Label.LabelStyle(font, Color.WHITE));
         scoreLabel = new Label("Score: " + playerScore.getScore(), new Label.LabelStyle(font, Color.WHITE));
         if(!streakImages.isEmpty()){
-            streaksLabel = new Label("You achieved some streaks!:", new Label.LabelStyle(font, Color.WHITE));
+            streaksLabel = new Label("You achieved some streaks!", new Label.LabelStyle(font, Color.WHITE));
         }else{
             streaksLabel = new Label("You didn't achieve any streaks!", new Label.LabelStyle(font, Color.WHITE));
         }
@@ -99,36 +97,29 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        table.add(title).center();
-        table.row().pad(5, 0, 0, 0);
-        table.add(streaksLabel).center();
-        table.row().pad(5, 0, 5, 0);
-        for(Image streak : streakImages){
-            table.add(streak).size(30,30).colspan(1);
-            table.row().pad(5,0,0,0);
-        }
+        table.add(title).center().colspan(2);
         table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
             Save.save();
             Label highScore = new Label("High Score!", new Label.LabelStyle(font, Color.WHITE));
-            table.add(highScore).center();
-            table.row().pad(5, 0, 5, 0);
+            table.add(highScore).center().colspan(2);
+            table.row().pad(5, 0, 0, 0);
         }
-        table.add(scoreLabel).center();
-        table.row().pad(5, 0, 5, 0);
+        table.add(scoreLabel).center().colspan(2);
+        table.row().pad(5, 0, 0, 0);
 
         // Add Streaks
-        table.add(streaksLabel).center();
+        table.add(streaksLabel).center().colspan(2);
         if (!streakImages.isEmpty()) {
             for (int i = 0; i < streakImages.size(); i++) {
-                table.row().pad(5,0,5,0);
-                table.add(streakImages.get(i)).size(30,30);
-                table.add(this.scoreAndStreaks.get(i)[0]).center();
+                table.row().pad(5,0,0,0);
+                table.add(streakImages.get(i)).size(30,30).right();
+                table.add(new Label(this.scoreAndStreaks.get(i)[0], new Label.LabelStyle(font, Color.WHITE))).center();
             }
         }
-        table.row().pad(5,0,5,0);
-        table.add(menuBtn).center();
+        table.row().pad(5,0,0,0);
+        table.add(menuBtn).center().colspan(2);
 
         menuBtn.addListener(new ChangeListener() {
             @Override

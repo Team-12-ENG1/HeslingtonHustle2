@@ -66,17 +66,17 @@ public class ActivityManager {
         // Eat
         if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             decrementEnergy(10);
-            dayManager.incrementEatScore();
+            dayManager.incrementEatScore("cafe");
             incrementTime(1);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.COMMA)) {
             // Recreation
             decrementEnergy(35);
-            dayManager.incrementRecreationalScore((String) activityProperties.get("place"));
+            dayManager.incrementRecreationalScore("ducks");
             incrementTime(2);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
             // Study
             decrementEnergy(40);
-            dayManager.incrementStudyScore((String) activityProperties.get("place"));
+            dayManager.incrementStudyScore("library");
             incrementTime(4);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
             // Sleep
@@ -94,7 +94,7 @@ public class ActivityManager {
             incrementTime(activityProperties.get("time", int.class));
             switch (activityProperties.get("activity", String.class)) {
                 case "eat":
-                    dayManager.incrementEatScore();
+                    dayManager.incrementEatScore((String) activityProperties.get("place"));
                     break;
                 case "study":
                     dayManager.incrementStudyScore((String) activityProperties.get("place")); //Pass in description tile attribute when thats implemented
