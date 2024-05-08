@@ -556,10 +556,6 @@ public class Play implements Screen {
         stage.addActor(lowerVolumeButton);
         stage.addActor(volumeOffButton);
         stage.addActor(volumeOnButton);
-
-
-
-
     }
     @Override
     public void hide() {

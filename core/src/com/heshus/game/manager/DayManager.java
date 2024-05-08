@@ -73,9 +73,6 @@ public class DayManager {
         Integer score = calculateScore();
         scoreAndStreaks.add(new String[] {String.valueOf(score)});
         scoreAndStreaks.addAll(getStreaks());
-       // scoreAndStreaks.add("test.png");
-        //scoreAndStreaks.add("test.png");
-        //scoreAndStreaks.add("test.png");
         Play.state = GAME_OVER;
         return scoreAndStreaks;
     }
@@ -187,13 +184,14 @@ public class DayManager {
         overallStudyCount++;
         currentDay.incrementStudyScore(place);
     }
+
     public void incrementRecreationalScore(String place){
-        if(Objects.equals(place, "Gym")){
+        if(Objects.equals(place, "gym")){
             int gymCount = streakTracker.get("GymRat");
             streakTracker.put("GymRat", gymCount++);
-        } else if (Objects.equals(place, "Ducks")){
+        } else if (Objects.equals(place, "ducks")){
             int duckCount = streakTracker.get("Ducks");
-            streakTracker.put("Ducks",duckCount);
+            streakTracker.put("Ducks",duckCount++);
         }
         overallRecreationalCount++;
         currentDay.incrementRecreationalScore(place);

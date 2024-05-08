@@ -60,14 +60,11 @@ public class GameOverScreen implements Screen {
     public GameOverScreen(final HesHusGame game) {
         this.game = game;
         stage = new Stage(new ExtendViewport(400, 225));
-
-        System.out.println("1");
         // New: Create an instance of Score for the player
         this.scoreAndStreaks = game.dayManager.endGame();
         game.score = Integer.parseInt(this.scoreAndStreaks.get(0)[0]);
         this.scoreAndStreaks.remove(0);
         playerScore = new Score(game.playerName, game.score);
-        System.out.println("2");
         this.streakTextures = new ArrayList<>();
         for(String[] scoreAndStreak : this.scoreAndStreaks) {
             System.out.println(scoreAndStreak[0]);
@@ -78,7 +75,6 @@ public class GameOverScreen implements Screen {
         for(Texture streakTexture: streakTextures){
             streakImages.add(new Image(streakTexture));
         }
-        System.out.println("3");
         // Set up font
         font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
         font.getData().setScale(.5F);
