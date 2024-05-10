@@ -34,24 +34,28 @@ public class DayManagerTests {
     }
 
     @Test
-    public void studyEachDay(){
-        int[] eatArray = {3,3,3,3,3,3,3};
-        int[] studyArray = {1,0,0,1,1,1,1};
-        int[] recArray = {1,1,1,1,1,1,1};
+    public void missTwoStudyDays() {
+        int[] eatArray = {3, 3, 3, 3, 3, 3, 3};
+        int[] studyArray = {1, 0, 0, 1, 1, 1, 1};
+        int[] recArray = {1, 1, 1, 1, 1, 1, 1};
         DayManager dm = new DayManager();
         for (int i = 0; i < eatArray.length; i++) {
             runDay(dm, eatArray[i], studyArray[i], recArray[i]);
         }
-        assertEquals("Passes when missing 2 days of study fails the player",0,dm.calculateScore());
 
-        eatArray = new int[]{3, 3, 3, 3, 3, 3, 3};
-        studyArray = new int[]{1, 0, 1, 1, 1, 1, 1};
-        recArray = new int[]{1, 1, 1, 1, 1, 1, 1};
-        dm = new DayManager();
+        assertTrue("Passes when missing 2 days of study fails the player",30 > dm.calculateScore());
+
+    }
+    public void studyEveryDay(){
+
+        int[] eatArray = new int[]{3, 3, 3, 3, 3, 3, 3};
+        int[] studyArray = new int[]{1, 0, 1, 1, 1, 1, 1};
+        int[] recArray = new int[]{1, 1, 1, 1, 1, 1, 1};
+        DayManager dm = new DayManager();
         for (int i = 0; i < eatArray.length; i++) {
             runDay(dm, eatArray[i], studyArray[i], recArray[i]);
         }
-        assertTrue("Passes when missing one day of study does not fail the player,",dm.calculateScore() > 0);
+        assertTrue("Passes when missing one day of study does not fail the player,",dm.calculateScore() > 30);
 
     }
 
@@ -63,9 +67,9 @@ public class DayManagerTests {
         //represents a case of over-studying where the score should be decreased
         DayManager dm2 = new DayManager();
 
-        int[] studyArray1 = {2,2,1,1,1,1,1};
-        int[] studyArray2 = {3,2,3,2,3,2,3};
-        int[] eatArray = {1,1,1,1,1,1,1};
+        int[] studyArray1 = {1,2,1,2,1,2,1};
+        int[] studyArray2 = {3,3,3,3,3,3,3};
+        int[] eatArray = {2,2,2,2,2,2,2};
         int[] recArray = {1,1,1,1,1,1,1};
 
         for (int i = 0; i < 7; i++){

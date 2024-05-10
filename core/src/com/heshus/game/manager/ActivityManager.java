@@ -1,13 +1,14 @@
 package com.heshus.game.manager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
 import com.heshus.game.entities.Player;
@@ -46,23 +47,20 @@ public class ActivityManager {
     /**
      * Checks whether and which activity is performed based on location of player
      */
-    public void checkActivity() {
-        // based on the x, y coordinates of the player
-        float avatarX = player.getX();
-        float avatarY = player.getY();
+    public void checkActivity(Rectangle playerBoundRect, boolean justPressedE, float x, float y) {
 
         // Check all activities
         MapObjects objects = layer.getObjects();
         // In activity area and they press E
         for (RectangleMapObject rectActivity : objects.getByType(RectangleMapObject.class)) {
-            if (player.getBoundingRectangle().overlaps(rectActivity.getRectangle()) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            if (playerBoundRect.overlaps(rectActivity.getRectangle()) && justPressedE) {
                 MapProperties activityProperties = rectActivity.getProperties();
-                performActivity(activityProperties);
+                performActivity(activityProperties, x, y);
             }
         }
     }
     //We can also use this to tinker with different locations having different effects
-    private void performActivity(MapProperties activityProperties) {
+    private void performActivity(MapProperties activityProperties, float x, float y) {
         String holdText = "";
         if(validActivity(activityProperties)) {
             decrementEnergy(activityProperties.get("energy", int.class));
@@ -91,7 +89,7 @@ public class ActivityManager {
             holdText = "It's getting late, you should go to bed";
         } else { holdText = "You should get some sleep"; }
         layout.setText(Play.getFont(), holdText);
-        setText(holdText, Math.round(player.getX() / 16) * 16 + 8 - (layout.width / 2), Math.round(player.getY() / 16) * 16);
+        setText(holdText, Math.round(x / 16) * 16 + 8 - (layout.width / 2), Math.round(y / 16) * 16);
     }
 
     private boolean validActivity(MapProperties activityProperties) {

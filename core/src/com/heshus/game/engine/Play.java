@@ -183,7 +183,11 @@ public class Play implements Screen {
 
         switch (state) {
             case(GAME_RUNNING):
-                activityManager.checkActivity();
+                activityManager.checkActivity(
+                        player.getBoundingRectangle(),
+                        Gdx.input.isKeyJustPressed(Input.Keys.E),
+                        player.getX(), player.getY()
+                );
                 //HUD
                 //Drawing energy bar, can be replaced for a standard energy bar with comments
                 renderer.getBatch().setColor(Color.GRAY);
@@ -686,6 +690,10 @@ public class Play implements Screen {
      * @return games value of font
      */
     public static BitmapFont getFont(){
+        if (font == null){
+            font = new BitmapFont();
+            font.getData().setScale(2);
+        }
         return font;
     }
 
