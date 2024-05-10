@@ -192,10 +192,10 @@ public class Play implements Screen {
                 //Drawing energy bar, can be replaced for a standard energy bar with comments
                 renderer.getBatch().setColor(Color.GRAY);
 
-                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth, 14);
+                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth, 20);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 3, (camera.position.y - camera.viewportHeight/2) + 3, 204, 44);
                 renderer.getBatch().setColor(Color.YELLOW);
-                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) game.dayManager.getEnergy() /100), 12);
+                renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2), (camera.position.y - camera.viewportHeight/2), camera.viewportWidth * ((float) game.dayManager.getEnergy() /100), 20);
                 //renderer.getBatch().draw(blankTexture, (camera.position.x - camera.viewportWidth/2) + 5, (camera.position.y - camera.viewportHeight/2) + 5, 200 * ((float) DayManager.currentDay.getEnergy() /100), 40);
 
                 renderer.getBatch().setColor(Color.WHITE);
@@ -217,18 +217,15 @@ public class Play implements Screen {
                         bubbleTimer -= bubblePeriod;
                         activityManager.setText("", 0, 0);
                     }
-
-
                 }
 
                 //Dims screen when energy lost
                 // New: Modified to include the new game's dayManager attribute
                 if (state != GAME_OVER) {
-                    // alpha = 1 - energy left%
-                    currentAlpha = 1 - ((float) game.dayManager.getEnergy() /100);
-                    // Get it as a percentage out of 0.6 (the max alpha of black we're allowing
-                    // as the player can still just see the game)
-                    currentAlpha = currentAlpha * 0.6f;
+                    // alpha = 1 - time left%
+                    // lower alpha makes game brighter
+                    currentAlpha = (game.dayManager.getTime()-8f) / 24;
+                    currentAlpha = Float.min(currentAlpha, 0.6f);
                     dimTexture.setAlpha(currentAlpha);
                     dimTexture.draw(renderer.getBatch());
                 }
@@ -275,7 +272,18 @@ public class Play implements Screen {
                 // Draw the Day icon in the first row
                 for (int i = 0; i < game.dayManager.getDayNumber(); i++) {
                     renderer.getBatch().draw(verticalBarSprite, verticalBarStartX+15 + (5 + iconSpacingX) * i, verticalBarStartY, 5, 20);
-                }//End of main renderer
+                }
+
+                // New: Display the current time
+                float timeX = camera.position.x - 10;
+                float timeY = camera.position.y - (camera.viewportHeight / 2) + 16;
+                font.setColor(Color.RED);
+                int time = (int) game.dayManager.getTime();
+                if (game.dayManager.getTime() < 12) {
+                    font.draw(renderer.getBatch(), time + " am", timeX, timeY);
+                } else { font.draw(renderer.getBatch(), time - 11 +" pm", timeX, timeY); }
+
+                //End of main renderer
                 renderer.getBatch().end();
                 //Draw sound buttons. (currently can't have buttons get input while other menus have input)
                 stage.act(Gdx.graphics.getDeltaTime());
@@ -551,10 +559,6 @@ public class Play implements Screen {
         stage.addActor(lowerVolumeButton);
         stage.addActor(volumeOffButton);
         stage.addActor(volumeOnButton);
-
-
-
-
     }
     @Override
     public void hide() {

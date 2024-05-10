@@ -1,5 +1,6 @@
 package com.heshus.game.manager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -49,13 +50,39 @@ public class ActivityManager {
      */
     public void checkActivity(Rectangle playerBoundRect, boolean justPressedE, float x, float y) {
 
+        MapProperties activityProperties = null;
         // Check all activities
         MapObjects objects = layer.getObjects();
         // In activity area and they press E
         for (RectangleMapObject rectActivity : objects.getByType(RectangleMapObject.class)) {
+
             if (playerBoundRect.overlaps(rectActivity.getRectangle()) && justPressedE) {
-                MapProperties activityProperties = rectActivity.getProperties();
+                activityProperties = rectActivity.getProperties();
                 performActivity(activityProperties, x, y);
+            }
+        }
+
+        // New: Dev buttons, (m , . /) perform eat/recreation/study/sleep
+        // Eat
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            decrementEnergy(10);
+            dayManager.incrementEatScore("cafe");
+            incrementTime(1);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.COMMA)) {
+            // Recreation
+            decrementEnergy(35);
+            dayManager.incrementRecreationalScore("ducks");
+            incrementTime(2);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
+            // Study
+            decrementEnergy(40);
+            dayManager.incrementStudyScore("library");
+            incrementTime(4);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
+            // Sleep
+            // if the game is not over the avatar will move to the next day and reset their energy
+            if (!dayManager.getGameOver()) {
+                dayManager.incrementDay();
             }
         }
     }
@@ -67,13 +94,13 @@ public class ActivityManager {
             incrementTime(activityProperties.get("time", int.class));
             switch (activityProperties.get("activity", String.class)) {
                 case "eat":
-                    dayManager.incrementEatScore();
+                    dayManager.incrementEatScore((String) activityProperties.get("place"));
                     break;
                 case "study":
-                    dayManager.incrementStudyScore("placeholder"); //Pass in description tile attribute when thats implemented
+                    dayManager.incrementStudyScore((String) activityProperties.get("place")); //Pass in description tile attribute when thats implemented
                     break;
                 case "recreation":
-                    dayManager.incrementRecreationalScore("placeholder");
+                    dayManager.incrementRecreationalScore((String) activityProperties.get("place"));
                     break;
                 case "sleep":
                     // if the game is not over the avatar will move to the next day and reset their energy
