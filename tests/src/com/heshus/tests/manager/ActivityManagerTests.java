@@ -78,6 +78,20 @@ public class ActivityManagerTests {
         assertEquals(9, dm.getTime(), 0.0);
     }
 
+    @Test
+    public void performSleepTest() {
+        float x = 48;
+        float y = 16;
+        DayManager dm = new DayManager();
+        ActivityManager am = createActivityManager(TEST_MAP, dm);
+        Rectangle rectangle = createRectangle(x, y);
+
+        am.checkActivity(rectangle, false, x, y);
+        assertEquals(1, dm.getDayNumber(), 0);
+
+        am.checkActivity(rectangle, true, x, y);
+        assertEquals(2, dm.getDayNumber(), 0);
+    }
 
     private ActivityManager createActivityManager(String mapPath, DayManager dm){
         TiledMap map = new TmxMapLoader().load(mapPath);
