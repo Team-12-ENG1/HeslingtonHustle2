@@ -87,7 +87,7 @@ public class DayManagerTests {
         boolean dayover = false;
         while (!dayover){
             if (eat > 0){
-                dm.incrementEatScore();
+                dm.incrementEatScore("placeholder");
                 eat--;
             }
             if (study > 0){

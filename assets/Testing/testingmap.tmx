@@ -12,6 +12,7 @@
     <property name="activity" value="eat"/>
     <property name="description" value="you ate"/>
     <property name="energy" type="int" value="10"/>
+    <property name="place" value=""/>
     <property name="time" type="int" value="1"/>
    </properties>
   </object>
@@ -20,6 +21,7 @@
     <property name="activity" value="recreation"/>
     <property name="description" value="you relaxed"/>
     <property name="energy" type="int" value="5"/>
+    <property name="place" value=""/>
     <property name="time" type="int" value="2"/>
    </properties>
   </object>
@@ -28,6 +30,7 @@
     <property name="activity" value="study"/>
     <property name="description" value="reading"/>
     <property name="energy" type="int" value="30"/>
+    <property name="place" value=""/>
     <property name="time" type="int" value="3"/>
    </properties>
   </object>
@@ -36,6 +39,7 @@
     <property name="activity" value="sleep"/>
     <property name="description" value="honk shooo"/>
     <property name="energy" type="int" value="0"/>
+    <property name="place" value=""/>
     <property name="time" type="int" value="0"/>
    </properties>
   </object>
