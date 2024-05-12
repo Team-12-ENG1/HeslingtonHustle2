@@ -7,7 +7,7 @@ import java.util.Collections;
  * Handles the leaderboard, which is an array of {@link Score} instances.
  */
 public class GameData {
-    private final int MAX_SCORES = 10;
+    public static final int MAX_SCORES = 10;
     private Score[] scores;
 
     public GameData() {
