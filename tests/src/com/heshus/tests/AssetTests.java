@@ -1,15 +1,11 @@
-package com.heshus.tests.assets;
+package com.heshus.tests;
 
 import static org.junit.Assert.assertTrue;
 
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.Play;
 import com.heshus.game.manager.Save;
-import com.heshus.game.screens.states.LeaderboardScreen;
-import com.heshus.game.screens.states.MainMenuScreen;
-import com.heshus.game.screens.states.PauseMenu;
-import com.heshus.game.screens.states.PlayerNameScreen;
-import com.heshus.tests.GdxTestRunner;
+import com.heshus.game.screens.states.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -126,5 +122,8 @@ public class AssetTests {
     }
 
     @Test
-    public void
+    public void gameOverAssets(){
+        assertTrue(Gdx.files.internal(GameOverScreen.BUTTON).exists());
+        assertTrue(Gdx.files.internal(GameOverScreen.FONT).exists());
+    }
 }
