@@ -69,8 +69,8 @@ public class DayManagerTests {
         //represents a case of over-studying where the score should be decreased
         DayManager dm2 = new DayManager();
 
-        int[] studyArray1 = {1,2,1,2,1,2,1};
-        int[] studyArray2 = {3,3,3,3,3,3,3};
+        int[] studyArray1 = {1,2,1,1,2,1,1};
+        int[] studyArray2 = {2,2,2,2,2,2,2};
         int[] eatArray = {2,2,2,2,2,2,2};
         int[] recArray = {1,1,1,1,1,1,1};
 
