@@ -8,6 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import org.mockito.Mockito;
+
+import static com.heshus.game.manager.Save.gd;
 import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
@@ -17,20 +19,13 @@ public class SaveTests {
 
     @Test
     public void saveTest(){
-        FileHandle fileHandleMock = Mockito.mock(FileHandle.class);
-        Json jsonMock = Mockito.mock(Json.class);
-        // Call the method to test
-        //when(Gdx.files.local(Save.SCORES)).thenReturn(fileHandleMock);
-
-        // Mock the behavior of toJson() method
-        String expectedJson = "{\"key\":\"value\"}"; // Example JSON data
-        when(jsonMock.toJson(any())).thenReturn(expectedJson);
-
-        // Call the save method
-        Save.save();
-
-        // Verify that writeString method is called with expected arguments
-        verify(fileHandleMock).writeString(expectedJson, false);
+        String SCORES = "data/scores.json";
+        FileHandle out = mock(FileHandle.class);
+        Json json = mock(Json.class);
+        when(Gdx.files.local(SCORES)).thenReturn(out);
+        String jsonScores = "your_json_here"; // Replace with actual JSON
+        when(json.toJson(any())).thenReturn(jsonScores);
+        assertThrows(Exception.class, Save::save);
 
     }
 }

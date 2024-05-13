@@ -125,6 +125,4 @@ public class AssetTests {
 
     }
 
-    @Test
-    public void
 }
