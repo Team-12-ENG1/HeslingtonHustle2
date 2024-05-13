@@ -15,9 +15,9 @@ import org.junit.runner.RunWith;
 
 import com.badlogic.gdx.Gdx;
 
-/*
+
 @RunWith(GdxTestRunner.class)
-public classAssetTests {
+public class AssetTests {
 
     @Test
     public void customiseSpritesAssets() {
@@ -124,5 +124,7 @@ public classAssetTests {
 
 
     }
+
+    @Test
+    public void
 }
-*/

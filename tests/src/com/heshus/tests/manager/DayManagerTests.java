@@ -109,7 +109,7 @@ public class DayManagerTests {
 
 
     @Test
-    public void getStreacksTest(){
+    public void getStreaksTest(){
         DayManager dm = new DayManager();
         //Populating the dictionary
 
