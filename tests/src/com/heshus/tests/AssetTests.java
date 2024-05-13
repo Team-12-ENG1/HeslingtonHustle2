@@ -123,8 +123,10 @@ public class AssetTests {
     
     @Test
     public void gameOverAssets(){
-        assertTrue(Gdx.files.internal(GameOverScreen.BUTTON).exists());
-        assertTrue(Gdx.files.internal(GameOverScreen.FONT).exists());
+        assertTrue("Passes when BUTTON is present",
+                Gdx.files.internal(GameOverScreen.BUTTON).exists());
+        assertTrue("Passes when FONT is present",
+                Gdx.files.internal(GameOverScreen.FONT).exists());
     }
 
 }
