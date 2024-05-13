@@ -5,6 +5,10 @@ import com.heshus.game.manager.DayManager;
 import com.heshus.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.*;
+
+import java.util.Dictionary;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -102,4 +106,37 @@ public class DayManagerTests {
         }
         dm.incrementDay();
     }
+
+
+    @Test
+    public void getStreacksTest(){
+        DayManager dm = new DayManager();
+        //Populating the dictionary
+
+        Dictionary<String,Integer> streakTracker = new Hashtable<String,Integer>();
+        streakTracker.put("Bookworm", 3);
+        streakTracker.put("GymRat", 5);
+        streakTracker.put("Ducks", 3);
+
+        // Call the getStreaks() method
+        List<String[]> result = dm.getStreaks();
+
+        // Assert the size and content of the result list
+        assertEquals(3, result.size());
+
+        assertNotEquals("Bookworm", result.get(0)[0]);
+        assertNotEquals("BookWorm.png", result.get(0)[1]);
+
+        assertEquals("Gym Rat", result.get(1)[0]);
+        assertEquals("GymRat.png", result.get(1)[1]);
+
+        assertEquals("Duck Duck Go!", result.get(2)[0]);
+        assertEquals("Ducks.png", result.get(2)[1]);
+
+        streakTracker.put("Bookworm", 4);
+        assertEquals("Bookworm", result.get(0)[0]);
+        assertEquals("BookWorm.png", result.get(0)[1]);
+    }
+
+
 }
