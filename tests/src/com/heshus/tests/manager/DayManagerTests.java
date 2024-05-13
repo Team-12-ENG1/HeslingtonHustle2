@@ -5,9 +5,7 @@ import com.heshus.game.manager.DayManager;
 import com.heshus.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.*;
 
-import java.util.Dictionary;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -109,20 +107,33 @@ public class DayManagerTests {
 
 
     @Test
-    public void getStreacksTest(){
+    public void getStreaksTest(){
+
         DayManager dm = new DayManager();
         //Populating the dictionary
+        dm.incrementRecreationalScore("gym");
+        dm.incrementRecreationalScore("gym");
+        dm.incrementRecreationalScore("gym");
+        dm.incrementRecreationalScore("gym");
+        dm.incrementRecreationalScore("gym");
 
-        Dictionary<String,Integer> streakTracker = new Hashtable<String,Integer>();
-        streakTracker.put("Bookworm", 3);
-        streakTracker.put("GymRat", 5);
-        streakTracker.put("Ducks", 3);
+        dm.incrementEatScore("Eating");
+        dm.incrementEatScore("Eating");
+        dm.incrementEatScore("Eating");
 
+        dm.incrementStudyScore("library");
+        dm.incrementStudyScore("library");
+        dm.incrementStudyScore("library");
+        /*
+        for (int i=0;i<5;i++) {dm.incrementRecreationalScore("gym");}
+        for (int y=0;y<3;y++){dm.incrementEatScore("Eating");}
+        for (int z=0;z<3;z++){dm.incrementStudyScore("library");}
+        */
         // Call the getStreaks() method
         List<String[]> result = dm.getStreaks();
 
         // Assert the size and content of the result list
-        assertEquals(3, result.size());
+        assertEquals(2, result.size());
 
         assertNotEquals("Bookworm", result.get(0)[0]);
         assertNotEquals("BookWorm.png", result.get(0)[1]);
@@ -133,7 +144,8 @@ public class DayManagerTests {
         assertEquals("Duck Duck Go!", result.get(2)[0]);
         assertEquals("Ducks.png", result.get(2)[1]);
 
-        streakTracker.put("Bookworm", 4);
+        dm.incrementStudyScore("library");
+        //streakTracker.put("Bookworm", 4);
         assertEquals("Bookworm", result.get(0)[0]);
         assertEquals("BookWorm.png", result.get(0)[1]);
     }
