@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.Play;
+import com.heshus.game.manager.DayManager;
 import com.heshus.game.manager.Save;
 import com.heshus.game.screens.states.*;
 import org.junit.Test;
@@ -127,6 +128,12 @@ public class AssetTests {
                 Gdx.files.internal(GameOverScreen.BUTTON).exists());
         assertTrue("Passes when FONT is present",
                 Gdx.files.internal(GameOverScreen.FONT).exists());
+        assertTrue("Passes then DUCKS is present",
+                Gdx.files.internal(GameOverScreen.ICONS+ DayManager.DUCKS).exists());
+        assertTrue("Passes then GYMRAT is present",
+                Gdx.files.internal(GameOverScreen.ICONS+ DayManager.GYMRAT).exists());
+        assertTrue("Passes then BOOKWORM is present",
+                Gdx.files.internal(GameOverScreen.ICONS+ DayManager.BOOKWORM).exists());
     }
 
 }
