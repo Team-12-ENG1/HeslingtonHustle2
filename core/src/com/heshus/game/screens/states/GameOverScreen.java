@@ -104,7 +104,7 @@ public class GameOverScreen implements Screen {
         table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
-            Save.save();
+            Save.save(Save.SCORES);
             Label highScore = new Label("High Score!", new Label.LabelStyle(font, Color.WHITE));
             table.add(highScore).center().colspan(2);
             table.row().pad(5, 0, 0, 0);

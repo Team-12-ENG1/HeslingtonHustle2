@@ -15,9 +15,9 @@ public class Save {
      * Save the {@link GameData} into the JSON file. It will try to open the file
      * however if it encounters an error, the game will close.
      */
-    public static void save() {
+    public static void save(String path) {
         try {
-            FileHandle out = Gdx.files.local(SCORES);
+            FileHandle out = Gdx.files.local(path);
             Json json = new Json();
             String jsonScores = json.toJson(gd);
             // Don't append, as we will alter the scores themselves and then write back
