@@ -3,12 +3,12 @@ package com.heshus.tests.manager;
 
 import com.heshus.game.manager.DayManager;
 import com.heshus.tests.GdxTestRunner;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class DayManagerTests {
@@ -19,7 +19,7 @@ public class DayManagerTests {
         DayManager dm = new DayManager();
         int prevDayNum = dm.getDayNumber();
         dm.incrementDay();
-        assertEquals(prevDayNum + 1, dm.getDayNumber());
+        Assert.assertEquals(prevDayNum + 1, dm.getDayNumber());
 
     }
 
@@ -30,9 +30,9 @@ public class DayManagerTests {
         for(int i = 0; i<6;i++){
             runDay(dm, 0, 0, 0);
         }
-        assertFalse(dm.getGameOver());
+        Assert.assertFalse(dm.getGameOver());
         dm.incrementDay();
-        assertTrue(dm.getGameOver());
+        Assert.assertTrue(dm.getGameOver());
     }
 
     @Test
@@ -45,19 +45,22 @@ public class DayManagerTests {
             runDay(dm, eatArray[i], studyArray[i], recArray[i]);
         }
 
-        assertTrue("Passes when missing 2 days of study fails the player",30 > dm.calculateScore());
+        Assert.assertTrue("Passes when missing 2 days of study fails the player",30 > dm.calculateScore());
 
     }
-    public void studyEveryDay(){
 
+    @Test
+    public void studyEveryDay(){
         int[] eatArray = new int[]{3, 3, 3, 3, 3, 3, 3};
         int[] studyArray = new int[]{1, 0, 1, 1, 1, 1, 1};
         int[] recArray = new int[]{1, 1, 1, 1, 1, 1, 1};
+
         DayManager dm = new DayManager();
+
         for (int i = 0; i < eatArray.length; i++) {
             runDay(dm, eatArray[i], studyArray[i], recArray[i]);
         }
-        assertTrue("Passes when missing one day of study does not fail the player,",dm.calculateScore() > 30);
+        Assert.assertTrue("Passes when missing one day of study does not fail the player,",dm.calculateScore() > 30);
 
     }
 
@@ -78,9 +81,87 @@ public class DayManagerTests {
             runDay(dm1, eatArray[i], studyArray1[i], recArray[i]);
             runDay(dm2, eatArray[i], studyArray2[i], recArray[i]);
         }
-        assertTrue(dm1.calculateScore() > dm2.calculateScore());
+        Assert.assertTrue(dm1.calculateScore() > dm2.calculateScore());
     }
 
+    @Test
+    public void normalPlayScoreTest(){
+          DayManager dm = new DayManager();
+          int[] studyArray = {1,2,1,1,2,1,1};
+          int[] eatArray = {3,3,3,3,3,3,3};
+          int[] recArray = {1,1,1,1,1,1,1};
+          for (int i = 0; i < studyArray.length; i++) {
+              runDay(dm, eatArray[i], studyArray[i], recArray[i]);
+          }
+          int score = dm.calculateScore();
+
+          Assert.assertTrue(dm.calculateScore()>40);
+          Assert.assertTrue(dm.calculateScore()<80);
+
+    }
+
+    @Test
+    public void bookwormStreakTest(){
+        DayManager dm = new DayManager();
+
+        for(int i = 0; i<3; i++){
+            dm.incrementStudyScore("library");
+            dm.incrementDay();
+        }
+
+        List<String[]> streaks = dm.getStreaks();
+        Assert.assertEquals(new ArrayList<String[]>(), streaks);
+
+        for(int i = 0; i<4; i++){
+            dm.incrementStudyScore("library");
+            dm.incrementDay();
+        }
+
+        streaks = dm.getStreaks();
+        Assert.assertArrayEquals(streaks.get(0), new String[]{"Bookworm", DayManager.BOOKWORM});
+
+    }
+    @Test
+    public void ducksStreakTest(){
+        DayManager dm = new DayManager();
+
+        for(int i = 0; i<2; i++){
+            dm.incrementRecreationalScore("ducks");
+            dm.incrementDay();
+        }
+
+        List<String[]> streaks = dm.getStreaks();
+        Assert.assertEquals(new ArrayList<String[]>(), streaks);
+
+        for(int i = 0; i<2; i++){
+            dm.incrementRecreationalScore("ducks");
+            dm.incrementDay();
+        }
+
+        streaks = dm.getStreaks();
+        Assert.assertArrayEquals(streaks.get(0), new String[]{"Duck Duck Go!", DayManager.DUCKS});
+    }
+    @Test
+    public void gymratStreakTest(){
+        DayManager dm = new DayManager();
+
+        for(int i = 0; i<4; i++){
+            dm.incrementRecreationalScore("gym");
+            dm.incrementDay();
+        }
+
+        List<String[]> streaks = dm.getStreaks();
+        Assert.assertEquals(new ArrayList<String[]>(), streaks);
+
+        for(int i = 0; i<3; i++){
+            dm.incrementRecreationalScore("gym");
+            dm.incrementDay();
+        }
+
+        streaks = dm.getStreaks();
+        Assert.assertArrayEquals(streaks.get(0), new String[]{"Gym Rat", DayManager.GYMRAT});
+
+    }
 
     /**
      * Simulates a day being played with
@@ -104,51 +185,5 @@ public class DayManagerTests {
         }
         dm.incrementDay();
     }
-
-
-    @Test
-    public void getStreaksTest(){
-
-        DayManager dm = new DayManager();
-        //Populating the dictionary
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-
-        dm.incrementEatScore("Eating");
-        dm.incrementEatScore("Eating");
-        dm.incrementEatScore("Eating");
-
-        dm.incrementStudyScore("library");
-        dm.incrementStudyScore("library");
-        dm.incrementStudyScore("library");
-        /*
-        for (int i=0;i<5;i++) {dm.incrementRecreationalScore("gym");}
-        for (int y=0;y<3;y++){dm.incrementEatScore("Eating");}
-        for (int z=0;z<3;z++){dm.incrementStudyScore("library");}
-        */
-        // Call the getStreaks() method
-        List<String[]> result = dm.getStreaks();
-
-        // Assert the size and content of the result list
-        assertEquals(2, result.size());
-
-        assertNotEquals("Bookworm", result.get(0)[0]);
-        assertNotEquals("BookWorm.png", result.get(0)[1]);
-
-        assertEquals("Gym Rat", result.get(1)[0]);
-        assertEquals("GymRat.png", result.get(1)[1]);
-
-        assertEquals("Duck Duck Go!", result.get(2)[0]);
-        assertEquals("Ducks.png", result.get(2)[1]);
-
-        dm.incrementStudyScore("library");
-        //streakTracker.put("Bookworm", 4);
-        assertEquals("Bookworm", result.get(0)[0]);
-        assertEquals("BookWorm.png", result.get(0)[1]);
-    }
-
 
 }
