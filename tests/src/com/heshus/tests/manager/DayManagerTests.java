@@ -5,6 +5,7 @@ import com.heshus.game.manager.DayManager;
 import com.heshus.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.*;
 
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class DayManagerTests {
         assertTrue("Passes when missing 2 days of study fails the player",30 > dm.calculateScore());
 
     }
+
+    @Test
     public void studyEveryDay(){
 
         int[] eatArray = new int[]{3, 3, 3, 3, 3, 3, 3};
@@ -111,43 +114,31 @@ public class DayManagerTests {
 
         DayManager dm = new DayManager();
         //Populating the dictionary
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
-        dm.incrementRecreationalScore("gym");
 
-        dm.incrementEatScore("Eating");
-        dm.incrementEatScore("Eating");
-        dm.incrementEatScore("Eating");
-
-        dm.incrementStudyScore("library");
-        dm.incrementStudyScore("library");
-        dm.incrementStudyScore("library");
-        /*
         for (int i=0;i<5;i++) {dm.incrementRecreationalScore("gym");}
-        for (int y=0;y<3;y++){dm.incrementEatScore("Eating");}
+        for (int y=0;y<4;y++) {dm.incrementRecreationalScore("ducks");}
         for (int z=0;z<3;z++){dm.incrementStudyScore("library");}
-        */
+
         // Call the getStreaks() method
         List<String[]> result = dm.getStreaks();
 
         // Assert the size and content of the result list
+
         assertEquals(2, result.size());
 
-        assertNotEquals("Bookworm", result.get(0)[0]);
-        assertNotEquals("BookWorm.png", result.get(0)[1]);
+        assertEquals("Gym Rat", result.get(0)[0]);
+        assertEquals("GymRat.png", result.get(0)[1]);
 
-        assertEquals("Gym Rat", result.get(1)[0]);
-        assertEquals("GymRat.png", result.get(1)[1]);
+        assertEquals("Duck Duck Go!", result.get(1)[0]);
+        assertEquals("Ducks.png", result.get(1)[1]);
 
-        assertEquals("Duck Duck Go!", result.get(2)[0]);
-        assertEquals("Ducks.png", result.get(2)[1]);
+        for (int z=0;z<4;z++){dm.incrementStudyScore("library");}
+        List<String[]> result1 = dm.getStreaks();
 
-        dm.incrementStudyScore("library");
         //streakTracker.put("Bookworm", 4);
-        assertEquals("Bookworm", result.get(0)[0]);
-        assertEquals("BookWorm.png", result.get(0)[1]);
+        assertEquals("Bookworm", result1.get(0)[0]);
+        assertEquals("BookWorm.png", result1.get(0)[1]);
+
     }
 
 
