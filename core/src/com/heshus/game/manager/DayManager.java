@@ -18,6 +18,10 @@ public class DayManager {
     public int overallStudyCount = 0;
     public int overallRecreationalCount = 0;
 
+    public static final String BOOKWORM = "BookWorm.png";
+    public static final String GYMRAT = "GymRat.png";
+    public static final String DUCKS = "Ducks.png";
+
     // New: added attributes to help when calculating scores (to implement game rules)
     private int daysOfNoStudy = 0;
     private boolean fail = false;
@@ -80,13 +84,13 @@ public class DayManager {
     public List<String[]> getStreaks(){
         List<String[]> streaks = new ArrayList<String[]>();
         if(this.streakTracker.get("Bookworm") >= 4){
-            streaks.add(new String[] {"Bookworm","BookWorm.png"});
+            streaks.add(new String[] {"Bookworm",BOOKWORM});
         }
         if(this.streakTracker.get("GymRat") >= 5){
-            streaks.add(new String[]{"Gym Rat", "GymRat.png"});
+            streaks.add(new String[]{"Gym Rat", GYMRAT});
         }
         if(this.streakTracker.get("Ducks") >= 3){
-            streaks.add(new String[] {"Duck Duck Go!" , "Ducks.png"});
+            streaks.add(new String[] {"Duck Duck Go!" , DUCKS});
         }
         return streaks;
     }
