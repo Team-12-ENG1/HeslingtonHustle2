@@ -74,7 +74,7 @@ public class PlayerTests {
         player.update(0.01f);
         Vector2 vel = player.getVelocity();
         assertTrue("The player moves diagonally when W and A are pressed",
-                (vel.x>-100&&vel.y>100));
+                (vel.x<-100&&vel.y>100));
         assertEquals("The player moves diagonally at a speed of 200",
                 200, vel.len(), 5);
     }
