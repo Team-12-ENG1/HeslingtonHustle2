@@ -27,6 +27,14 @@ import com.heshus.game.screens.states.PauseMenu;
 import com.heshus.game.screens.states.SettingsMenu;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
+/**
+ * The Play class represents the game screen and manages some of the states functionalities
+ * as well as handling user input and game sprites
+ * It's also responsible for drawing the game world, the player character,
+ * and the UI elements like the pause and settings menus. It also handles sound effects
+ * and music playback based on game events.
+ * creates new instance of the Play screen with specific game and player sprite settings.
+ */
 public class Play implements Screen {
 
     public static final int GAME_RUNNING = 0;
@@ -45,7 +53,6 @@ public class Play implements Screen {
     private OrthographicCamera camera;
     private Player player;
     private static BitmapFont font;
-    private TiledMapTileLayer collisionLayer;
     private ActivityManager activityManager;
     private float volume = 0.5f;
 
@@ -61,7 +68,7 @@ public class Play implements Screen {
     private Texture verticalBarTexture;
     private Sprite verticalBarSprite;
 
-    private float bubbleTimer, bubblePeriod = 3;
+    private float bubbleTimer;
 
     // Walking sounds
     private Sound walkingSound1;
@@ -87,7 +94,7 @@ public class Play implements Screen {
     private Texture moonTexture;
 
     private Sound clickSound;
-    private Texture playerTexture;
+    private final Texture playerTexture;
     private InputMultiplexer inputMultiplexer;
     private Button increaseVolumeButton;
     private Button lowerVolumeButton;
@@ -112,22 +119,10 @@ public class Play implements Screen {
     public static final String VOLUME_OFF = "Icons/volume-off.png";
     public static final String VOLUME_ON = "Icons/volume-on.png";
 
-
-
-
-
-
-
     /**
-     * The Play class represents the game screen and manages some of the states functionalities
-     * as well as handling user input and game sprites
-     * It's also responsible for drawing the game world, the player character,
-     * and the UI elements like the pause and settings menus. It also handles sound effects
-     * and music playback based on game events.
-     * creates new instance of the Play screen with specific game and player sprite settings.
+     * Create an instance of the game play screen
      * @param playerSpriteSelection The texture for the player sprite to be used in the game.* Create the Play instance
      * @param game the game instance
-     * @param playerSpriteSelection the texture which will be used as the player sprite
      */
     public Play(HesHusGame game, Texture playerSpriteSelection) {
         this.game = game;
@@ -213,6 +208,7 @@ public class Play implements Screen {
                     //changes timer
                     bubbleTimer += Gdx.graphics.getDeltaTime();
                     //removes bubble after timer ends
+                    float bubblePeriod = 3;
                     if(bubbleTimer > bubblePeriod){
                         bubbleTimer -= bubblePeriod;
                         activityManager.setText("", 0, 0);
@@ -231,14 +227,8 @@ public class Play implements Screen {
                 }
 
 
-                /**
-                 * The counterbox setup, it stays in the upper left corner and allows through
-                 * using the LibGDX BitMapFont class to increment written integers over the white
-                 * counter box on the screen
-                 */
-
-                ///////////////////////////////////////////////////////////////////////////
-                // The Counter and Counter Icons                                         //
+                //////////////////////////////////////////////////////////////////////////
+                // The Counter and Counter Icons                                        //
                 // Upper-left corner position for the counter box set and will not move //
                 float counterBoxX = camera.position.x - camera.viewportWidth / 2;
                 float counterBoxY = (camera.position.y + camera.viewportHeight / 2) - counterBoxTexture.getHeight();
@@ -319,26 +309,10 @@ public class Play implements Screen {
                 renderer.getBatch().end();
                 break;
         }
-
-        // updates and draws the stage
-        // the stage is a container for all the actors
-        //coordinates user inputs
-        /**
-         * Updates the {@link Stage} with the time passed since the last frame and draws all {@link Actor}s added to it.
-         * This method should be called every frame to ensure the {@link Stage} accurately represents the current game state,
-         * including processing any input events and executing any actions on {@link Actor}s.
-         *
-         * @param delta The time in seconds since the last frame, used to update animations and process input.
-         */
-
-
     }
+
     /**
-     * the method should be called every frame, updates the game state
-     * checks for the player's movement sounds
-     *  handles movement and game over scenario
-     *  as parameter it has time delta that is time in seconds
-     *  since last frame
+     * Update the game every frame, checking/handling player movement
      */
     private void update(){
         //Detect if game should be paused or not
@@ -405,10 +379,10 @@ public class Play implements Screen {
         // Load the map and set up the renderer
 
         map = new TmxMapLoader().load(MAP);
-        collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
+        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);
 
 
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);
+        renderer = new OrthogonalTiledMapRenderer(map, 1);
 
         // Set up the player
         Sprite playerSprite = new Sprite(playerTexture);
@@ -416,12 +390,10 @@ public class Play implements Screen {
         float startX = 50 * collisionLayer.getTileWidth();
         float startY = (collisionLayer.getHeight() - 26) * collisionLayer.getTileHeight();
         player.setPosition(startX, startY);
-        //Gdx.input.setInputProcessor(player);
 
         // Set up the activity manager
         // New: added the new activity manager for a more intuitive management of the activities the player can do
         activityManager = new ActivityManager(map.getLayers().get("Activities"), game.dayManager);
-        activityManager.setPlayer(player);
 
         // Set up the font
         font = new BitmapFont();
@@ -465,11 +437,7 @@ public class Play implements Screen {
         clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
 
-
-        /**
-         * stage is initialised and the setup creates a stage for UI elements and input processing
-         * and preparing the buttons for volume control
-         */
+        // Create the stage for the UI elements
         stage = new Stage(extendViewport, renderer.getBatch());
 
         // a Multiplexer is needed in the play screen to be able to manage inputs from the UI and the player
@@ -497,7 +465,6 @@ public class Play implements Screen {
         Button.ButtonStyle increaseVolumeStyle = new Button.ButtonStyle();
         increaseVolumeStyle.up = new TextureRegionDrawable(new TextureRegion(increaseVolumeTexture));
         increaseVolumeButton = new Button(increaseVolumeStyle);
-        //increaseVolumeButton.setPosition(900, 670); // Example position
 
         increaseVolumeButton.addListener(new ClickListener() {
             @Override
@@ -512,7 +479,6 @@ public class Play implements Screen {
         Button.ButtonStyle lowerVolumeStyle = new Button.ButtonStyle();
         lowerVolumeStyle.up = new TextureRegionDrawable(new TextureRegion(lowerVolumeTexture));
         lowerVolumeButton = new Button(lowerVolumeStyle);
-        //lowerVolumeButton.setPosition(950, 670); // Example position
         lowerVolumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -525,7 +491,6 @@ public class Play implements Screen {
         Button.ButtonStyle volumeOffStyle = new Button.ButtonStyle();
         volumeOffStyle.up = new TextureRegionDrawable(new TextureRegion(volumeOffTexture));
         volumeOffButton = new Button(volumeOffStyle);
-        // volumeOffButton.setPosition(1000, 670); // Example position
         volumeOffButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -543,7 +508,6 @@ public class Play implements Screen {
         Button.ButtonStyle volumeOnStyle = new Button.ButtonStyle();
         volumeOnStyle.up = new TextureRegionDrawable(new TextureRegion(volumeOnTexture));
         volumeOnButton = new Button(volumeOnStyle);
-        //volumeOnButton.setPosition(1050, 670); // Example position
         volumeOnButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -589,11 +553,6 @@ public class Play implements Screen {
      */
     @Override
     public void dispose() {
-        //if we forget to dispose something it causes a memory leak!
-        //if this is a big concern we should change our approach to assets
-        //using the AssetManager means we have to load assets in a different way
-        //BUT we can just call AssetManager.dispose() and it will for sure dispose all our assets correctly
-
         map.dispose();
         player.getTexture().dispose();
         font.dispose();
@@ -605,7 +564,6 @@ public class Play implements Screen {
         walkingSound4.dispose();
         settingsMenu.dispose();
         pauseMenu.dispose();
-
         if (backgroundMusic != null) {
             backgroundMusic.dispose();
         }
@@ -655,7 +613,7 @@ public class Play implements Screen {
     }
 
     /**
-     *If camera would show out of map, move it in
+     *If camera showed out of map, move it in
      * @param cam camera to keep position within layer
      * @param layer TiledMapTile layer to lock
      */

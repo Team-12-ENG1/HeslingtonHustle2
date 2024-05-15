@@ -28,19 +28,19 @@ public class SettingsMenu {
     private final int returnState;//state to go back to once done
     private final TextButton returnButton;
     private final TextButton applyButton;
-    private Table table;
-    private Camera camera;
+    private final Table table;
+    private final Camera camera;
     private final CheckBox fullScreenCheckbox;
     private final ArrayList<Vector2> supportedResolutions;
     private int resolutionSelectIndex;
     private TextButton.TextButtonStyle textButtonStyle;
     private CheckBox.CheckBoxStyle checkBoxStyle;
     private TextButton.TextButtonStyle squareButtonStyle;
-    private Table resolutionTable;
-    private TextButton leftButton;
-    private TextButton rightButton;
-    private TextButton resolutionButton;
-    private Sound clickSound;
+    private final Table resolutionTable;
+    private final TextButton leftButton;
+    private final TextButton rightButton;
+    private final TextButton resolutionButton;
+    private final Sound clickSound;
 
     public static final String CLICK = "Sounds/switch2.ogg";
     public static final String FONT = "Fonts/monogram/pixel.fnt";

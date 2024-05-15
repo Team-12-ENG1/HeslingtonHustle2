@@ -1,23 +1,25 @@
 package com.heshus.game.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * The Player class handles everything related to the player, from setting the player's avatar
+ * to handling their movement. It implements {@link InputProcessor} as well as extending {@link Sprite}
+ * in order to implement the former methods.
+ */
 public class Player extends Sprite implements InputProcessor {
     //movement velocity - Vector2 stores 2 values, for x and y
     private Vector2 velocity = new Vector2();
-    private float speed = 200;
     boolean leftMove;
     boolean rightMove;
     boolean downMove;
     boolean upMove;
-    private TiledMapTileLayer collisionLayer;
+    private final TiledMapTileLayer collisionLayer;
 
     /**
      * Instantiate Player object
@@ -60,12 +62,7 @@ public class Player extends Sprite implements InputProcessor {
         // set velocity
         updateMotion();
 
-        //**********************
         //  COLLISION DETECTION
-        //**********************
-
-        // todo: Modification - Improved the collision detection, making it simpler and easier to understand
-
         int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
         int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
@@ -84,11 +81,11 @@ public class Player extends Sprite implements InputProcessor {
         this.velocity = velocity;
     }
 
-    // todo: Addition/Modification - improved readability of code and accounted for different directional keys pressed
     /**
      * Update the players motion (velocity) depending on their movement direction
      */
     public void updateMotion() {
+        float speed = 200;
         if (leftMove) {velocity.x = -speed;}
         else if (rightMove) {velocity.x = speed;}
         else {velocity.x = 0;}
@@ -98,7 +95,6 @@ public class Player extends Sprite implements InputProcessor {
         else {velocity.y = 0;}
     }
 
-    // todo: Addition - created directional movement states to control multi-input requests
     /**
      * Set the player's movement direction to left, cancelling the right movement if true
      * @param t player's moving left state
@@ -108,6 +104,7 @@ public class Player extends Sprite implements InputProcessor {
         if(rightMove && t) rightMove = false;
         leftMove = t;
     }
+
     /**
      * Set the player's movement direction to right, cancelling the left movement if true
      * @param t player's moving right state
@@ -117,6 +114,7 @@ public class Player extends Sprite implements InputProcessor {
         if(leftMove && t) leftMove = false;
         rightMove = t;
     }
+
     /**
      * Set the player's movement direction to up, cancelling the down movement if true
      * @param t player's moving up state
@@ -140,7 +138,6 @@ public class Player extends Sprite implements InputProcessor {
     //INPUT HANDLING
     ///////////////////
 
-    // todo: Modification - accounted for arrow keys being pressed
     /**
      * This sets a players movement when a key is pressed down
      *
@@ -170,7 +167,6 @@ public class Player extends Sprite implements InputProcessor {
         return true;
     }
 
-    // todo: Modification - accounted for arrow keys being pressed
     /**
      * This sets a players movement when a key is pressed down
      *
@@ -199,7 +195,6 @@ public class Player extends Sprite implements InputProcessor {
         }
         return true;
     }
-    //DON'T NEED ANY OF THE REST OF THESE METHODS
 
     @Override
     public boolean keyTyped(char character) {

@@ -14,9 +14,9 @@ public class Day {
     private final int dayNumber;
     private float time;
 
-    private List<String> studyPlaces;
-    private List<String> recPlaces;
-    private List<String> eatingTimes;
+    private final List<String> studyPlaces;
+    private final List<String> recPlaces;
+    private final List<String> eatingTimes;
 
 
     /**
@@ -92,7 +92,6 @@ public class Day {
     public float getTime() { return this.time; }
 
     /**
-     *
      * @return current day's energy
      */
     public int getEnergy() { return this.energy; }
@@ -119,7 +118,6 @@ public class Day {
         return "evening";
     }
 
-    // todo: Addition - Day class now summarises each day and states the score achieved
     /**
      * Sets current day's time to param
      * @param time

@@ -1,9 +1,7 @@
 package com.heshus.game.manager;
 
 import com.heshus.game.engine.Play;
-
 import java.util.*;
-
 import static com.heshus.game.engine.Play.GAME_OVER;
 
 /**
@@ -22,7 +20,7 @@ public class DayManager {
     private int daysOfNoStudy = 0;
     private boolean fail = false;
 
-    private Dictionary<String,Integer> streakTracker;
+    private final Dictionary<String,Integer> streakTracker;
 
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
@@ -47,7 +45,7 @@ public class DayManager {
         int dayNum = currentDay.getDayNumber();
         Dictionary<String,Integer> summary = currentDay.summariseDay();
 
-        //if statement checks for the fail condition of not studying two days in a row
+        // if statement checks for the fail condition of not studying two days in a row
         if(summary.get("study") == 0){
             daysOfNoStudy++;
         }else{
@@ -56,7 +54,7 @@ public class DayManager {
         if(daysOfNoStudy > 1){
             fail = true;
         }
-        //Adds the output of the summary function into the dictionary containing the summary for each day
+        // Adds the output of the summary function into the dictionary containing the summary for each day
         statsByDay.put(dayNum, summary);
         if(dayNum < 7){
             currentDay = new Day(dayNum+1,8,100);
@@ -209,7 +207,6 @@ public class DayManager {
     }
     public boolean getGameOver() { return this.gameOver; }
     public void setGameOver(boolean state) { this.gameOver = state; }
-
     public int getDayNumber() {
         return currentDay.getDayNumber();
     }

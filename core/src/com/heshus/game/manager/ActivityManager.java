@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
@@ -12,26 +11,21 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
-import com.heshus.game.entities.Player;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 /**
-
  * Manages all activities in the game that the player can perform
  * by introducing property tags to the tiled map the player interacts with each property tag
  * and according to what the type of activity is the player's energy and time is incremented or decremented
  * Manages how the activities are performed, why they are performed and energy/time constraints
  * Displays text whenever a task is completed
  */
-
 public class ActivityManager {
-
     private final MapLayer layer;
-    private Player player;
-    private DayManager dayManager;
+    private final DayManager dayManager;
 
     private String activityText = "";
-    private Vector2 textPosition = new Vector2();
+    private final Vector2 textPosition = new Vector2();
 
     GlyphLayout layout = new GlyphLayout();
 
@@ -140,16 +134,6 @@ public class ActivityManager {
         float newTime = dayManager.getTime() + setTime;
         dayManager.setTime(newTime);
     }
-
-
-    /**
-     * Sets another class' instance of 'player' to ActivityManager's player
-     * @param player
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
 
     /**
      *

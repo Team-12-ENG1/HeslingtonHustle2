@@ -3,7 +3,6 @@ package com.heshus.game.screens.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,41 +14,38 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.manager.DayManager;
 import com.heshus.game.manager.Save;
 import com.heshus.game.manager.Score;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.heshus.game.manager.Save.gd;
 
+/**
+ * This {@link Screen} is displayed to the player once they have completed the game.
+ */
 public class GameOverScreen implements Screen {
 
     private final HesHusGame game;
     // New: added the player's score as a Score instance
-    private Score playerScore;
-    private BitmapFont font;
-    private Table table;
-    private TextButton menuBtn;
-    private Label title;
-    private Label scoreLabel;
+    private final Score playerScore;
+    private final BitmapFont font;
+    private final Table table;
+    private final TextButton menuBtn;
+    private final Label title;
+    private final Label scoreLabel;
 
-    private Label streaksLabel;
+    private final Label streaksLabel;
     private Texture buttonTexture;
-    private TextureRegion buttonTextureRegion;
-    private TextureRegionDrawable buttonTextureRegionDrawable;
     private TextButton.TextButtonStyle textButtonStyle;
-    private Stage stage;
+    private final Stage stage;
 
-    private List<Texture> streakTextures;
-    private List<Image> streakImages;
-    private List<String[]> scoreAndStreaks;
+    private final List<Texture> streakTextures;
+    private final List<Image> streakImages;
+    private final List<String[]> scoreAndStreaks;
 
 
     /**
@@ -141,8 +137,8 @@ public class GameOverScreen implements Screen {
 
     private void setButtonStyle() {
         buttonTexture = new Texture("UI/button_up.png");
-        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
-        buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
+        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
+        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
     }
 

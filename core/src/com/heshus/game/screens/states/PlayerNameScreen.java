@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.heshus.game.editor.CustomiseSprite;
 import com.heshus.game.engine.HesHusGame;
 import com.heshus.game.engine.Play;
 
@@ -33,10 +31,7 @@ public class PlayerNameScreen {
     private Texture buttonTexture;
     private TextButton.TextButtonStyle textButtonStyle;
     private final TextField enterName;
-    private final HesHusGame game;
     private final Skin skin;
-    private Label title;
-    private TextButton button;
 
     public static final String SKIN = "UI/uiskin.json";
     public static final String CLICK = "Sounds/switch2.ogg";
@@ -52,15 +47,14 @@ public class PlayerNameScreen {
     public PlayerNameScreen(HesHusGame game, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
         this.stage = new Stage(viewport);
-        this.game = game;
 
         skin = new Skin(Gdx.files.internal(SKIN));
         clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
-        setupFont(.5f);
+        setupFont();
         setButtonStyle();
 
-        title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
-        button = new TextButton("PLAY", textButtonStyle);
+        Label title = new Label("Enter your name:", new Label.LabelStyle(font, Color.WHITE));
+        TextButton button = new TextButton("PLAY", textButtonStyle);
         enterName = new TextField("", skin);
         enterName.setMessageText("Max 10 characters");
         enterName.setScale(0.8f);
@@ -100,11 +94,10 @@ public class PlayerNameScreen {
 
     /**
      * Set up the font for the UI, with a given scale
-     * @param scale The scale of the font
      */
-    private void setupFont(float scale) {
+    private void setupFont() {
         font = new BitmapFont(Gdx.files.internal(FONT), false);
-        font.getData().setScale(scale);
+        font.getData().setScale((float) 0.5);
         font.setColor(Color.BLACK);
     }
 
