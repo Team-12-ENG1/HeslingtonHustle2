@@ -52,7 +52,7 @@ public class LeaderboardScreen {
         clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
         // Load the save file
-        Save.load();
+        Save.load(Save.SCORES);
         highScores = gd.getScores();
         Arrays.sort(highScores, Collections.reverseOrder());
 

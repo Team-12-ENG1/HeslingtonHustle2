@@ -33,13 +33,13 @@ public class Save {
     /**
      * Load the data from the JSON file (if it exists) and give it as the {@link GameData}.
      */
-    public static void load() {
+    public static void load(String path) {
         try {
             if (!saveFileExists()) {
                 init();
                 return;
             }
-            FileHandle in = Gdx.files.local(SCORES);
+            FileHandle in = Gdx.files.local(path);
             Json json = new Json();
             gd = json.fromJson(GameData.class, in);
         }
@@ -56,6 +56,6 @@ public class Save {
 
     public static void init() {
         gd = new GameData();
-        save();
+        save(SCORES);
     }
 }
