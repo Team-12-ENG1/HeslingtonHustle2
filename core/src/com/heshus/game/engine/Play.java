@@ -269,7 +269,11 @@ public class Play implements Screen {
                 float timeY = camera.position.y - (camera.viewportHeight / 2) + 16;
                 font.setColor(Color.RED);
                 int time = (int) game.dayManager.getTime();
-                font.draw(renderer.getBatch(), time + ":00", timeX, timeY);
+                if(time == 24){
+                    font.draw(renderer.getBatch(),"00:00", timeX, timeY);
+                }else{
+                    font.draw(renderer.getBatch(), time + ":00", timeX, timeY);
+                }
                 //else { font.draw(renderer.getBatch(), time - 11 +" pm", timeX, timeY); }
 
                 //End of main renderer
