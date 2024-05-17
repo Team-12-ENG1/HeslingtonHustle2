@@ -98,15 +98,15 @@ public class DayManager {
         if(fail){
             return 0;
         }
-        double eat = 3 * overallEatCount;
+        double eat = 1.5 * overallEatCount;
         double study = 5 * overallStudyCount;
-        double rec = 8 * overallRecreationalCount;
+        double rec = 3 * overallRecreationalCount;
 
         eat = applyEatPen(eat);
         study = applyStudyPen(study);
         rec = applyRecPen(rec);
 
-        return (int) (eat + rec + study)/3;
+        return (int) (eat + rec + study);
     }
     /**
      * This applies any penalties relating to the player's eating habits
@@ -132,15 +132,15 @@ public class DayManager {
      * @return The new studying section score after applying possible penalties
      */
     private double applyStudyPen(double study){
-        if(overallStudyCount < 7){
-            return study;
+        if (overallStudyCount != 7) {
+            if (overallStudyCount < 7) {
+                return study;
+            } else if (overallStudyCount <= 11) {
+                study += 20;
+            } else {
+                return 40;
+            }
         }
-        if(overallStudyCount>=8 && overallStudyCount<=11){
-            study += 20;
-        }else{
-            study *= 0.7;
-        }
-        study += 4 * (int)(getUniquePlaces("Study")/7);
         return Math.min((int)study,100);
     }
 

@@ -76,6 +76,8 @@ public class DayManagerTests {
             runDay(dm1, eatArray[i], studyArray1[i], recArray[i]);
             runDay(dm2, eatArray[i], studyArray2[i], recArray[i]);
         }
+        System.out.println(dm1.calculateScore());
+        System.out.println(dm2.calculateScore());
         assertTrue(dm1.calculateScore() > dm2.calculateScore());
     }
 
