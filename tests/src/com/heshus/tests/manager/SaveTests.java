@@ -1,5 +1,6 @@
-package com.heshus.game.manager;
-
+package com.heshus.tests.manager;
+import com.heshus.game.manager.Save;
+import com.heshus.game.manager.GameData;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Application;
@@ -79,7 +80,7 @@ public class SaveTests {
 
         Save.load("testPath");
 
-        assertNotNull(gd); // As init() should be called
+        assertNotNull(gd);
         verify(mockFileHandle, never()).readString();
     }
 
