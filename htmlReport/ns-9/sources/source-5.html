@@ -1,0 +1,218 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SaveTests</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.tests.manager</a>
+</div>
+
+<h1>Coverage Summary for Class: SaveTests (com.heshus.tests.manager)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SaveTests</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (45/45)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.tests.manager;
+&nbsp;import com.heshus.game.manager.Save;
+&nbsp;import com.heshus.game.manager.GameData;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Files;
+&nbsp;import com.badlogic.gdx.Application;
+&nbsp;import com.badlogic.gdx.files.FileHandle;
+&nbsp;import com.badlogic.gdx.utils.Json;
+&nbsp;import com.heshus.tests.GdxTestRunner;
+&nbsp;import org.junit.Before;
+&nbsp;import org.junit.Test;
+&nbsp;import org.junit.runner.RunWith;
+&nbsp;
+&nbsp;import static com.badlogic.gdx.net.HttpRequestBuilder.json;
+&nbsp;import static com.heshus.game.manager.Save.gd;
+&nbsp;import static org.mockito.Mockito.*;
+&nbsp;import static org.junit.Assert.*;
+&nbsp;
+&nbsp;@RunWith(GdxTestRunner.class)
+&nbsp;
+<b class="fc">&nbsp;public class SaveTests {</b>
+&nbsp;
+&nbsp;    //mock objects to simulate the behaviour of real objects in the tests
+&nbsp;    private FileHandle mockFileHandle;
+&nbsp;    private Files mockFiles;
+&nbsp;    private Json mockJson;
+&nbsp;    private GameData mockGameData;
+&nbsp;
+&nbsp;    @Before //Run before each test to set up the necessary objects
+&nbsp;    public void setup() {
+<b class="fc">&nbsp;        mockFileHandle = mock(FileHandle.class);</b>
+<b class="fc">&nbsp;        mockFiles = mock(Files.class);</b>
+<b class="fc">&nbsp;        mockJson = mock(Json.class);</b>
+<b class="fc">&nbsp;        mockGameData = mock(GameData.class);</b>
+<b class="fc">&nbsp;        Application mockApp = mock(Application.class);</b>
+&nbsp;
+<b class="fc">&nbsp;        Gdx.files = mockFiles;</b>
+<b class="fc">&nbsp;        Gdx.app = mockApp;</b>
+<b class="fc">&nbsp;        gd = mockGameData;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void SaveTestSuccess() {
+&nbsp;        /*testing the save method*/
+<b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;
+<b class="fc">&nbsp;        String expectedJsonString = json.toJson(gd);</b>
+&nbsp;
+<b class="fc">&nbsp;        Save.save(&quot;testPath&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        verify(mockFileHandle).writeString(expectedJsonString, false);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void SaveTestException() {
+&nbsp;        /*testing the save method when an Exception occurs*/
+<b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        doThrow(new RuntimeException(&quot;Test Exception&quot;)).when(mockFileHandle).writeString(anyString(), eq(false));</b>
+&nbsp;
+<b class="fc">&nbsp;        Save.save(&quot;testPath&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        verify(Gdx.app).exit();</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void LoadTestSuccess() {
+<b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(true);</b>
+<b class="fc">&nbsp;        when(mockJson.fromJson(eq(GameData.class), eq(mockFileHandle))).thenReturn(mockGameData);</b>
+&nbsp;
+<b class="fc">&nbsp;        Save.load(&quot;testPath&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        assertNotNull(gd);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void LoadTestFileNotExists() {
+<b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(false);</b>
+&nbsp;
+<b class="fc">&nbsp;        Save.load(&quot;testPath&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        assertNotNull(gd);</b>
+<b class="fc">&nbsp;        verify(mockFileHandle, never()).readString();</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void LoadTestException() {
+<b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        doThrow(new RuntimeException(&quot;Test Exception&quot;)).when(mockFileHandle).readString();</b>
+&nbsp;
+<b class="fc">&nbsp;        Save.load(&quot;testPath&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        verify(Gdx.app).exit();</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void SaveFileExistsTest() {
+<b class="fc">&nbsp;        when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        assertTrue(Save.saveFileExists());</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void SaveFileNotExistsTest() {
+<b class="fc">&nbsp;        when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);</b>
+<b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(false);</b>
+&nbsp;
+<b class="fc">&nbsp;        assertFalse(Save.saveFileExists());</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-17 18:07</div>
+</div>
+</body>
+</html>

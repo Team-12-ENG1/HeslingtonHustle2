@@ -1,0 +1,192 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HesHusGame</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.engine</a>
+</div>
+
+<h1>Coverage Summary for Class: HesHusGame (com.heshus.game.engine)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HesHusGame</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.engine;
+&nbsp;
+&nbsp;import com.badlogic.gdx.*;
+&nbsp;import com.badlogic.gdx.graphics.g2d.*;
+&nbsp;//import com.heshus.game.manager.ActivityManager;
+&nbsp;import com.heshus.game.manager.DayManager;
+&nbsp;
+&nbsp;//LUKE IMPORTS
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;
+&nbsp;import com.heshus.game.screens.states.MainMenuScreen;
+&nbsp;
+&nbsp;/**
+&nbsp; * Main class for HesHus, and it extends the Game class from LibGDX
+&nbsp; * manages some of our initial game settings
+&nbsp; */
+<b class="nc">&nbsp;public class HesHusGame extends Game {</b>
+&nbsp;	/**
+&nbsp;	 * the SpriteBatch is used for drawing some of the textures and sprites
+&nbsp;	 */
+&nbsp;	// we can use the HesHusGame as a second central game class for our screens/states
+&nbsp;	public SpriteBatch batch;
+&nbsp;
+&nbsp;	// New: added public attributes storing the player&#39;s name and their eventual score
+&nbsp;	public String playerName;
+&nbsp;	public int score;
+&nbsp;	/**
+&nbsp;	 *  The font used to write text on the screen with LibGDX&#39;s Arial font as
+&nbsp;	 *  default
+&nbsp;	 */
+&nbsp;	public BitmapFont font;
+&nbsp;
+&nbsp;	// New: Added the day manager into the base game class so it can be accessed through the game attributes
+&nbsp;	public DayManager dayManager;
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The Preferences is a hash map that holds certain value
+&nbsp;	 */
+&nbsp;	public static Preferences settings;
+&nbsp;	/**
+&nbsp;	 * This method sets up the initial settings for window size
+&nbsp;	 */
+&nbsp;	public void create() {
+<b class="nc">&nbsp;		batch = new SpriteBatch();</b>
+&nbsp;		// use libGDX&#39;s default Arial font
+<b class="nc">&nbsp;		font = new BitmapFont();</b>
+<b class="nc">&nbsp;		setDefaultPreferences();</b>
+&nbsp;		// adjusts the window size according to requirements
+<b class="nc">&nbsp;		Gdx.graphics.setWindowedMode(settings.getInteger(&quot;windowWidth&quot;), settings.getInteger(&quot;windowHeight&quot;));</b>
+&nbsp;		// setting to the MainMenuScreen
+<b class="nc">&nbsp;		this.setScreen(new MainMenuScreen(this));</b>
+&nbsp;		// New: create an instance of the dayManager for the game&#39;s attribute as well as set the player&#39;s name blank
+<b class="nc">&nbsp;		this.dayManager = new DayManager();</b>
+<b class="nc">&nbsp;		playerName = &quot;&quot;;</b>
+&nbsp;	}
+&nbsp;	/**
+&nbsp;	 * the render method is called by the game loop from the application
+&nbsp;	 */
+&nbsp;	// important!
+&nbsp;	public void render() {
+<b class="nc">&nbsp;		super.render();</b>
+&nbsp;	}
+&nbsp;	/**
+&nbsp;	 * the dispose frees up resource, only called when the game is closing
+&nbsp;	 */
+&nbsp;
+&nbsp;	public void dispose() {
+&nbsp;		// cleans up the Spritebatch resource to prevent memory leaks
+<b class="nc">&nbsp;		batch.dispose();</b>
+&nbsp;		// cleans up the font resource to prevent memory leaks
+<b class="nc">&nbsp;		font.dispose();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Sets the default preferences for the screen
+&nbsp;	 */
+&nbsp;	public void setDefaultPreferences(){
+<b class="nc">&nbsp;		settings = Gdx.app.getPreferences(&quot;userSettings&quot;);</b>
+<b class="nc">&nbsp;		settings.putString(&quot;name&quot;, &quot;bucket&quot;);</b>
+<b class="nc">&nbsp;		settings.putBoolean(&quot;soundOn&quot;, true);</b>
+<b class="nc">&nbsp;		settings.putInteger(&quot;windowWidth&quot;, 1280);</b>
+<b class="nc">&nbsp;		settings.putInteger(&quot;windowHeight&quot;,720);</b>
+<b class="nc">&nbsp;		settings.putBoolean(&quot;isFullScreen&quot;, false);</b>
+<b class="nc">&nbsp;		settings.flush();</b>
+&nbsp;	}
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-17 18:07</div>
+</div>
+</body>
+</html>

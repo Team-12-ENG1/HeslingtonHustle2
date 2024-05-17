@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > LeaderboardScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.screens.states</a>
+</div>
+
+<h1>Coverage Summary for Class: LeaderboardScreen (com.heshus.game.screens.states)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LeaderboardScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/43)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LeaderboardScreen$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/47)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.screens.states;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.audio.Sound;
+&nbsp;import com.badlogic.gdx.graphics.Camera;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputListener;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
+&nbsp;import com.heshus.game.manager.Save;
+&nbsp;import com.heshus.game.manager.Score;
+&nbsp;
+&nbsp;import static com.heshus.game.engine.Play.CLICK;
+&nbsp;import static com.heshus.game.engine.Play.state;
+&nbsp;import static com.heshus.game.manager.Save.gd;
+&nbsp;import java.util.Arrays;
+&nbsp;import java.util.Collections;
+&nbsp;
+<b class="nc">&nbsp;public class LeaderboardScreen {</b>
+&nbsp;    private BitmapFont font;
+&nbsp;    private Stage stage;
+&nbsp;    private Camera camera;
+&nbsp;    private Table table;
+&nbsp;    private Sound clickSound;
+&nbsp;    private final int returnState;
+&nbsp;    private Texture buttonTexture;
+&nbsp;    private TextureRegion buttonTextureRegion;
+&nbsp;    private TextureRegionDrawable buttonTextureRegionDrawable;
+&nbsp;    private TextButton.TextButtonStyle textButtonStyle;
+&nbsp;    private Label title;
+&nbsp;    private TextButton backBtn;
+&nbsp;    private Score[] highScores;
+&nbsp;
+&nbsp;    public static final String CLICK = &quot;Sounds/switch2.ogg&quot;;
+&nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
+&nbsp;    public static final String BUTTON = &quot;UI/button_up.png&quot;;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    public LeaderboardScreen(int returnState, Camera camera, ExtendViewport viewport) {</b>
+<b class="nc">&nbsp;        this.camera = camera;</b>
+<b class="nc">&nbsp;        this.stage = new Stage(viewport);</b>
+<b class="nc">&nbsp;        this.returnState = returnState;</b>
+<b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));</b>
+&nbsp;
+&nbsp;        // Load the save file
+<b class="nc">&nbsp;        Save.load(Save.SCORES);</b>
+<b class="nc">&nbsp;        highScores = gd.getScores();</b>
+<b class="nc">&nbsp;        Arrays.sort(highScores, Collections.reverseOrder());</b>
+&nbsp;
+&nbsp;        // Set up font
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        font.getData().setScale(.5F);</b>
+<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
+&nbsp;
+<b class="nc">&nbsp;        title = new Label(&quot;Leaderboard:&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+&nbsp;
+<b class="nc">&nbsp;        setButtonStyle();</b>
+<b class="nc">&nbsp;        backBtn = new TextButton(&quot;BACK&quot;, textButtonStyle);</b>
+&nbsp;
+<b class="nc">&nbsp;        table = new Table();</b>
+<b class="nc">&nbsp;        stage.addActor(table);</b>
+&nbsp;
+&nbsp;        // Layout the leaderboard
+<b class="nc">&nbsp;        table.add(title).colspan(3).center();</b>
+&nbsp;
+<b class="nc">&nbsp;        for (int i = 0; i &lt; highScores.length; i++) {</b>
+<b class="nc">&nbsp;            Label rankLabel = new Label(String.valueOf(i+1), new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;            Label playerLabel = new Label(highScores[i].getName(), new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;            Label scoreLabel = new Label(String.valueOf(highScores[i].getScore()), new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;            playerLabel.setFontScale(0.3f);</b>
+<b class="nc">&nbsp;            scoreLabel.setFontScale(0.3f);</b>
+<b class="nc">&nbsp;            rankLabel.setFontScale(0.3f);</b>
+&nbsp;
+<b class="nc">&nbsp;            table.row().pad(3, 0, 0, 0);</b>
+<b class="nc">&nbsp;            table.add(rankLabel).left();</b>
+<b class="nc">&nbsp;            table.add(playerLabel).center();</b>
+<b class="nc">&nbsp;            table.add(scoreLabel).right();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        table.row().padTop(6);</b>
+<b class="nc">&nbsp;        table.add(backBtn).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight()).colspan(3);</b>
+&nbsp;
+<b class="nc">&nbsp;        backBtn.addListener(new InputListener() {</b>
+&nbsp;            @Override
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = returnState;</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    private void setButtonStyle() {
+<b class="nc">&nbsp;        buttonTexture = new Texture(BUTTON);</b>
+<b class="nc">&nbsp;        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
+<b class="nc">&nbsp;        buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
+<b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void update() {
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
+<b class="nc">&nbsp;        table.setPosition(camera.position.x, camera.position.y);</b>
+<b class="nc">&nbsp;        stage.draw();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void dispose() {
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        font.dispose();</b>
+<b class="nc">&nbsp;        buttonTexture.dispose();</b>
+<b class="nc">&nbsp;        clickSound.dispose();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-17 18:07</div>
+</div>
+</body>
+</html>
