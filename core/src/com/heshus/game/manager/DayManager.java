@@ -138,7 +138,7 @@ public class DayManager {
         if(overallStudyCount>=8 && overallStudyCount<=11){
             study += 20;
         }else{
-            study *= 0.7;
+            return 40;
         }
         study += 4 * (int)(getUniquePlaces("Study")/7);
         return Math.min((int)study,100);
