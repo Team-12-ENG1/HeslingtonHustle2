@@ -2,13 +2,12 @@ package com.heshus.tests.manager;
 
 import com.heshus.game.manager.GameData;
 import com.heshus.game.manager.Score;
-import com.heshus.tests.GdxTestRunner;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 
 import static org.junit.Assert.*;
 
-@RunWith(GdxTestRunner.class)
+
 public class GameDataTests {
 
     @Test

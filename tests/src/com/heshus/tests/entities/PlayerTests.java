@@ -20,6 +20,10 @@ import static org.junit.Assert.assertTrue;
 public class PlayerTests {
     public final static String TESTMAP = "Testing/testmap.tmx";
     public final static String PLAYERSPRITE = "Testing/player-1.png";
+/*
+* The following movement tests are here to test for
+* UR_CONTROL and FR_CONTROL
+* */
 
     @Test
     public void testAKeyMovement() {

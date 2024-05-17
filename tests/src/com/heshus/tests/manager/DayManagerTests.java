@@ -5,7 +5,6 @@ import com.heshus.game.manager.DayManager;
 import com.heshus.tests.GdxTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import java.util.*;
 
 import java.util.List;
 
@@ -24,7 +23,10 @@ public class DayManagerTests {
 
     }
 
-    //tests that gameover is set to true after the 7th day
+    /*
+     * Tests that gameover is set to true after the 7th day
+     * UR_SLEEP_FEATURE_TASK
+     */
     @Test
     public void gameOverAfterLastDay(){
         DayManager dm = new DayManager();
@@ -36,6 +38,8 @@ public class DayManagerTests {
         assertTrue(dm.getGameOver());
     }
 
+
+    // Following are tests for FR_SCORE
     @Test
     public void missTwoStudyDays() {
         int[] eatArray = {3, 3, 3, 3, 3, 3, 3};
@@ -109,6 +113,7 @@ public class DayManagerTests {
     }
 
 
+    //Test for FR_STREAKS
     @Test
     public void getStreaksTest(){
 
