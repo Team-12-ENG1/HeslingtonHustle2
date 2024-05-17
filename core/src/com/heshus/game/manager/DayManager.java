@@ -140,7 +140,7 @@ public class DayManager {
         }else{
             study *= 0.7;
         }
-        study = study * (int)(getUniquePlaces("Study")/7);
+        study += 4 * (int)(getUniquePlaces("Study")/7);
         return Math.min((int)study,100);
     }
 
