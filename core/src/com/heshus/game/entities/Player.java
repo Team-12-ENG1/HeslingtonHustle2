@@ -86,13 +86,23 @@ public class Player extends Sprite implements InputProcessor {
      */
     public void updateMotion() {
         float speed = 200;
-        if (leftMove) {velocity.x = -speed;}
-        else if (rightMove) {velocity.x = speed;}
-        else {velocity.x = 0;}
+        float xDelta = 0;
+        float yDelta = 0;
 
-        if (upMove) {velocity.y = speed;}
-        else if (downMove) {velocity.y = -speed;}
-        else {velocity.y = 0;}
+
+        if (leftMove) {xDelta += -speed;}
+        else if (rightMove) {xDelta += speed;}
+        else {xDelta = 0;}
+
+        if (upMove) {yDelta += speed;}
+        else if (downMove) {yDelta += -speed;}
+        else {yDelta = 0;}
+        if(xDelta != 0 && yDelta !=0){
+            xDelta /= (float)Math.sqrt(2);
+            yDelta /= (float)Math.sqrt(2);
+        }
+        velocity.x = xDelta;
+        velocity.y = yDelta;
     }
 
     /**
