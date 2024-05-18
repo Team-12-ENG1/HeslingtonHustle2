@@ -138,8 +138,37 @@ public class PlayerTests {
                  0, player.getVelocity().y,0.1);
     }
 
+    @Test
+    public void xCollision(){
+        Player player = init();
+        player.setX(118);
+        player.setY(76);
+        player.keyDown(Input.Keys.D);
+        player.update(0.01f);
+        assertEquals(118, player.getX(), 0.01);
+    }
+    @Test
+    public void yCollision(){
+        Player player = init();
+        player.setX(76);
+        player.setY(119);
+        player.keyDown(Input.Keys.W);
+        player.update(0.01f);
+        assertEquals(119, player.getY(), 0.01);
+    }
+
+    @Test
+    public void collisionLargeDelta(){
+        Player player = init();
+        player.setX(118);
+        player.setY(76);
+        player.keyDown(Input.Keys.D);
+        player.update(0.1f);
+        assertEquals(118, player.getX(), 0.01);
+    }
+
     private Player init(){
         TiledMap map = new TmxMapLoader().load(TESTMAP);
-        return new Player(new Sprite(new Texture(PLAYERSPRITE)),(TiledMapTileLayer) map.getLayers().get(0));
+        return new Player(new Sprite(new Texture(PLAYERSPRITE)),(TiledMapTileLayer) map.getLayers().get("COLLISIONS"));
     }
 }
