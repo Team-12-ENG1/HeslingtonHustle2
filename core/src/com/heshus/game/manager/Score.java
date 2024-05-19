@@ -6,7 +6,7 @@ package com.heshus.game.manager;
  */
 public class Score implements Comparable<Score> {
     private String name;
-    private int score;
+    private final int score;
 
     // Zero-argument constructor for Json
     public Score() {
@@ -20,10 +20,16 @@ public class Score implements Comparable<Score> {
     }
 
     // Getters and setters for the attributes
-    public String getName() {return name;}
-    public void setName(String name) {this.name = name;}
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getScore() {return score;}
+    public int getScore() {
+        return score;
+    }
 
     // This is used when sorting all the scores created in the game
     @Override

@@ -2,13 +2,9 @@ package com.heshus.game.engine;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.*;
-//import com.heshus.game.manager.ActivityManager;
 import com.heshus.game.manager.DayManager;
-
-//LUKE IMPORTS
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import com.heshus.game.screens.states.MainMenuScreen;
 
 /**
@@ -57,14 +53,14 @@ public class HesHusGame extends Game {
 	/**
 	 * the render method is called by the game loop from the application
 	 */
-	// important!
 	public void render() {
 		super.render();
 	}
-	/**
-	 * the dispose frees up resource, only called when the game is closing
-	 */
 
+
+	/**
+	 * Dispose of resources to free up memory
+	 */
 	public void dispose() {
 		// cleans up the Spritebatch resource to prevent memory leaks
 		batch.dispose();

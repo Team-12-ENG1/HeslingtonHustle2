@@ -31,8 +31,8 @@ import com.heshus.game.engine.Play;
 import static com.heshus.game.engine.Play.*;
 
 /**
- * Displays buttons to quit, start new game, change settings
- * Also does zoomed in scrolling of our map :)
+ * Displays buttons to quit, start new game, change settings with a background of the game map.
+ * It implements {@link Screen} to display it to the user.
  */
 public class MainMenuScreen implements Screen {
 
@@ -40,7 +40,6 @@ public class MainMenuScreen implements Screen {
     private final ExtendViewport extendViewport;
     private final OrthographicCamera camera;
     private final OrthogonalTiledMapRenderer renderer;
-    private final TiledMap map;
     int mapPixelWidth;
     int mapPixelHeight;
     BitmapFont font;
@@ -60,14 +59,12 @@ public class MainMenuScreen implements Screen {
     private final SettingsMenu settingsMenu;
     private final PlayerNameScreen playerNameScreen;
     private final CustomiseSprite customiseSprite;
-
+    private final LeaderboardScreen leaderboardScreen;
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
     private final TextButton gotItButton;
     private boolean isNewGameClicked;
-    private LeaderboardScreen leaderboardScreen;
-
     public final static String FONT = "Fonts/monogram/pixel.fnt";
     public final static String BUTTON = "UI/button_up.png";
     public final static String BUTTON_WIDE = "UI/wide_button.png";
@@ -82,7 +79,7 @@ public class MainMenuScreen implements Screen {
         state = GAME_MAINMENU;
         //Map for background initialisation
 
-        map = new TmxMapLoader().load(Play.MAP);
+        TiledMap map = new TmxMapLoader().load(Play.MAP);
 
         renderer = new OrthogonalTiledMapRenderer(map, 1);
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);

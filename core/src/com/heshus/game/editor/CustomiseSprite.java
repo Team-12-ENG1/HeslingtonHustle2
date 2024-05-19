@@ -19,19 +19,15 @@ import com.heshus.game.engine.Play;
 import java.util.ArrayList;
 
 public class CustomiseSprite {
-    private HesHusGame game;
-    private Camera camera;
-    private Stage stage;
-    private Sound clickSound;
+    private final HesHusGame game;
+    private final Camera camera;
+    private final Stage stage;
+    private final Sound clickSound;
     private BitmapFont font;
-    private Texture leftarrowTexture;
-    private Texture rightarrowTexture;
-    private Image leftarrow;
-    private Image rightarrow;
-    private Image character;
-    private Label title;
-    private Label prompt;
-    private Table table;
+    private final Texture leftarrowTexture;
+    private final Texture rightarrowTexture;
+    private final Image character;
+    private final Table table;
 
     public static final String CLICK_SOUND = "Sounds/switch2.ogg";
     public static final String FONT = "Fonts/monogram/pixel.fnt";
@@ -42,9 +38,9 @@ public class CustomiseSprite {
 
     boolean validPlayer = false;
 
-    //this is the default sprite selected
-    //importantly, this number points to an ARRAY INDEX, not the number in the name of the .png file
-    //so for player-1 to player-6 it ranges from 0 TO 5 not 1 to 6
+    // this is the default sprite selected
+    // importantly, this number points to an ARRAY INDEX, not the number in the name of the .png file
+    // so for player-1 to player-6 it ranges from 0 TO 5 not 1 to 6
     private int playerSelection = 3;
     private final int totalPlayerSpriteChoices = 6;
 
@@ -63,7 +59,7 @@ public class CustomiseSprite {
 
         Gdx.input.setInputProcessor(stage);
         clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK_SOUND));
-        setupFont(.5f);
+        setupFont();
 
         //set up arrow key textures
         leftarrowTexture = new Texture(LEFT_ARROW);
@@ -71,15 +67,15 @@ public class CustomiseSprite {
 
         //add all player textures to the textureList
         for (int i = 0; i < totalPlayerSpriteChoices; i++) {
-            textureList.add(new Texture("Icons/player-" + Integer.toString(i + 1) +".png"));
+            textureList.add(new Texture("Icons/player-" + (i + 1) +".png"));
         }
 
         // Begin making UI layout
-        title = new Label("CHOOSE A PLAYER:", new Label.LabelStyle(font, Color.WHITE));
-        prompt = new Label("Press ENTER to start", new Label.LabelStyle(font, Color.WHITE));
+        Label title = new Label("CHOOSE A PLAYER:", new Label.LabelStyle(font, Color.WHITE));
+        Label prompt = new Label("Press ENTER to start", new Label.LabelStyle(font, Color.WHITE));
 
-        leftarrow = new Image(leftarrowTexture);
-        rightarrow = new Image(rightarrowTexture);
+        Image leftarrow = new Image(leftarrowTexture);
+        Image rightarrow = new Image(rightarrowTexture);
 
         character = new Image(textureList.get(playerSelection));
 
@@ -98,11 +94,10 @@ public class CustomiseSprite {
 
     /**
      * Set up the font for the UI, with a given scale
-     * @param scale The scale of the font
      */
-    private void setupFont(float scale) {
+    private void setupFont() {
         font = new BitmapFont(Gdx.files.internal(FONT), false);
-        font.getData().setScale(scale);
+        font.getData().setScale((float) 0.5);
     }
 
     /**

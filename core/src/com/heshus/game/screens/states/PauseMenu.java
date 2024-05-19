@@ -22,34 +22,27 @@ import static com.heshus.game.engine.Play.*;
  * Loads, draws and controls buttons to make a pause menu
  */
 public class PauseMenu{
-    private Stage stage;
-    private Texture buttonTexture;
-    private TextureRegion buttonTextureRegion;
-    private TextureRegionDrawable buttonTextureRegionDrawable;
-    private TextButton resumeButton;
-    private TextButton quitButton;
-    private TextButton settingsButton;
-    private Table table;
-    private int buttonWidth;
-    private int buttonHeight;
-    private float buttonScale;
+    private final Stage stage;
+    private final Texture buttonTexture;
+    private final TextButton resumeButton;
+    private final TextButton quitButton;
+    private final TextButton settingsButton;
+    private final Table table;
     private Table areYouSure;
-    private Sound clickSound;
-    private BitmapFont font;
-
-    /**
-     *
-     * @param viewport
-     * @param camera
-     */
+    private final Sound clickSound;
 
     public static final String CLICK = "Sounds/switch2.ogg";
     public static final String FONT = "Fonts/monogram/pixel.fnt";
     public static final String BUTTON = "UI/button_up.png";
 
+    /**
+     * Create the pause menu, which is used in the play game
+     * @param viewport
+     * @param camera
+     */
     public PauseMenu(ExtendViewport viewport, Camera camera) {
         //set up font
-        font = new BitmapFont(Gdx.files.internal(FONT), false);
+        BitmapFont font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(1.5F);
         font.setColor(Color.BLACK);
         //sound on click
@@ -58,13 +51,13 @@ public class PauseMenu{
         //BUTTONS
         //set textbuttonstyle
         buttonTexture = new Texture(BUTTON);
-        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
-        buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );
+        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
+        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font);
         //set button sizes
-        buttonScale = 2;
-        buttonHeight = (int) (buttonTexture.getHeight()*buttonScale);
-        buttonWidth = (int) (buttonTexture.getWidth()*buttonScale);
+        float buttonScale = 2;
+        int buttonHeight = (int) (buttonTexture.getHeight() * buttonScale);
+        int buttonWidth = (int) (buttonTexture.getWidth() * buttonScale);
 
         //Resume button:
         resumeButton = new TextButton("RESUME!!", textButtonStyle);

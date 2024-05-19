@@ -18,26 +18,22 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.heshus.game.manager.Save;
 import com.heshus.game.manager.Score;
 
-import static com.heshus.game.engine.Play.CLICK;
 import static com.heshus.game.engine.Play.state;
 import static com.heshus.game.manager.Save.gd;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * This creates a view of the leaderboard, which is displayed to the user when clicking the "Leaderboard" button
+ */
 public class LeaderboardScreen {
-    private BitmapFont font;
-    private Stage stage;
-    private Camera camera;
-    private Table table;
-    private Sound clickSound;
-    private final int returnState;
+    private final BitmapFont font;
+    private final Stage stage;
+    private final Camera camera;
+    private final Table table;
+    private final Sound clickSound;
     private Texture buttonTexture;
-    private TextureRegion buttonTextureRegion;
-    private TextureRegionDrawable buttonTextureRegionDrawable;
     private TextButton.TextButtonStyle textButtonStyle;
-    private Label title;
-    private TextButton backBtn;
-    private Score[] highScores;
 
     public static final String CLICK = "Sounds/switch2.ogg";
     public static final String FONT = "Fonts/monogram/pixel.fnt";
@@ -48,12 +44,11 @@ public class LeaderboardScreen {
     public LeaderboardScreen(int returnState, Camera camera, ExtendViewport viewport) {
         this.camera = camera;
         this.stage = new Stage(viewport);
-        this.returnState = returnState;
         clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));
 
         // Load the save file
         Save.load(Save.SCORES);
-        highScores = gd.getScores();
+        Score[] highScores = gd.getScores();
         Arrays.sort(highScores, Collections.reverseOrder());
 
         // Set up font
@@ -61,10 +56,10 @@ public class LeaderboardScreen {
         font.getData().setScale(.5F);
         font.setColor(Color.BLACK);
 
-        title = new Label("Leaderboard:", new Label.LabelStyle(font, Color.WHITE));
+        Label title = new Label("Leaderboard:", new Label.LabelStyle(font, Color.WHITE));
 
         setButtonStyle();
-        backBtn = new TextButton("BACK", textButtonStyle);
+        TextButton backBtn = new TextButton("BACK", textButtonStyle);
 
         table = new Table();
         stage.addActor(table);
@@ -101,8 +96,8 @@ public class LeaderboardScreen {
 
     private void setButtonStyle() {
         buttonTexture = new Texture(BUTTON);
-        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
-        buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
+        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
+        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
     }
 

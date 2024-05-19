@@ -1,9 +1,7 @@
 package com.heshus.game.manager;
 
 import com.heshus.game.engine.Play;
-
 import java.util.*;
-
 import static com.heshus.game.engine.Play.GAME_OVER;
 
 /**
@@ -26,7 +24,7 @@ public class DayManager {
     private int daysOfNoStudy = 0;
     private boolean fail = false;
 
-    private Dictionary<String,Integer> streakTracker;
+    private final Dictionary<String,Integer> streakTracker;
 
     public static Dictionary<Integer,Dictionary<String,Integer>> statsByDay;
 
@@ -51,7 +49,7 @@ public class DayManager {
         int dayNum = currentDay.getDayNumber();
         Dictionary<String,Integer> summary = currentDay.summariseDay();
 
-        //if statement checks for the fail condition of not studying two days in a row
+        // if statement checks for the fail condition of not studying two days in a row
         if(summary.get("study") == 0){
             daysOfNoStudy++;
         }else{
@@ -60,7 +58,7 @@ public class DayManager {
         if(daysOfNoStudy > 1){
             fail = true;
         }
-        //Adds the output of the summary function into the dictionary containing the summary for each day
+        // Adds the output of the summary function into the dictionary containing the summary for each day
         statsByDay.put(dayNum, summary);
         if(dayNum < 7){
             currentDay = new Day(dayNum+1,8,100);
@@ -104,15 +102,15 @@ public class DayManager {
         if(fail){
             return 0;
         }
-        double eat = 3 * overallEatCount;
+        double eat = 1.5 * overallEatCount;
         double study = 5 * overallStudyCount;
-        double rec = 8 * overallRecreationalCount;
+        double rec = 3 * overallRecreationalCount;
 
         eat = applyEatPen(eat);
         study = applyStudyPen(study);
         rec = applyRecPen(rec);
 
-        return (int) (eat + rec + study)/3;
+        return (int) (eat + rec + study);
     }
     /**
      * This applies any penalties relating to the player's eating habits
@@ -138,15 +136,15 @@ public class DayManager {
      * @return The new studying section score after applying possible penalties
      */
     private double applyStudyPen(double study){
-        if(overallStudyCount < 7){
-            return study;
+        if (overallStudyCount != 7) {
+            if (overallStudyCount < 7) {
+                return study;
+            } else if (overallStudyCount <= 11) {
+                study += 20;
+            } else {
+                return 40;
+            }
         }
-        if(overallStudyCount>=8 && overallStudyCount<=11){
-            study += 20;
-        }else{
-            study *= 0.7;
-        }
-        study = study * (int)(getUniquePlaces("Study")/7);
         return Math.min((int)study,100);
     }
 
@@ -213,7 +211,6 @@ public class DayManager {
     }
     public boolean getGameOver() { return this.gameOver; }
     public void setGameOver(boolean state) { this.gameOver = state; }
-
     public int getDayNumber() {
         return currentDay.getDayNumber();
     }
