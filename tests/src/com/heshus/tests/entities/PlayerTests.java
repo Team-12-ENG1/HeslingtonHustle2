@@ -27,35 +27,35 @@ public class PlayerTests {
 
     @Test
     public void testAKeyMovement() {
-        testMovementX(Input.Keys.A, -200);
+        testMovementX(Input.Keys.A, -4);
     }
     @Test
     public void testDKeyMovement(){
-        testMovementX(Input.Keys.D, 200);
+        testMovementX(Input.Keys.D, 4);
     }
     @Test
     public void testLeftKeyMovement(){
-        testMovementX(Input.Keys.LEFT, -200);
+        testMovementX(Input.Keys.LEFT, -4);
     }
     @Test
     public void testRightKeyMovement(){
-        testMovementX(Input.Keys.RIGHT, 200);
+        testMovementX(Input.Keys.RIGHT, 4);
     }
     @Test
     public void testWKeyMovement(){
-        testMovementY(Input.Keys.W, 200);
+        testMovementY(Input.Keys.W, 4);
     }
     @Test
     public void testUpKeyMovement(){
-        testMovementY(Input.Keys.UP, 200);
+        testMovementY(Input.Keys.UP, 4);
     }
     @Test
     public void testSKeyMovement(){
-        testMovementY(Input.Keys.S, -200);
+        testMovementY(Input.Keys.S, -4);
     }
     @Test
     public void testDownKeyMovement(){
-        testMovementY(Input.Keys.DOWN, -200);
+        testMovementY(Input.Keys.DOWN, -4);
     }
 
     @Test
