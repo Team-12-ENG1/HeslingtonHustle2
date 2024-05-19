@@ -45,14 +45,22 @@ public class DayTest {
     }
     //checks the method returns the correct string after entering the time
     @Test
-    public void convertTimeTest(){
+    public void convertTimeMorning(){
         Day day = new Day(1,8,100);
         assertEquals("morning",day.convertTime((float)8.0));
-        Day day1 = new Day(1,12,100);
-        assertEquals("afternoon",day1.convertTime((float)12.0));
-        Day day2 = new Day(1,17,100);
-        assertEquals("evening",day2.convertTime((float)17.0));
 
+    }
+
+    @Test
+    public void convertTimeAfternoon(){
+        Day day = new Day(1,12,100);
+        assertEquals("afternoon",day.convertTime((float)12.0));
+    }
+
+    @Test
+    public void convertTimeEvening(){
+        Day day = new Day(1,17,100);
+        assertEquals("evening",day.convertTime((float)17.0));
     }
 
 }
