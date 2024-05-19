@@ -63,14 +63,25 @@ public class Player extends Sprite implements InputProcessor {
         updateMotion();
 
         //  COLLISION DETECTION
-        int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
-        int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
-        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
-            setX(getX() + velocity.x * delta);
-            setY(getY() + velocity.y * delta);
+
+        int safeMove = 0;
+        for(int i = 1; i <= Math.ceil(delta); i++){
+            int cellX = (int) (getX() + (velocity.x * i) + this.getWidth()/2)/16;
+            int cellY = (int) (getY() + (velocity.y * i) + this.getHeight()/2)/16;
+            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
+            if(cell != null && cell.getTile().getProperties().containsKey("collision")) {
+                break;
+            }
+            safeMove++;
+
         }
+        setX(getX() + velocity.x * safeMove);
+        setY(getY() + velocity.y * safeMove);
+//        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
+//            setX(getX() + velocity.x * delta);
+//            setY(getY() + velocity.y * delta);
+//        }
     }
 
     public Vector2 getVelocity() {
@@ -85,7 +96,7 @@ public class Player extends Sprite implements InputProcessor {
      * Update the players motion (velocity) depending on their movement direction
      */
     public void updateMotion() {
-        float speed = 200;
+        float speed = 4;
         float xDelta = 0;
         float yDelta = 0;
 

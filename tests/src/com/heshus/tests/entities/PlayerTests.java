@@ -27,35 +27,35 @@ public class PlayerTests {
 
     @Test
     public void testAKeyMovement() {
-        testMovementX(Input.Keys.A, -200);
+        testMovementX(Input.Keys.A, -4);
     }
     @Test
     public void testDKeyMovement(){
-        testMovementX(Input.Keys.D, 200);
+        testMovementX(Input.Keys.D, 4);
     }
     @Test
     public void testLeftKeyMovement(){
-        testMovementX(Input.Keys.LEFT, -200);
+        testMovementX(Input.Keys.LEFT, -4);
     }
     @Test
     public void testRightKeyMovement(){
-        testMovementX(Input.Keys.RIGHT, 200);
+        testMovementX(Input.Keys.RIGHT, 4);
     }
     @Test
     public void testWKeyMovement(){
-        testMovementY(Input.Keys.W, 200);
+        testMovementY(Input.Keys.W, 4);
     }
     @Test
     public void testUpKeyMovement(){
-        testMovementY(Input.Keys.UP, 200);
+        testMovementY(Input.Keys.UP, 4);
     }
     @Test
     public void testSKeyMovement(){
-        testMovementY(Input.Keys.S, -200);
+        testMovementY(Input.Keys.S, -4);
     }
     @Test
     public void testDownKeyMovement(){
-        testMovementY(Input.Keys.DOWN, -200);
+        testMovementY(Input.Keys.DOWN, -4);
     }
 
     @Test
@@ -66,9 +66,9 @@ public class PlayerTests {
         player.update(0.01f);
         Vector2 vel = player.getVelocity();
         assertTrue("The player moves diagonally when W and D are pressed",
-                (vel.x>100&&vel.y>100));
-        assertEquals("The player moves diagonally at a speed of 200",
-                200, vel.len(), 5);
+                (vel.x>2&&vel.y>2));
+        assertEquals("The player moves diagonally at a speed of 4",
+                4, vel.len(), 0.05);
     }
     @Test
     public void testDiagonalMovementWA(){
@@ -78,9 +78,9 @@ public class PlayerTests {
         player.update(0.01f);
         Vector2 vel = player.getVelocity();
         assertTrue("The player moves diagonally when W and A are pressed",
-                (vel.x<-100&&vel.y>100));
-        assertEquals("The player moves diagonally at a speed of 200",
-                200, vel.len(), 5);
+                (vel.x<-2&&vel.y>2));
+        assertEquals("The player moves diagonally at a speed of 4",
+                4, vel.len(), 5);
     }
     @Test
     public void testDiagonalMovementSA(){
@@ -90,9 +90,9 @@ public class PlayerTests {
         player.update(0.01f);
         Vector2 vel = player.getVelocity();
         assertTrue("The player moves diagonally when S and A are pressed",
-                (vel.x<-100&&vel.y<-100));
-        assertEquals("The player moves diagonally at a speed of 200",
-                200, vel.len(), 5);
+                (vel.x<-2&&vel.y<-2));
+        assertEquals("The player moves diagonally at a speed of 4",
+                4, vel.len(), 0.05);
     }
     @Test
     public void testDiagonalMovementSD(){
@@ -102,9 +102,9 @@ public class PlayerTests {
         player.update(0.01f);
         Vector2 vel = player.getVelocity();
         assertTrue("The player moves diagonally when S and D are pressed",
-                (vel.x>100&&vel.y<-100));
-        assertEquals("The player moves diagonally at a speed of 200",
-                200, vel.len(), 5);
+                (vel.x>2 && vel.y<-2));
+        assertEquals("The player moves diagonally at a speed of 4",
+                4, vel.len(), 0.05);
     }
 
 
