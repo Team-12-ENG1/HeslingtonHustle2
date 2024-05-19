@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > HesHusGame</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -79,13 +79,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import com.badlogic.gdx.*;
 &nbsp;import com.badlogic.gdx.graphics.g2d.*;
-&nbsp;//import com.heshus.game.manager.ActivityManager;
 &nbsp;import com.heshus.game.manager.DayManager;
-&nbsp;
-&nbsp;//LUKE IMPORTS
 &nbsp;import com.badlogic.gdx.Gdx;
 &nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-&nbsp;
 &nbsp;import com.heshus.game.screens.states.MainMenuScreen;
 &nbsp;
 &nbsp;/**
@@ -134,14 +130,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	/**
 &nbsp;	 * the render method is called by the game loop from the application
 &nbsp;	 */
-&nbsp;	// important!
 &nbsp;	public void render() {
 <b class="nc">&nbsp;		super.render();</b>
 &nbsp;	}
-&nbsp;	/**
-&nbsp;	 * the dispose frees up resource, only called when the game is closing
-&nbsp;	 */
 &nbsp;
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Dispose of resources to free up memory
+&nbsp;	 */
 &nbsp;	public void dispose() {
 &nbsp;		// cleans up the Spritebatch resource to prevent memory leaks
 <b class="nc">&nbsp;		batch.dispose();</b>
@@ -186,7 +182,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

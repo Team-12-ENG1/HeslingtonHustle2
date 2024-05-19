@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > GameOverScreen</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -34,6 +34,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
@@ -52,7 +56,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/65)
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/62)
   </span>
 </td>
 </tr>
@@ -90,7 +102,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/71)
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/68)
   </span>
 </td>
 </tr>
@@ -106,7 +126,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.badlogic.gdx.Gdx;
 &nbsp;import com.badlogic.gdx.Screen;
 &nbsp;import com.badlogic.gdx.graphics.Color;
-&nbsp;import com.badlogic.gdx.graphics.OrthographicCamera;
 &nbsp;import com.badlogic.gdx.graphics.Texture;
 &nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
 &nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -118,41 +137,38 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-&nbsp;import com.badlogic.gdx.utils.Align;
 &nbsp;import com.badlogic.gdx.utils.ScreenUtils;
 &nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
-&nbsp;import com.badlogic.gdx.utils.viewport.Viewport;
 &nbsp;import com.heshus.game.engine.HesHusGame;
 &nbsp;import com.heshus.game.manager.DayManager;
 &nbsp;import com.heshus.game.manager.Save;
 &nbsp;import com.heshus.game.manager.Score;
-&nbsp;
 &nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
-&nbsp;
 &nbsp;import static com.heshus.game.manager.Save.gd;
 &nbsp;
+&nbsp;/**
+&nbsp; * This {@link Screen} is displayed to the player once they have completed the game.
+&nbsp; */
 <b class="nc">&nbsp;public class GameOverScreen implements Screen {</b>
 &nbsp;
 &nbsp;    private final HesHusGame game;
 &nbsp;    // New: added the player&#39;s score as a Score instance
-&nbsp;    private Score playerScore;
-&nbsp;    private BitmapFont font;
-&nbsp;    private Table table;
-&nbsp;    private TextButton menuBtn;
-&nbsp;    private Label title;
-&nbsp;    private Label scoreLabel;
+&nbsp;    private final Score playerScore;
+&nbsp;    private final BitmapFont font;
+&nbsp;    private final Table table;
+&nbsp;    private final TextButton menuBtn;
+&nbsp;    private final Label title;
+&nbsp;    private final Label scoreLabel;
 &nbsp;
-&nbsp;    private Label streaksLabel;
+&nbsp;    private final Label streaksLabel;
 &nbsp;    private Texture buttonTexture;
-&nbsp;    private TextureRegion buttonTextureRegion;
-&nbsp;    private TextureRegionDrawable buttonTextureRegionDrawable;
 &nbsp;    private TextButton.TextButtonStyle textButtonStyle;
-&nbsp;    private Stage stage;
+&nbsp;    private final Stage stage;
 &nbsp;
-&nbsp;    private List&lt;Texture&gt; streakTextures;
-&nbsp;    private List&lt;Image&gt; streakImages;
-&nbsp;    private List&lt;String[]&gt; scoreAndStreaks;
+&nbsp;    private final List&lt;Texture&gt; streakTextures;
+&nbsp;    private final List&lt;Image&gt; streakImages;
+&nbsp;    private final List&lt;String[]&gt; scoreAndStreaks;
 &nbsp;
 &nbsp;    public final static String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
 &nbsp;    public final static String BUTTON = &quot;UI/button_up.png&quot;;
@@ -174,11 +190,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        this.streakTextures = new ArrayList&lt;&gt;();</b>
 <b class="nc">&nbsp;        for(String[] scoreAndStreak : this.scoreAndStreaks) {</b>
 <b class="nc">&nbsp;            streakTextures.add(new Texture(ICONS + scoreAndStreak[1]));</b>
-<b class="nc">&nbsp;        }</b>
+&nbsp;        }
 <b class="nc">&nbsp;        this.streakImages = new ArrayList&lt;&gt;();</b>
 <b class="nc">&nbsp;        for(Texture streakTexture: streakTextures){</b>
 <b class="nc">&nbsp;            streakImages.add(new Image(streakTexture));</b>
-<b class="nc">&nbsp;        }</b>
+&nbsp;        }
 &nbsp;        // Set up font
 <b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
 <b class="nc">&nbsp;        font.getData().setScale(.5F);</b>
@@ -247,8 +263,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    private void setButtonStyle() {
 <b class="nc">&nbsp;        buttonTexture = new Texture(BUTTON);</b>
-<b class="nc">&nbsp;        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
-<b class="nc">&nbsp;        buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
+<b class="nc">&nbsp;        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
+<b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
 <b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);</b>
 &nbsp;    }
 &nbsp;
@@ -279,7 +295,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        stage.dispose();</b>
 <b class="nc">&nbsp;        for(Texture streak: streakTextures){</b>
 <b class="nc">&nbsp;            streak.dispose();</b>
-<b class="nc">&nbsp;        }</b>
+&nbsp;        }
 &nbsp;    }
 &nbsp;}
 </code>
@@ -305,7 +321,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

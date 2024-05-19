@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > Score</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -60,10 +60,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    50%
+    46.2%
   </span>
   <span class="absValue">
-    (6/12)
+    (6/13)
   </span>
 </td>
 </tr>
@@ -83,7 +83,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp; */
 &nbsp;public class Score implements Comparable&lt;Score&gt; {
 &nbsp;    private String name;
-&nbsp;    private int score;
+&nbsp;    private final int score;
 &nbsp;
 &nbsp;    // Zero-argument constructor for Json
 <b class="nc">&nbsp;    public Score() {</b>
@@ -97,10 +97,16 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    // Getters and setters for the attributes
-<b class="nc">&nbsp;    public String getName() {return name;}</b>
-<b class="nc">&nbsp;    public void setName(String name) {this.name = name;}</b>
+&nbsp;    public String getName() {
+<b class="nc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;    public void setName(String name) {
+<b class="nc">&nbsp;        this.name = name;</b>
+<b class="nc">&nbsp;    }</b>
 &nbsp;
-<b class="fc">&nbsp;    public int getScore() {return score;}</b>
+&nbsp;    public int getScore() {
+<b class="fc">&nbsp;        return score;</b>
+&nbsp;    }
 &nbsp;
 &nbsp;    // This is used when sorting all the scores created in the game
 &nbsp;    @Override
@@ -131,7 +137,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

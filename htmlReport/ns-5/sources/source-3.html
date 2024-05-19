@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > DayManager</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -37,6 +37,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
@@ -60,6 +64,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (32/36)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
     97%
   </span>
   <span class="absValue">
@@ -78,9 +90,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.manager;
 &nbsp;
 &nbsp;import com.heshus.game.engine.Play;
-&nbsp;
 &nbsp;import java.util.*;
-&nbsp;
 &nbsp;import static com.heshus.game.engine.Play.GAME_OVER;
 &nbsp;
 &nbsp;/**
@@ -103,7 +113,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    private int daysOfNoStudy = 0;</b>
 <b class="fc">&nbsp;    private boolean fail = false;</b>
 &nbsp;
-&nbsp;    private Dictionary&lt;String,Integer&gt; streakTracker;
+&nbsp;    private final Dictionary&lt;String,Integer&gt; streakTracker;
 &nbsp;
 &nbsp;    public static Dictionary&lt;Integer,Dictionary&lt;String,Integer&gt;&gt; statsByDay;
 &nbsp;
@@ -128,7 +138,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        int dayNum = currentDay.getDayNumber();</b>
 <b class="fc">&nbsp;        Dictionary&lt;String,Integer&gt; summary = currentDay.summariseDay();</b>
 &nbsp;
-&nbsp;        //if statement checks for the fail condition of not studying two days in a row
+&nbsp;        // if statement checks for the fail condition of not studying two days in a row
 <b class="fc">&nbsp;        if(summary.get(&quot;study&quot;) == 0){</b>
 <b class="fc">&nbsp;            daysOfNoStudy++;</b>
 &nbsp;        }else{
@@ -137,7 +147,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        if(daysOfNoStudy &gt; 1){</b>
 <b class="fc">&nbsp;            fail = true;</b>
 &nbsp;        }
-&nbsp;        //Adds the output of the summary function into the dictionary containing the summary for each day
+&nbsp;        // Adds the output of the summary function into the dictionary containing the summary for each day
 <b class="fc">&nbsp;        statsByDay.put(dayNum, summary);</b>
 <b class="fc">&nbsp;        if(dayNum &lt; 7){</b>
 <b class="fc">&nbsp;            currentDay = new Day(dayNum+1,8,100);</b>
@@ -181,15 +191,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        if(fail){</b>
 <b class="fc">&nbsp;            return 0;</b>
 &nbsp;        }
-<b class="fc">&nbsp;        double eat = 3 * overallEatCount;</b>
+<b class="fc">&nbsp;        double eat = 1.5 * overallEatCount;</b>
 <b class="fc">&nbsp;        double study = 5 * overallStudyCount;</b>
-<b class="fc">&nbsp;        double rec = 8 * overallRecreationalCount;</b>
+<b class="fc">&nbsp;        double rec = 3 * overallRecreationalCount;</b>
 &nbsp;
 <b class="fc">&nbsp;        eat = applyEatPen(eat);</b>
 <b class="fc">&nbsp;        study = applyStudyPen(study);</b>
 <b class="fc">&nbsp;        rec = applyRecPen(rec);</b>
 &nbsp;
-<b class="fc">&nbsp;        return (int) (eat + rec + study)/3;</b>
+<b class="fc">&nbsp;        return (int) (eat + rec + study);</b>
 &nbsp;    }
 &nbsp;    /**
 &nbsp;     * This applies any penalties relating to the player&#39;s eating habits
@@ -198,13 +208,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    private double applyEatPen(double eat){
 <b class="fc">&nbsp;        int uniqueTimes = getUniquePlaces(&quot;Eating&quot;);</b>
-<b class="fc">&nbsp;        if(uniqueTimes == 21){</b>
+<b class="pc">&nbsp;        if(uniqueTimes == 21){</b>
 <b class="nc">&nbsp;            return 100;</b>
 &nbsp;        }
 <b class="fc">&nbsp;        if(overallEatCount == 21){</b>
 <b class="fc">&nbsp;            eat = eat + 20;</b>
 &nbsp;        }
-<b class="fc">&nbsp;        if(uniqueTimes &gt;= 14) {</b>
+<b class="pc">&nbsp;        if(uniqueTimes &gt;= 14) {</b>
 <b class="nc">&nbsp;            eat += 15;</b>
 &nbsp;        }
 <b class="fc">&nbsp;        return Math.min((int)eat,100);</b>
@@ -215,15 +225,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @return The new studying section score after applying possible penalties
 &nbsp;     */
 &nbsp;    private double applyStudyPen(double study){
-<b class="fc">&nbsp;        if(overallStudyCount &lt; 7){</b>
-<b class="fc">&nbsp;            return study;</b>
+<b class="pc">&nbsp;        if (overallStudyCount != 7) {</b>
+<b class="fc">&nbsp;            if (overallStudyCount &lt; 7) {</b>
+<b class="fc">&nbsp;                return study;</b>
+<b class="fc">&nbsp;            } else if (overallStudyCount &lt;= 11) {</b>
+<b class="fc">&nbsp;                study += 20;</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                return 40;</b>
+&nbsp;            }
 &nbsp;        }
-<b class="fc">&nbsp;        if(overallStudyCount&gt;=8 &amp;&amp; overallStudyCount&lt;=11){</b>
-<b class="fc">&nbsp;            study += 20;</b>
-&nbsp;        }else{
-<b class="fc">&nbsp;            study *= 0.7;</b>
-&nbsp;        }
-<b class="fc">&nbsp;        study = study * (int)(getUniquePlaces(&quot;Study&quot;)/7);</b>
 <b class="fc">&nbsp;        return Math.min((int)study,100);</b>
 &nbsp;    }
 &nbsp;
@@ -234,7 +244,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    private double applyRecPen(double rec){
 <b class="fc">&nbsp;        rec = rec * getUniquePlaces(&quot;Rec&quot;)/7 + 0.5;</b>
-<b class="fc">&nbsp;        if(overallRecreationalCount &gt; 10){</b>
+<b class="pc">&nbsp;        if(overallRecreationalCount &gt; 10){</b>
 <b class="nc">&nbsp;            rec = rec * 0.8;</b>
 &nbsp;        }
 <b class="fc">&nbsp;        return Math.min((int)rec,100);</b>
@@ -290,7 +300,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 <b class="fc">&nbsp;    public boolean getGameOver() { return this.gameOver; }</b>
 <b class="fc">&nbsp;    public void setGameOver(boolean state) { this.gameOver = state; }</b>
-&nbsp;
 &nbsp;    public int getDayNumber() {
 <b class="fc">&nbsp;        return currentDay.getDayNumber();</b>
 &nbsp;    }
@@ -318,7 +327,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

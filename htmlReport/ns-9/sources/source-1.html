@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > ActivityManagerTests</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -55,15 +55,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (7/7)
+    (10/10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    98.7%
   </span>
   <span class="absValue">
-    (50/50)
+    (74/75)
   </span>
 </td>
 </tr>
@@ -99,6 +99,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    * (48,48) - eat, 10 energy, 1 time
 &nbsp;    * (16,16) - study, 30 energy, 3 time
 &nbsp;    * (48,16) - sleep
+&nbsp;    *
+&nbsp;    * The following test for
+&nbsp;    * UR_CONTROL,
+&nbsp;    * UR_CHOOSE_TASKS,
+&nbsp;    * FR_STATIC_TIME,
+&nbsp;    * FR_UNIVERSITY_TASKS and
+&nbsp;    * FR_ENERGY_TIME_MANAGEMENT
 &nbsp;    * */
 &nbsp;    public static final String TEST_MAP = &quot;Testing/testingmap.tmx&quot;;
 &nbsp;
@@ -137,6 +144,45 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        assertEquals(70, dm.getEnergy(), 0.0);</b>
 <b class="fc">&nbsp;        assertEquals(11, dm.getTime(), 0.0);</b>
 <b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    //[TODO]:Test for running out of time and energy
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void notEnoughTime(){
+<b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
+<b class="fc">&nbsp;        ActivityManager am = createActivityManager(TEST_MAP, dm);</b>
+<b class="fc">&nbsp;        Rectangle rectangle = createRectangle(16,16);</b>
+<b class="fc">&nbsp;        dm.setTime(23);</b>
+<b class="fc">&nbsp;        am.checkActivity(rectangle, true, 16,16);</b>
+<b class="fc">&nbsp;        assertEquals(23, dm.getTime(), 0.0);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void notEnoughEnergy(){
+<b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
+<b class="fc">&nbsp;        ActivityManager am = createActivityManager(TEST_MAP, dm);</b>
+<b class="fc">&nbsp;        Rectangle rectangle = createRectangle(16,16);</b>
+<b class="fc">&nbsp;        dm.setEnergy(3);</b>
+<b class="fc">&nbsp;        float time = dm.getTime();</b>
+<b class="fc">&nbsp;        am.checkActivity(rectangle, true, 16,16);</b>
+<b class="fc">&nbsp;        assertEquals(3, dm.getEnergy(), 0.0);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    // Tests for FR_STUDYING_RESTRICTIONS
+&nbsp;    @Test
+&nbsp;    public void studyTwice(){
+<b class="fc">&nbsp;        float x = 16;</b>
+<b class="fc">&nbsp;        float y = 16;</b>
+<b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
+<b class="fc">&nbsp;        ActivityManager am = createActivityManager(TEST_MAP, dm);</b>
+<b class="fc">&nbsp;        Rectangle rectangle = createRectangle(x,y);</b>
+<b class="fc">&nbsp;        am.checkActivity(rectangle, true, x, y);</b>
+<b class="fc">&nbsp;        float time = dm.getTime();</b>
+&nbsp;        //2nd study shouldn&#39;t happen as it is the same day
+<b class="fc">&nbsp;        am.checkActivity(rectangle, true, x, y);</b>
+<b class="fc">&nbsp;        assertEquals(time, dm.getTime(), 0.0);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
 &nbsp;
 &nbsp;    @Test
 &nbsp;    public void performEatActivity(){
@@ -204,7 +250,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

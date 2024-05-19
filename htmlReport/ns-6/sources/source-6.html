@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > SettingsMenu</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -34,6 +34,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
@@ -45,6 +49,14 @@ Current scope:     <a href="../../index.html">all classes</a>
   </span>
   <span class="absValue">
     (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -90,12 +102,28 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
     (0/6)
   </span>
 </td>
   </tr>
   <tr>
     <td class="name">SettingsMenu$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -166,6 +194,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
     (0/103)
   </span>
 </td>
@@ -207,19 +243,19 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private final int returnState;//state to go back to once done
 &nbsp;    private final TextButton returnButton;
 &nbsp;    private final TextButton applyButton;
-&nbsp;    private Table table;
-&nbsp;    private Camera camera;
+&nbsp;    private final Table table;
+&nbsp;    private final Camera camera;
 &nbsp;    private final CheckBox fullScreenCheckbox;
 &nbsp;    private final ArrayList&lt;Vector2&gt; supportedResolutions;
 &nbsp;    private int resolutionSelectIndex;
 &nbsp;    private TextButton.TextButtonStyle textButtonStyle;
 &nbsp;    private CheckBox.CheckBoxStyle checkBoxStyle;
 &nbsp;    private TextButton.TextButtonStyle squareButtonStyle;
-&nbsp;    private Table resolutionTable;
-&nbsp;    private TextButton leftButton;
-&nbsp;    private TextButton rightButton;
-&nbsp;    private TextButton resolutionButton;
-&nbsp;    private Sound clickSound;
+&nbsp;    private final Table resolutionTable;
+&nbsp;    private final TextButton leftButton;
+&nbsp;    private final TextButton rightButton;
+&nbsp;    private final TextButton resolutionButton;
+&nbsp;    private final Sound clickSound;
 &nbsp;
 &nbsp;    public static final String CLICK = &quot;Sounds/switch2.ogg&quot;;
 &nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
@@ -455,7 +491,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

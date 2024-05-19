@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > DayTest</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -55,7 +55,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (5/5)
+    (7/7)
   </span>
 </td>
 <td class="coverageStat">
@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (32/32)
+    (34/34)
   </span>
 </td>
 </tr>
@@ -122,14 +122,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    }</b>
 &nbsp;    //checks the method returns the correct string after entering the time
 &nbsp;    @Test
-&nbsp;    public void convertTimeTest(){
+&nbsp;    public void convertTimeMorning(){
 <b class="fc">&nbsp;        Day day = new Day(1,8,100);</b>
 <b class="fc">&nbsp;        assertEquals(&quot;morning&quot;,day.convertTime((float)8.0));</b>
-<b class="fc">&nbsp;        Day day1 = new Day(1,12,100);</b>
-<b class="fc">&nbsp;        assertEquals(&quot;afternoon&quot;,day1.convertTime((float)12.0));</b>
-<b class="fc">&nbsp;        Day day2 = new Day(1,17,100);</b>
-<b class="fc">&nbsp;        assertEquals(&quot;evening&quot;,day2.convertTime((float)17.0));</b>
 &nbsp;
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void convertTimeAfternoon(){
+<b class="fc">&nbsp;        Day day = new Day(1,12,100);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;afternoon&quot;,day.convertTime((float)12.0));</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void convertTimeEvening(){
+<b class="fc">&nbsp;        Day day = new Day(1,17,100);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;evening&quot;,day.convertTime((float)17.0));</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;}
@@ -156,7 +164,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

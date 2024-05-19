@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > PauseMenu</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -34,6 +34,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
@@ -45,6 +49,14 @@ Current scope:     <a href="../../index.html">all classes</a>
   </span>
   <span class="absValue">
     (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
   </span>
 </td>
 <td class="coverageStat">
@@ -147,6 +159,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
     (0/53)
   </span>
 </td>
@@ -182,34 +202,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp; * Loads, draws and controls buttons to make a pause menu
 &nbsp; */
 <b class="nc">&nbsp;public class PauseMenu{</b>
-&nbsp;    private Stage stage;
-&nbsp;    private Texture buttonTexture;
-&nbsp;    private TextureRegion buttonTextureRegion;
-&nbsp;    private TextureRegionDrawable buttonTextureRegionDrawable;
-&nbsp;    private TextButton resumeButton;
-&nbsp;    private TextButton quitButton;
-&nbsp;    private TextButton settingsButton;
-&nbsp;    private Table table;
-&nbsp;    private int buttonWidth;
-&nbsp;    private int buttonHeight;
-&nbsp;    private float buttonScale;
+&nbsp;    private final Stage stage;
+&nbsp;    private final Texture buttonTexture;
+&nbsp;    private final TextButton resumeButton;
+&nbsp;    private final TextButton quitButton;
+&nbsp;    private final TextButton settingsButton;
+&nbsp;    private final Table table;
 &nbsp;    private Table areYouSure;
-&nbsp;    private Sound clickSound;
-&nbsp;    private BitmapFont font;
-&nbsp;
-&nbsp;    /**
-&nbsp;     *
-&nbsp;     * @param viewport
-&nbsp;     * @param camera
-&nbsp;     */
+&nbsp;    private final Sound clickSound;
 &nbsp;
 &nbsp;    public static final String CLICK = &quot;Sounds/switch2.ogg&quot;;
 &nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
 &nbsp;    public static final String BUTTON = &quot;UI/button_up.png&quot;;
 &nbsp;
+&nbsp;    /**
+&nbsp;     * Create the pause menu, which is used in the play game
+&nbsp;     * @param viewport
+&nbsp;     * @param camera
+&nbsp;     */
 <b class="nc">&nbsp;    public PauseMenu(ExtendViewport viewport, Camera camera) {</b>
 &nbsp;        //set up font
-<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        BitmapFont font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
 <b class="nc">&nbsp;        font.getData().setScale(1.5F);</b>
 <b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
 &nbsp;        //sound on click
@@ -218,13 +231,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        //BUTTONS
 &nbsp;        //set textbuttonstyle
 <b class="nc">&nbsp;        buttonTexture = new Texture(BUTTON);</b>
-<b class="nc">&nbsp;        buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
-<b class="nc">&nbsp;        buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);</b>
-<b class="nc">&nbsp;        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );</b>
+<b class="nc">&nbsp;        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
+<b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
+<b class="nc">&nbsp;        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font);</b>
 &nbsp;        //set button sizes
-<b class="nc">&nbsp;        buttonScale = 2;</b>
-<b class="nc">&nbsp;        buttonHeight = (int) (buttonTexture.getHeight()*buttonScale);</b>
-<b class="nc">&nbsp;        buttonWidth = (int) (buttonTexture.getWidth()*buttonScale);</b>
+<b class="nc">&nbsp;        float buttonScale = 2;</b>
+<b class="nc">&nbsp;        int buttonHeight = (int) (buttonTexture.getHeight() * buttonScale);</b>
+<b class="nc">&nbsp;        int buttonWidth = (int) (buttonTexture.getWidth() * buttonScale);</b>
 &nbsp;
 &nbsp;        //Resume button:
 <b class="nc">&nbsp;        resumeButton = new TextButton(&quot;RESUME!!&quot;, textButtonStyle);</b>
@@ -236,7 +249,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        quitButton = new TextButton(&quot;QUIT :(&quot;, textButtonStyle);</b>
 <b class="nc">&nbsp;        quitButton.padBottom(10);</b>
 &nbsp;
-&nbsp;        //sets up what heppens when buttons clicked
+&nbsp;        //sets up what happens when buttons clicked
 <b class="nc">&nbsp;        buttonsOnClickLogic();</b>
 &nbsp;
 &nbsp;        //Table to store buttons
@@ -349,7 +362,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > Play</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -34,6 +34,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
@@ -49,10 +53,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
+    3.2%
+  </span>
+  <span class="absValue">
+    (2/62)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
     1.5%
   </span>
   <span class="absValue">
-    (4/264)
+    (4/263)
   </span>
 </td>
 </tr>
@@ -109,12 +121,28 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
     (0/5)
   </span>
 </td>
   </tr>
   <tr>
     <td class="name">Play$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -144,10 +172,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
+    3%
+  </span>
+  <span class="absValue">
+    (2/66)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
     1.4%
   </span>
   <span class="absValue">
-    (4/282)
+    (4/281)
   </span>
 </td>
 </tr>
@@ -187,6 +223,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.heshus.game.screens.states.SettingsMenu;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Button;
 &nbsp;
+&nbsp;/**
+&nbsp; * The Play class represents the game screen and manages some of the states functionalities
+&nbsp; * as well as handling user input and game sprites
+&nbsp; * It&#39;s also responsible for drawing the game world, the player character,
+&nbsp; * and the UI elements like the pause and settings menus. It also handles sound effects
+&nbsp; * and music playback based on game events.
+&nbsp; * creates new instance of the Play screen with specific game and player sprite settings.
+&nbsp; */
 <b class="nc">&nbsp;public class Play implements Screen {</b>
 &nbsp;
 &nbsp;    public static final int GAME_RUNNING = 0;
@@ -205,7 +249,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private OrthographicCamera camera;
 &nbsp;    private Player player;
 &nbsp;    private static BitmapFont font;
-&nbsp;    private TiledMapTileLayer collisionLayer;
 &nbsp;    private ActivityManager activityManager;
 <b class="nc">&nbsp;    private float volume = 0.5f;</b>
 &nbsp;
@@ -221,7 +264,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private Texture verticalBarTexture;
 &nbsp;    private Sprite verticalBarSprite;
 &nbsp;
-<b class="nc">&nbsp;    private float bubbleTimer, bubblePeriod = 3;</b>
+&nbsp;    private float bubbleTimer;
 &nbsp;
 &nbsp;    // Walking sounds
 &nbsp;    private Sound walkingSound1;
@@ -247,7 +290,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private Texture moonTexture;
 &nbsp;
 &nbsp;    private Sound clickSound;
-&nbsp;    private Texture playerTexture;
+&nbsp;    private final Texture playerTexture;
 &nbsp;    private InputMultiplexer inputMultiplexer;
 &nbsp;    private Button increaseVolumeButton;
 &nbsp;    private Button lowerVolumeButton;
@@ -272,22 +315,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public static final String VOLUME_OFF = &quot;Icons/volume-off.png&quot;;
 &nbsp;    public static final String VOLUME_ON = &quot;Icons/volume-on.png&quot;;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
 &nbsp;    /**
-&nbsp;     * The Play class represents the game screen and manages some of the states functionalities
-&nbsp;     * as well as handling user input and game sprites
-&nbsp;     * It&#39;s also responsible for drawing the game world, the player character,
-&nbsp;     * and the UI elements like the pause and settings menus. It also handles sound effects
-&nbsp;     * and music playback based on game events.
-&nbsp;     * creates new instance of the Play screen with specific game and player sprite settings.
+&nbsp;     * Create an instance of the game play screen
 &nbsp;     * @param playerSpriteSelection The texture for the player sprite to be used in the game.* Create the Play instance
 &nbsp;     * @param game the game instance
-&nbsp;     * @param playerSpriteSelection the texture which will be used as the player sprite
 &nbsp;     */
 <b class="nc">&nbsp;    public Play(HesHusGame game, Texture playerSpriteSelection) {</b>
 <b class="nc">&nbsp;        this.game = game;</b>
@@ -373,6 +404,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;                    //changes timer
 <b class="nc">&nbsp;                    bubbleTimer += Gdx.graphics.getDeltaTime();</b>
 &nbsp;                    //removes bubble after timer ends
+<b class="nc">&nbsp;                    float bubblePeriod = 3;</b>
 <b class="nc">&nbsp;                    if(bubbleTimer &gt; bubblePeriod){</b>
 <b class="nc">&nbsp;                        bubbleTimer -= bubblePeriod;</b>
 <b class="nc">&nbsp;                        activityManager.setText(&quot;&quot;, 0, 0);</b>
@@ -391,14 +423,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;                }
 &nbsp;
 &nbsp;
-&nbsp;                /**
-&nbsp;                 * The counterbox setup, it stays in the upper left corner and allows through
-&nbsp;                 * using the LibGDX BitMapFont class to increment written integers over the white
-&nbsp;                 * counter box on the screen
-&nbsp;                 */
-&nbsp;
-&nbsp;                ///////////////////////////////////////////////////////////////////////////
-&nbsp;                // The Counter and Counter Icons                                         //
+&nbsp;                //////////////////////////////////////////////////////////////////////////
+&nbsp;                // The Counter and Counter Icons                                        //
 &nbsp;                // Upper-left corner position for the counter box set and will not move //
 <b class="nc">&nbsp;                float counterBoxX = camera.position.x - camera.viewportWidth / 2;</b>
 <b class="nc">&nbsp;                float counterBoxY = (camera.position.y + camera.viewportHeight / 2) - counterBoxTexture.getHeight();</b>
@@ -439,9 +465,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;                float timeY = camera.position.y - (camera.viewportHeight / 2) + 16;</b>
 <b class="nc">&nbsp;                font.setColor(Color.RED);</b>
 <b class="nc">&nbsp;                int time = (int) game.dayManager.getTime();</b>
-<b class="nc">&nbsp;                if (game.dayManager.getTime() &lt; 12) {</b>
-<b class="nc">&nbsp;                    font.draw(renderer.getBatch(), time + &quot; am&quot;, timeX, timeY);</b>
-<b class="nc">&nbsp;                } else { font.draw(renderer.getBatch(), time - 11 +&quot; pm&quot;, timeX, timeY); }</b>
+<b class="nc">&nbsp;                if(time == 24){</b>
+<b class="nc">&nbsp;                    font.draw(renderer.getBatch(),&quot;00:00&quot;, timeX, timeY);</b>
+&nbsp;                }else{
+<b class="nc">&nbsp;                    font.draw(renderer.getBatch(), time + &quot;:00&quot;, timeX, timeY);</b>
+&nbsp;                }
+&nbsp;                //else { font.draw(renderer.getBatch(), time - 11 +&quot; pm&quot;, timeX, timeY); }
 &nbsp;
 &nbsp;                //End of main renderer
 <b class="nc">&nbsp;                renderer.getBatch().end();</b>
@@ -479,26 +508,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;                renderer.getBatch().end();</b>
 &nbsp;                break;
 &nbsp;        }
-&nbsp;
-&nbsp;        // updates and draws the stage
-&nbsp;        // the stage is a container for all the actors
-&nbsp;        //coordinates user inputs
-&nbsp;        /**
-&nbsp;         * Updates the {@link Stage} with the time passed since the last frame and draws all {@link Actor}s added to it.
-&nbsp;         * This method should be called every frame to ensure the {@link Stage} accurately represents the current game state,
-&nbsp;         * including processing any input events and executing any actions on {@link Actor}s.
-&nbsp;         *
-&nbsp;         * @param delta The time in seconds since the last frame, used to update animations and process input.
-&nbsp;         */
-&nbsp;
-&nbsp;
 <b class="nc">&nbsp;    }</b>
+&nbsp;
 &nbsp;    /**
-&nbsp;     * the method should be called every frame, updates the game state
-&nbsp;     * checks for the player&#39;s movement sounds
-&nbsp;     *  handles movement and game over scenario
-&nbsp;     *  as parameter it has time delta that is time in seconds
-&nbsp;     *  since last frame
+&nbsp;     * Update the game every frame, checking/handling player movement
 &nbsp;     */
 &nbsp;    private void update(){
 &nbsp;        //Detect if game should be paused or not
@@ -565,10 +578,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        // Load the map and set up the renderer
 &nbsp;
 <b class="nc">&nbsp;        map = new TmxMapLoader().load(MAP);</b>
-<b class="nc">&nbsp;        collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);</b>
+<b class="nc">&nbsp;        TiledMapTileLayer collisionLayer = (TiledMapTileLayer) map.getLayers().get(1);</b>
 &nbsp;
 &nbsp;
-<b class="nc">&nbsp;        renderer = new OrthogonalTiledMapRenderer(map, 1 / 1f);</b>
+<b class="nc">&nbsp;        renderer = new OrthogonalTiledMapRenderer(map, 1);</b>
 &nbsp;
 &nbsp;        // Set up the player
 <b class="nc">&nbsp;        Sprite playerSprite = new Sprite(playerTexture);</b>
@@ -576,12 +589,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        float startX = 50 * collisionLayer.getTileWidth();</b>
 <b class="nc">&nbsp;        float startY = (collisionLayer.getHeight() - 26) * collisionLayer.getTileHeight();</b>
 <b class="nc">&nbsp;        player.setPosition(startX, startY);</b>
-&nbsp;        //Gdx.input.setInputProcessor(player);
 &nbsp;
 &nbsp;        // Set up the activity manager
 &nbsp;        // New: added the new activity manager for a more intuitive management of the activities the player can do
 <b class="nc">&nbsp;        activityManager = new ActivityManager(map.getLayers().get(&quot;Activities&quot;), game.dayManager);</b>
-<b class="nc">&nbsp;        activityManager.setPlayer(player);</b>
 &nbsp;
 &nbsp;        // Set up the font
 <b class="nc">&nbsp;        font = new BitmapFont();</b>
@@ -625,11 +636,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));</b>
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;        /**
-&nbsp;         * stage is initialised and the setup creates a stage for UI elements and input processing
-&nbsp;         * and preparing the buttons for volume control
-&nbsp;         */
+&nbsp;        // Create the stage for the UI elements
 <b class="nc">&nbsp;        stage = new Stage(extendViewport, renderer.getBatch());</b>
 &nbsp;
 &nbsp;        // a Multiplexer is needed in the play screen to be able to manage inputs from the UI and the player
@@ -657,7 +664,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        Button.ButtonStyle increaseVolumeStyle = new Button.ButtonStyle();</b>
 <b class="nc">&nbsp;        increaseVolumeStyle.up = new TextureRegionDrawable(new TextureRegion(increaseVolumeTexture));</b>
 <b class="nc">&nbsp;        increaseVolumeButton = new Button(increaseVolumeStyle);</b>
-&nbsp;        //increaseVolumeButton.setPosition(900, 670); // Example position
 &nbsp;
 <b class="nc">&nbsp;        increaseVolumeButton.addListener(new ClickListener() {</b>
 &nbsp;            @Override
@@ -672,7 +678,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        Button.ButtonStyle lowerVolumeStyle = new Button.ButtonStyle();</b>
 <b class="nc">&nbsp;        lowerVolumeStyle.up = new TextureRegionDrawable(new TextureRegion(lowerVolumeTexture));</b>
 <b class="nc">&nbsp;        lowerVolumeButton = new Button(lowerVolumeStyle);</b>
-&nbsp;        //lowerVolumeButton.setPosition(950, 670); // Example position
 <b class="nc">&nbsp;        lowerVolumeButton.addListener(new ClickListener() {</b>
 &nbsp;            @Override
 &nbsp;            public void clicked(InputEvent event, float x, float y) {
@@ -685,7 +690,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        Button.ButtonStyle volumeOffStyle = new Button.ButtonStyle();</b>
 <b class="nc">&nbsp;        volumeOffStyle.up = new TextureRegionDrawable(new TextureRegion(volumeOffTexture));</b>
 <b class="nc">&nbsp;        volumeOffButton = new Button(volumeOffStyle);</b>
-&nbsp;        // volumeOffButton.setPosition(1000, 670); // Example position
 <b class="nc">&nbsp;        volumeOffButton.addListener(new ClickListener() {</b>
 &nbsp;            @Override
 &nbsp;            public void clicked(InputEvent event, float x, float y) {
@@ -703,7 +707,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        Button.ButtonStyle volumeOnStyle = new Button.ButtonStyle();</b>
 <b class="nc">&nbsp;        volumeOnStyle.up = new TextureRegionDrawable(new TextureRegion(volumeOnTexture));</b>
 <b class="nc">&nbsp;        volumeOnButton = new Button(volumeOnStyle);</b>
-&nbsp;        //volumeOnButton.setPosition(1050, 670); // Example position
 <b class="nc">&nbsp;        volumeOnButton.addListener(new ClickListener() {</b>
 &nbsp;            @Override
 &nbsp;            public void clicked(InputEvent event, float x, float y) {
@@ -749,11 +752,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    @Override
 &nbsp;    public void dispose() {
-&nbsp;        //if we forget to dispose something it causes a memory leak!
-&nbsp;        //if this is a big concern we should change our approach to assets
-&nbsp;        //using the AssetManager means we have to load assets in a different way
-&nbsp;        //BUT we can just call AssetManager.dispose() and it will for sure dispose all our assets correctly
-&nbsp;
 <b class="nc">&nbsp;        map.dispose();</b>
 <b class="nc">&nbsp;        player.getTexture().dispose();</b>
 <b class="nc">&nbsp;        font.dispose();</b>
@@ -765,7 +763,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;        walkingSound4.dispose();</b>
 <b class="nc">&nbsp;        settingsMenu.dispose();</b>
 <b class="nc">&nbsp;        pauseMenu.dispose();</b>
-&nbsp;
 <b class="nc">&nbsp;        if (backgroundMusic != null) {</b>
 <b class="nc">&nbsp;            backgroundMusic.dispose();</b>
 &nbsp;        }
@@ -815,7 +812,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    /**
-&nbsp;     *If camera would show out of map, move it in
+&nbsp;     *If camera showed out of map, move it in
 &nbsp;     * @param cam camera to keep position within layer
 &nbsp;     * @param layer TiledMapTile layer to lock
 &nbsp;     */
@@ -886,7 +883,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-17 18:07</div>
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
 </div>
 </body>
 </html>
