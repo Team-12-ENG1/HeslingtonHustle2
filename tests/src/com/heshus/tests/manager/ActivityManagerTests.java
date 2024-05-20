@@ -68,7 +68,6 @@ public class ActivityManagerTests {
         assertEquals(11, dm.getTime(), 0.0);
     }
 
-    //[TODO]:Test for running out of time and energy
 
     @Test
     public void notEnoughTime(){
