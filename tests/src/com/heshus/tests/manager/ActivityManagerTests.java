@@ -100,7 +100,7 @@ public class ActivityManagerTests {
         Rectangle rectangle = createRectangle(x,y);
         am.checkActivity(rectangle, true, x, y);
         float time = dm.getTime();
-        //2nd study shouldn't happen as it is the same day
+        // 2nd study shouldn't happen as it is the same day
         am.checkActivity(rectangle, true, x, y);
         assertEquals(time, dm.getTime(), 0.0);
     }
