@@ -69,7 +69,7 @@ public class PauseMenu{
         quitButton = new TextButton("QUIT :(", textButtonStyle);
         quitButton.padBottom(10);
 
-        //sets up what heppens when buttons clicked
+        //sets up what happens when buttons clicked
         buttonsOnClickLogic();
 
         //Table to store buttons

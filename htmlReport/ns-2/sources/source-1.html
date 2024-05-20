@@ -1,0 +1,258 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CustomiseSprite</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.editor</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomiseSprite (com.heshus.game.editor)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomiseSprite</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/50)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.editor;
+&nbsp;
+&nbsp;import com.badlogic.gdx.*;
+&nbsp;import com.badlogic.gdx.audio.Sound;
+&nbsp;import com.badlogic.gdx.graphics.Camera;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Image;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
+&nbsp;import com.heshus.game.engine.HesHusGame;
+&nbsp;import com.heshus.game.engine.Play;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;
+&nbsp;public class CustomiseSprite {
+&nbsp;    private final HesHusGame game;
+&nbsp;    private final Camera camera;
+&nbsp;    private final Stage stage;
+&nbsp;    private final Sound clickSound;
+&nbsp;    private BitmapFont font;
+&nbsp;    private final Texture leftarrowTexture;
+&nbsp;    private final Texture rightarrowTexture;
+&nbsp;    private final Image character;
+&nbsp;    private final Table table;
+&nbsp;
+&nbsp;    public static final String CLICK_SOUND = &quot;Sounds/switch2.ogg&quot;;
+&nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
+&nbsp;    public static final String LEFT_ARROW = &quot;UI/keyboard_arrow_left_outline.png&quot; ;
+&nbsp;    public static final String RIGHT_ARROW = &quot;UI/keyboard_arrow_right_outline.png&quot; ;
+&nbsp;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    boolean validPlayer = false;</b>
+&nbsp;
+&nbsp;    // this is the default sprite selected
+&nbsp;    // importantly, this number points to an ARRAY INDEX, not the number in the name of the .png file
+&nbsp;    // so for player-1 to player-6 it ranges from 0 TO 5 not 1 to 6
+<b class="nc">&nbsp;    private int playerSelection = 3;</b>
+<b class="nc">&nbsp;    private final int totalPlayerSpriteChoices = 6;</b>
+&nbsp;
+<b class="nc">&nbsp;    private final ArrayList&lt;Texture&gt; textureList = new ArrayList&lt;Texture&gt;();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Create the CustomiseSprite menu (screen) instance
+&nbsp;     * @param game The game instance
+&nbsp;     * @param camera The current camera object
+&nbsp;     * @param viewport The current view&#39;s viewport
+&nbsp;     */
+<b class="nc">&nbsp;    public CustomiseSprite(final HesHusGame game, Camera camera, ExtendViewport viewport) {</b>
+<b class="nc">&nbsp;        this.game = game;</b>
+<b class="nc">&nbsp;        this.camera = camera;</b>
+<b class="nc">&nbsp;        this.stage = new Stage(viewport);</b>
+&nbsp;
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
+<b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK_SOUND));</b>
+<b class="nc">&nbsp;        setupFont();</b>
+&nbsp;
+&nbsp;        //set up arrow key textures
+<b class="nc">&nbsp;        leftarrowTexture = new Texture(LEFT_ARROW);</b>
+<b class="nc">&nbsp;        rightarrowTexture = new Texture(RIGHT_ARROW);</b>
+&nbsp;
+&nbsp;        //add all player textures to the textureList
+<b class="nc">&nbsp;        for (int i = 0; i &lt; totalPlayerSpriteChoices; i++) {</b>
+<b class="nc">&nbsp;            textureList.add(new Texture(&quot;Icons/player-&quot; + (i + 1) +&quot;.png&quot;));</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Begin making UI layout
+<b class="nc">&nbsp;        Label title = new Label(&quot;CHOOSE A PLAYER:&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;        Label prompt = new Label(&quot;Press ENTER to start&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+&nbsp;
+<b class="nc">&nbsp;        Image leftarrow = new Image(leftarrowTexture);</b>
+<b class="nc">&nbsp;        Image rightarrow = new Image(rightarrowTexture);</b>
+&nbsp;
+<b class="nc">&nbsp;        character = new Image(textureList.get(playerSelection));</b>
+&nbsp;
+<b class="nc">&nbsp;        table = new Table();</b>
+<b class="nc">&nbsp;        stage.addActor(table);</b>
+&nbsp;
+&nbsp;        // Arrange table layout
+<b class="nc">&nbsp;        table.add(title).center().colspan(3);</b>
+<b class="nc">&nbsp;        table.row().pad(10, 0, 10, 0);</b>
+<b class="nc">&nbsp;        table.add(leftarrow).size(30, 30);</b>
+<b class="nc">&nbsp;        table.add(character).size(60, 60);</b>
+<b class="nc">&nbsp;        table.add(rightarrow).size(30, 30);</b>
+<b class="nc">&nbsp;        table.row().pad(10, 0, 10, 0);</b>
+<b class="nc">&nbsp;        table.add(prompt).center().colspan(3);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Set up the font for the UI, with a given scale
+&nbsp;     */
+&nbsp;    private void setupFont() {
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        font.getData().setScale((float) 0.5);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Update the table with the new character to select
+&nbsp;     */
+&nbsp;    public void update() {
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
+<b class="nc">&nbsp;        table.setPosition(camera.position.x, camera.position.y);</b>
+&nbsp;
+&nbsp;        //left arrow: decrement playerSelection
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.A)) {</b>
+<b class="nc">&nbsp;            playerSelection = (playerSelection-- &lt;= 0) ? totalPlayerSpriteChoices-1 : playerSelection--;</b>
+<b class="nc">&nbsp;        } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || Gdx.input.isKeyJustPressed(Input.Keys.D)) {</b>
+&nbsp;            //right arrow: increment playerSelection
+<b class="nc">&nbsp;            playerSelection = (playerSelection++ &gt;= totalPlayerSpriteChoices-1) ? 0 : playerSelection++;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        //validate player choice (should always pass but good to be safe)
+<b class="nc">&nbsp;        validPlayer = (playerSelection &lt;= totalPlayerSpriteChoices &amp;&amp; playerSelection &gt;= 0);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (validPlayer) {</b>
+<b class="nc">&nbsp;            character.setDrawable(new TextureRegionDrawable(new TextureRegion(textureList.get(playerSelection))));</b>
+<b class="nc">&nbsp;            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {</b>
+<b class="nc">&nbsp;                game.setScreen(new Play(game, textureList.get(playerSelection)));</b>
+<b class="nc">&nbsp;                dispose();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        camera.update();</b>
+<b class="nc">&nbsp;        stage.draw();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Dispose of all textures
+&nbsp;     */
+&nbsp;    public void dispose() {
+<b class="nc">&nbsp;        font.dispose();</b>
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        leftarrowTexture.dispose();</b>
+<b class="nc">&nbsp;        rightarrowTexture.dispose();</b>
+<b class="nc">&nbsp;        clickSound.dispose();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-19 21:46</div>
+</div>
+</body>
+</html>

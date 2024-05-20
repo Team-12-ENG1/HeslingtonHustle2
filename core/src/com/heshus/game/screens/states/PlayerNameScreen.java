@@ -61,7 +61,6 @@ public class PlayerNameScreen {
 
         table = new Table();
         stage.addActor(table);
-
         // Arrange table
         table.add(title).fillX().center();
         table.row().pad(10, 0, 10, 0);

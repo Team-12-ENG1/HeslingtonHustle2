@@ -22,6 +22,13 @@ public class ActivityManagerTests {
     * (48,48) - eat, 10 energy, 1 time
     * (16,16) - study, 30 energy, 3 time
     * (48,16) - sleep
+    *
+    * The following test for
+    * UR_CONTROL,
+    * UR_CHOOSE_TASKS,
+    * FR_STATIC_TIME,
+    * FR_UNIVERSITY_TASKS and
+    * FR_ENERGY_TIME_MANAGEMENT
     * */
     public static final String TEST_MAP = "Testing/testingmap.tmx";
 
@@ -60,6 +67,44 @@ public class ActivityManagerTests {
         assertEquals(70, dm.getEnergy(), 0.0);
         assertEquals(11, dm.getTime(), 0.0);
     }
+
+
+    @Test
+    public void notEnoughTime(){
+        DayManager dm = new DayManager();
+        ActivityManager am = createActivityManager(TEST_MAP, dm);
+        Rectangle rectangle = createRectangle(16,16);
+        dm.setTime(23);
+        am.checkActivity(rectangle, true, 16,16);
+        assertEquals(23, dm.getTime(), 0.0);
+    }
+
+    @Test
+    public void notEnoughEnergy(){
+        DayManager dm = new DayManager();
+        ActivityManager am = createActivityManager(TEST_MAP, dm);
+        Rectangle rectangle = createRectangle(16,16);
+        dm.setEnergy(3);
+        float time = dm.getTime();
+        am.checkActivity(rectangle, true, 16,16);
+        assertEquals(3, dm.getEnergy(), 0.0);
+    }
+
+    // Tests for FR_STUDYING_RESTRICTIONS
+    @Test
+    public void studyTwice(){
+        float x = 16;
+        float y = 16;
+        DayManager dm = new DayManager();
+        ActivityManager am = createActivityManager(TEST_MAP, dm);
+        Rectangle rectangle = createRectangle(x,y);
+        am.checkActivity(rectangle, true, x, y);
+        float time = dm.getTime();
+        //2nd study shouldn't happen as it is the same day
+        am.checkActivity(rectangle, true, x, y);
+        assertEquals(time, dm.getTime(), 0.0);
+    }
+
 
     @Test
     public void performEatActivity(){

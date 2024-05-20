@@ -63,14 +63,25 @@ public class Player extends Sprite implements InputProcessor {
         updateMotion();
 
         //  COLLISION DETECTION
-        int cellX = (int) (getX() + (velocity.x * delta) + this.getWidth()/2)/16;
-        int cellY = (int) (getY() + (velocity.y * delta) + this.getHeight()/2)/16;
 
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
-        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
-            setX(getX() + velocity.x * delta);
-            setY(getY() + velocity.y * delta);
+
+        int safeMove = 0;
+        for(int i = 1; i <= Math.ceil(delta); i++){
+            int cellX = (int) (getX() + (velocity.x * i) + this.getWidth()/2)/16;
+            int cellY = (int) (getY() + (velocity.y * i) + this.getHeight()/2)/16;
+            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
+            if(cell != null && cell.getTile().getProperties().containsKey("collision")) {
+                break;
+            }
+            safeMove++;
+
         }
+        setX(getX() + velocity.x * safeMove);
+        setY(getY() + velocity.y * safeMove);
+//        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
+//            setX(getX() + velocity.x * delta);
+//            setY(getY() + velocity.y * delta);
+//        }
     }
 
     public Vector2 getVelocity() {
@@ -85,7 +96,7 @@ public class Player extends Sprite implements InputProcessor {
      * Update the players motion (velocity) depending on their movement direction
      */
     public void updateMotion() {
-        float speed = 200;
+        float speed = 4;
         float xDelta = 0;
         float yDelta = 0;
 
@@ -109,7 +120,7 @@ public class Player extends Sprite implements InputProcessor {
      * Set the player's movement direction to left, cancelling the right movement if true
      * @param t player's moving left state
      */
-    public void setLeftMove(boolean t)
+    private void setLeftMove(boolean t)
     {
         if(rightMove && t) rightMove = false;
         leftMove = t;
@@ -119,7 +130,7 @@ public class Player extends Sprite implements InputProcessor {
      * Set the player's movement direction to right, cancelling the left movement if true
      * @param t player's moving right state
      */
-    public void setRightMove(boolean t)
+    private void setRightMove(boolean t)
     {
         if(leftMove && t) leftMove = false;
         rightMove = t;
@@ -129,7 +140,7 @@ public class Player extends Sprite implements InputProcessor {
      * Set the player's movement direction to up, cancelling the down movement if true
      * @param t player's moving up state
      */
-    public void setUpMove(boolean t)
+    private void setUpMove(boolean t)
     {
         if(downMove && t) downMove = false;
         upMove = t;
@@ -138,7 +149,7 @@ public class Player extends Sprite implements InputProcessor {
      * Set the player's movement direction to down, cancelling the up movement if true
      * @param t player's moving down state
      */
-    public void setDownMove(boolean t)
+    private void setDownMove(boolean t)
     {
         if(upMove && t) upMove = false;
         downMove = t;

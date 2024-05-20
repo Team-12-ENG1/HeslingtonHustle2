@@ -47,6 +47,9 @@ public class GameOverScreen implements Screen {
     private final List<Image> streakImages;
     private final List<String[]> scoreAndStreaks;
 
+    public final static String FONT = "Fonts/monogram/pixel.fnt";
+    public final static String BUTTON = "UI/button_up.png";
+    public final static String ICONS = "Icons/";
 
     /**
      * Create an instance of the game over screen
@@ -63,14 +66,14 @@ public class GameOverScreen implements Screen {
         playerScore = new Score(game.playerName, game.score);
         this.streakTextures = new ArrayList<>();
         for(String[] scoreAndStreak : this.scoreAndStreaks) {
-            streakTextures.add(new Texture("Icons/" + scoreAndStreak[1]));
+            streakTextures.add(new Texture(ICONS + scoreAndStreak[1]));
         }
         this.streakImages = new ArrayList<>();
         for(Texture streakTexture: streakTextures){
             streakImages.add(new Image(streakTexture));
         }
         // Set up font
-        font = new BitmapFont(Gdx.files.internal("Fonts/monogram/pixel.fnt"), false);
+        font = new BitmapFont(Gdx.files.internal(FONT), false);
         font.getData().setScale(.5F);
         font.setColor(Color.BLACK);
 
@@ -97,7 +100,7 @@ public class GameOverScreen implements Screen {
         table.row().pad(5, 0, 0, 0);
         if (gd.isHighScore(playerScore)) {
             gd.addHighScore(playerScore);
-            Save.save();
+            Save.save(Save.SCORES);
             Label highScore = new Label("High Score!", new Label.LabelStyle(font, Color.WHITE));
             table.add(highScore).center().colspan(2);
             table.row().pad(5, 0, 0, 0);
@@ -136,7 +139,7 @@ public class GameOverScreen implements Screen {
     }
 
     private void setButtonStyle() {
-        buttonTexture = new Texture("UI/button_up.png");
+        buttonTexture = new Texture(BUTTON);
         TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);
