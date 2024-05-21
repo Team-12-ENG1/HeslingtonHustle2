@@ -68,7 +68,7 @@ public class ActivityManagerTests {
         assertEquals(11, dm.getTime(), 0.0);
     }
 
-
+    //Test for FR_ENERGY_TIME_MANAGEMENT
     @Test
     public void notEnoughTime(){
         DayManager dm = new DayManager();
@@ -90,18 +90,25 @@ public class ActivityManagerTests {
         assertEquals(3, dm.getEnergy(), 0.0);
     }
 
-    // Tests for FR_STUDYING_RESTRICTIONS
+    // Test for FR_STUDYING_RESTRICTIONS
     @Test
     public void studyTwice(){
-        float x = 16;
-        float y = 16;
         DayManager dm = new DayManager();
         ActivityManager am = createActivityManager(TEST_MAP, dm);
-        Rectangle rectangle = createRectangle(x,y);
-        am.checkActivity(rectangle, true, x, y);
+        Rectangle studyRectangle = createRectangle(16,16);
+        Rectangle sleepRectangle = createRectangle(48,16);
+        am.checkActivity(studyRectangle, true, 16, 16);
+        am.checkActivity(sleepRectangle, true, 48, 16);
+
+        am.checkActivity(studyRectangle, true, 16, 16);
+        /*
+         * Because the player studied the previous day the player
+         * should not be able to study twice today.
+         * The time should remain the same after attempting to study again.
+         */
         float time = dm.getTime();
         // 2nd study shouldn't happen as it is the same day
-        am.checkActivity(rectangle, true, x, y);
+        am.checkActivity(studyRectangle, true, 16, 16);
         assertEquals(time, dm.getTime(), 0.0);
     }
 
