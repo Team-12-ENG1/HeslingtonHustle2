@@ -14,4 +14,11 @@ public class ScoreTests {
         assertEquals(-1, lower.compareTo(upper));
         assertEquals(1, upper.compareTo(lower));
     }
+
+    @Test
+    public void compareEqualScores(){
+        Score score1 = new Score("name", 10);
+        Score score2 = new Score("name", 10);
+        assertEquals(0, score1.compareTo(score2));
+    }
 }
