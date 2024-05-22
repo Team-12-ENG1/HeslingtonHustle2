@@ -214,4 +214,7 @@ public class DayManager {
     public int getDayNumber() {
         return currentDay.getDayNumber();
     }
+    public int getDaysOfNoStudy() {
+        return daysOfNoStudy;
+    }
 }

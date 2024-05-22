@@ -81,6 +81,21 @@ public class DayManagerTests {
         assertTrue(dm1.calculateScore() > dm2.calculateScore());
     }
 
+    @Test
+    public void normalPlayScoreTest(){
+        DayManager dm = new DayManager();
+        int[] studyArray = {1,1,1,1,1,1,1};
+        int[] eatArray = {3,3,3,3,3,3,3};
+        int[] recArray = {1,1,1,1,0,1,1};
+        for (int i = 0; i < studyArray.length; i++) {
+            runDay(dm, eatArray[i], studyArray[i], recArray[i]);
+        }
+        int score = dm.calculateScore();
+        assertTrue(dm.calculateScore()>40);
+        assertTrue(dm.calculateScore()<=100);
+
+    }
+
     //Test for FR_STREAKS
     @Test
     public void getStreaksTest(){

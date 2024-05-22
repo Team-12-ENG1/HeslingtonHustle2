@@ -66,22 +66,34 @@ public class Player extends Sprite implements InputProcessor {
 
 
         int safeMove = 0;
+        int xMove = 0;
+        int yMove = 0;
+        boolean safeX = true;
+        boolean safeY = true;
         for(int i = 1; i <= Math.ceil(delta); i++){
             int cellX = (int) (getX() + (velocity.x * i) + this.getWidth()/2)/16;
             int cellY = (int) (getY() + (velocity.y * i) + this.getHeight()/2)/16;
-            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);
+            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);;
+
+            // Diagonal movement
             if(cell != null && cell.getTile().getProperties().containsKey("collision")) {
                 break;
+            } else {
+                boolean freeX = collisionLayer.getCell(cellX, (int) getY()) == null;
+                boolean freeY = collisionLayer.getCell((int) getX(), cellY) == null;
+                if (freeX) {
+                    xMove++;
+                }
+                if (freeY) {
+                    yMove++;
+                }
+                if (!(freeX && freeY)) {
+                    break;
+                }
             }
-            safeMove++;
-
         }
-        setX(getX() + velocity.x * safeMove);
-        setY(getY() + velocity.y * safeMove);
-//        if (cell == null || !cell.getTile().getProperties().containsKey("collision")) {
-//            setX(getX() + velocity.x * delta);
-//            setY(getY() + velocity.y * delta);
-//        }
+        if (xMove != 0) { setX(getX() + velocity.x * xMove); }
+        if (yMove != 0) { setY(getY() + velocity.y * yMove); }
     }
 
     public Vector2 getVelocity() {

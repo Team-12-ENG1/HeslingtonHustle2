@@ -47,6 +47,7 @@ public class MainMenuScreen implements Screen {
     TextButton quitButton;
     TextButton leaderboardButton;
     TextButton newButton;
+    TextButton creditsButton;
     Label gameTitle;
     Label howToTitle;
     Label instructions;
@@ -60,6 +61,7 @@ public class MainMenuScreen implements Screen {
     private final PlayerNameScreen playerNameScreen;
     private final CustomiseSprite customiseSprite;
     private final LeaderboardScreen leaderboardScreen;
+    private final CreditsScreen credits;
     int xSpeed;
     int ySpeed;
     private Sound clickSound;
@@ -113,6 +115,10 @@ public class MainMenuScreen implements Screen {
         leaderboardButton = new TextButton("LEADERBOARD", textButtonStyle); //Set the button up
         leaderboardButton.padBottom(6);//center text in graphic
 
+        // Credits button
+        creditsButton = new TextButton("CREDITS", textButtonStyle);
+        creditsButton.padBottom(6);
+
         //Quit button:
         quitButton = new TextButton("QUIT :(", textButtonStyle); //Set the button up
         quitButton.padBottom(6);
@@ -133,13 +139,14 @@ public class MainMenuScreen implements Screen {
 
         //Add everything to a table! (the main menu table)
         mainTable = new Table();
-        mainTable.add(gameTitle).colspan(3).padBottom(6);
+        mainTable.add(gameTitle).colspan(4).padBottom(6);
         mainTable.row();
-        mainTable.add(newButton).colspan(3).padBottom(3);
+        mainTable.add(newButton).colspan(4).padBottom(3);
         mainTable.row();
         // Added leaderboard button
         mainTable.add(leaderboardButton).padRight(3);
         mainTable.add(settingsButton).padRight(3);
+        mainTable.add(creditsButton);
         mainTable.row();
         mainTable.add(quitButton).padTop(3).colspan(3);
         mainTable.setFillParent(true);
@@ -158,6 +165,9 @@ public class MainMenuScreen implements Screen {
         // New: added customise sprite view
         customiseSprite = new CustomiseSprite(this.game, camera, extendViewport);
 
+        // New: added credits
+        credits = new CreditsScreen(state, camera, extendViewport);
+
         howToTable = instructionTable();
     }
 
@@ -167,15 +177,19 @@ public class MainMenuScreen implements Screen {
         howToTable = new Table();
 
         howToTitle = new Label("How to play:", new Label.LabelStyle(font, Color.WHITE));
-        instructions = new Label("P or Esc to pause,E to interact\nWASD or Arrowkeys to move", new Label.LabelStyle(font, Color.WHITE));
+        instructions = new Label("Complete a variety of recreational, educational and dietary activities " +
+                "to get through the last week before exams!\n" +
+                "P or Esc to pause, E to interact with activities (they have their\nname above them). " +
+                "Use WASD or arrow keys to move.", new Label.LabelStyle(font, Color.WHITE));
+        instructions.setWrap(true);
 
         // Arrange table
+        howToTable.setFillParent(true);
         howToTable.add(howToTitle).padBottom(6);
         howToTable.row();
-        howToTable.add(instructions).center().padBottom(6);
+        howToTable.add(instructions).fill().width(300);
         howToTable.row();
         howToTable.add(gotItButton).center();
-        howToTable.setFillParent(true);
         howToTable.setVisible(false);
         stage.addActor(howToTable);
         return howToTable;
@@ -230,6 +244,15 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        // Credits button
+        creditsButton.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                clickSound.play();
+                state = GAME_CREDITS;
+                return false;
+            }
+        });
+
         //GOTITBUTTON: confirms player knows controls
         gotItButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -247,12 +270,10 @@ public class MainMenuScreen implements Screen {
      * set button styles
      */
     private void initialiseTextButtonStyles() {
-        //Setup buttonstyles! (a new TextureRegionDrawable version for down would be nice and would kinda animate them)
         Texture buttonTexture = new Texture(BUTTON);
         TextureRegion buttonTextureRegion= new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());
         TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);
         textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );
-        //w i d e  b u t t o n (its wider)
         Texture newButtonTexture = new Texture(BUTTON_WIDE);
         TextureRegion newButtonTextureRegion= new TextureRegion(newButtonTexture, newButtonTexture.getWidth(), newButtonTexture.getHeight());
         TextureRegionDrawable newButtonTextureRegionDrawable =new TextureRegionDrawable(newButtonTextureRegion);
@@ -310,6 +331,9 @@ public class MainMenuScreen implements Screen {
                     break;
                 case (GAME_PLAYER_SELECT):
                     customiseSprite.update();
+                    break;
+                case (GAME_CREDITS):
+                    credits.update();
                     break;
             }
 

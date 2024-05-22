@@ -158,6 +158,20 @@ public class PlayerTests {
     }
 
     @Test
+    public void invariantMovement(){
+        Player player = init();
+        player.setX(76);
+        player.setY(76);
+        player.keyDown(Input.Keys.D);
+        player.update(0.01f);
+        player.update(0.01f);
+        float x = player.getX();
+        player.setX(76);
+        player.update(0.02f);
+        assertEquals(x, player.getX(), 0.01);
+    }
+
+    @Test
     public void collisionLargeDelta(){
         Player player = init();
         player.setX(118);

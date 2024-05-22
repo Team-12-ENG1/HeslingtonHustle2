@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.heshus.game.engine.Play;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
+import java.util.Objects;
+
 /**
  * Manages all activities in the game that the player can perform
  * by introducing property tags to the tiled map the player interacts with each property tag
@@ -27,6 +29,8 @@ public class ActivityManager {
     private String activityText = "";
     private final Vector2 textPosition = new Vector2();
 
+    private int studied;
+
     GlyphLayout layout = new GlyphLayout();
 
     /**
@@ -36,6 +40,7 @@ public class ActivityManager {
     public ActivityManager(MapLayer layer, DayManager dayManager) {
         this.layer = layer;
         this.dayManager = dayManager;
+        this.studied = 0;
     }
 
     // todo: Modification - method now checks the newly added activities layer and gets a selected activity's properties
@@ -91,6 +96,7 @@ public class ActivityManager {
                     dayManager.incrementEatScore((String) activityProperties.get("place"));
                     break;
                 case "study":
+                    studied++;
                     dayManager.incrementStudyScore((String) activityProperties.get("place")); //Pass in description tile attribute when thats implemented
                     break;
                 case "recreation":
@@ -100,6 +106,7 @@ public class ActivityManager {
                     // if the game is not over the avatar will move to the next day and reset their energy
                     if (!dayManager.getGameOver()) {
                         dayManager.incrementDay();
+                        studied = 0;
                     }
                     break;
             }
@@ -108,14 +115,30 @@ public class ActivityManager {
             holdText = "You're too tired for that, you should sleep";
         } else if (dayManager.getTime() + activityProperties.get("time", int.class) > 24) {
             holdText = "It's getting late, you should go to bed";
+        } else if (cantStudy()) {
+            holdText = "You cannot study any more today";
         } else { holdText = "You should get some sleep"; }
         layout.setText(Play.getFont(), holdText);
         setText(holdText, Math.round(x / 16) * 16 + 8 - (layout.width / 2), Math.round(y / 16) * 16);
     }
 
     private boolean validActivity(MapProperties activityProperties) {
-        return (dayManager.getEnergy() - activityProperties.get("energy", int.class) >= 0) &&
-                (dayManager.getTime() + activityProperties.get("time", int.class) <= 24);
+        // Can only study twice if they didn't study previous day
+        if (cantStudy() && Objects.equals(activityProperties.get("activity", String.class), "study")) {
+            return false;
+        }
+        boolean enoughEnergy = dayManager.getEnergy() - activityProperties.get("energy", int.class) >= 0;
+        boolean enoughTime = dayManager.getTime() + activityProperties.get("time", int.class) <= 24;
+
+        return enoughEnergy && enoughTime;
+    }
+
+    /**
+     * @return boolean indicating whether the player can study or not
+     */
+    private boolean cantStudy() {
+        return (dayManager.getDaysOfNoStudy() <= 0 || studied > 1) &&
+                (dayManager.getDaysOfNoStudy() != 0 || studied != 0);
     }
 
     /**
