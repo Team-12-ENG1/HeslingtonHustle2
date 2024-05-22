@@ -60,10 +60,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    82.4%
+    84.7%
   </span>
   <span class="absValue">
-    (61/74)
+    (72/85)
   </span>
 </td>
 </tr>
@@ -143,22 +143,34 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 <b class="fc">&nbsp;        int safeMove = 0;</b>
+<b class="fc">&nbsp;        int xMove = 0;</b>
+<b class="fc">&nbsp;        int yMove = 0;</b>
+<b class="fc">&nbsp;        boolean safeX = true;</b>
+<b class="fc">&nbsp;        boolean safeY = true;</b>
 <b class="fc">&nbsp;        for(int i = 1; i &lt;= Math.ceil(delta); i++){</b>
 <b class="fc">&nbsp;            int cellX = (int) (getX() + (velocity.x * i) + this.getWidth()/2)/16;</b>
 <b class="fc">&nbsp;            int cellY = (int) (getY() + (velocity.y * i) + this.getHeight()/2)/16;</b>
-<b class="fc">&nbsp;            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);</b>
+<b class="fc">&nbsp;            TiledMapTileLayer.Cell cell = collisionLayer.getCell(cellX, cellY);;</b>
+&nbsp;
+&nbsp;            // Diagonal movement
 <b class="fc">&nbsp;            if(cell != null &amp;&amp; cell.getTile().getProperties().containsKey(&quot;collision&quot;)) {</b>
 <b class="fc">&nbsp;                break;</b>
+&nbsp;            } else {
+<b class="fc">&nbsp;                boolean freeX = collisionLayer.getCell(cellX, (int) getY()) == null;</b>
+<b class="fc">&nbsp;                boolean freeY = collisionLayer.getCell((int) getX(), cellY) == null;</b>
+<b class="fc">&nbsp;                if (freeX) {</b>
+<b class="fc">&nbsp;                    xMove++;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                if (freeY) {</b>
+<b class="fc">&nbsp;                    yMove++;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                if (!(freeX &amp;&amp; freeY)) {</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                }
 &nbsp;            }
-<b class="nc">&nbsp;            safeMove++;</b>
-&nbsp;
 &nbsp;        }
-<b class="fc">&nbsp;        setX(getX() + velocity.x * safeMove);</b>
-<b class="fc">&nbsp;        setY(getY() + velocity.y * safeMove);</b>
-&nbsp;//        if (cell == null || !cell.getTile().getProperties().containsKey(&quot;collision&quot;)) {
-&nbsp;//            setX(getX() + velocity.x * delta);
-&nbsp;//            setY(getY() + velocity.y * delta);
-&nbsp;//        }
+<b class="fc">&nbsp;        if (xMove != 0) { setX(getX() + velocity.x * xMove); }</b>
+<b class="fc">&nbsp;        if (yMove != 0) { setY(getY() + velocity.y * yMove); }</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    public Vector2 getVelocity() {
@@ -352,7 +364,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

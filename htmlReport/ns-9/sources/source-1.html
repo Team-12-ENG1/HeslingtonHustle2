@@ -60,10 +60,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    98.7%
+    100%
   </span>
   <span class="absValue">
-    (74/75)
+    (76/76)
   </span>
 </td>
 </tr>
@@ -145,7 +145,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        assertEquals(11, dm.getTime(), 0.0);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
-&nbsp;
+&nbsp;    //Test for FR_ENERGY_TIME_MANAGEMENT
 &nbsp;    @Test
 &nbsp;    public void notEnoughTime(){
 <b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
@@ -167,20 +167,27 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        assertEquals(3, dm.getEnergy(), 0.0);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
-&nbsp;    // Tests for FR_STUDYING_RESTRICTIONS
+&nbsp;    // Test for FR_STUDYING_RESTRICTIONS
 &nbsp;    @Test
 &nbsp;    public void studyTwice(){
-<b class="fc">&nbsp;        float x = 16;</b>
-<b class="fc">&nbsp;        float y = 16;</b>
 <b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
 <b class="fc">&nbsp;        ActivityManager am = createActivityManager(TEST_MAP, dm);</b>
-<b class="fc">&nbsp;        Rectangle rectangle = createRectangle(x,y);</b>
-<b class="fc">&nbsp;        am.checkActivity(rectangle, true, x, y);</b>
+<b class="fc">&nbsp;        Rectangle studyRectangle = createRectangle(16,16);</b>
+<b class="fc">&nbsp;        Rectangle sleepRectangle = createRectangle(48,16);</b>
+<b class="fc">&nbsp;        am.checkActivity(studyRectangle, true, 16, 16);</b>
+<b class="fc">&nbsp;        am.checkActivity(sleepRectangle, true, 48, 16);</b>
+&nbsp;
+<b class="fc">&nbsp;        am.checkActivity(studyRectangle, true, 16, 16);</b>
+&nbsp;        /*
+&nbsp;         * Because the player studied the previous day the player
+&nbsp;         * should not be able to study twice today.
+&nbsp;         * The time should remain the same after attempting to study again.
+&nbsp;         */
 <b class="fc">&nbsp;        float time = dm.getTime();</b>
-&nbsp;        //2nd study shouldn&#39;t happen as it is the same day
-<b class="fc">&nbsp;        am.checkActivity(rectangle, true, x, y);</b>
+&nbsp;        // 2nd study shouldn&#39;t happen as it is the same day
+<b class="fc">&nbsp;        am.checkActivity(studyRectangle, true, 16, 16);</b>
 <b class="fc">&nbsp;        assertEquals(time, dm.getTime(), 0.0);</b>
-<b class="nc">&nbsp;    }</b>
+<b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;
 &nbsp;    @Test
@@ -249,7 +256,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
-  <title>Coverage Report > GameDataTests</title>
+  <title>Coverage Report > ScoreTests</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,7 +22,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.heshus.tests.manager</a>
 </div>
 
-<h1>Coverage Summary for Class: GameDataTests (com.heshus.tests.manager)</h1>
+<h1>Coverage Summary for Class: ScoreTests (com.heshus.tests.manager)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -41,7 +41,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">GameDataTests</td>
+  <td class="name">ScoreTests</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -55,7 +55,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (4/4)
+    (3/3)
   </span>
 </td>
 <td class="coverageStat">
@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (18/18)
+    (10/10)
   </span>
 </td>
 </tr>
@@ -77,43 +77,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.tests.manager;
 &nbsp;
-&nbsp;import com.heshus.game.manager.GameData;
 &nbsp;import com.heshus.game.manager.Score;
 &nbsp;import org.junit.Test;
 &nbsp;
+&nbsp;import static org.junit.Assert.assertEquals;
 &nbsp;
-&nbsp;import static org.junit.Assert.*;
+<b class="fc">&nbsp;public class ScoreTests {</b>
 &nbsp;
-&nbsp;
-<b class="fc">&nbsp;public class GameDataTests {</b>
-&nbsp;
-&nbsp;    // UR_LEADERBOARD  
 &nbsp;    @Test
-&nbsp;    public void testGameData() {
-<b class="fc">&nbsp;        GameData gameData = new GameData();</b>
-<b class="fc">&nbsp;        gameData.init();</b>
-&nbsp;
-<b class="fc">&nbsp;        Score highScore = new Score(&quot;name&quot;, 96);</b>
-<b class="fc">&nbsp;        assertTrue(gameData.isHighScore(highScore));</b>
-&nbsp;
-<b class="fc">&nbsp;        Score notHighScore = new Score(&quot;name&quot;, 1);</b>
-<b class="fc">&nbsp;        assertFalse(gameData.isHighScore(notHighScore));</b>
+&nbsp;    public void compareScores(){
+<b class="fc">&nbsp;        Score lower = new Score(&quot;name&quot;, 10);</b>
+<b class="fc">&nbsp;        Score upper = new Score(&quot;name&quot;, 90);</b>
+<b class="fc">&nbsp;        assertEquals(-1, lower.compareTo(upper));</b>
+<b class="fc">&nbsp;        assertEquals(1, upper.compareTo(lower));</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    @Test
-&nbsp;    public void emptyListTest(){
-<b class="fc">&nbsp;        GameData gameData = new GameData();</b>
-<b class="fc">&nbsp;        Score score = new Score(&quot;name&quot;, 11);</b>
-<b class="fc">&nbsp;        assertTrue(gameData.isHighScore(score));</b>
-<b class="fc">&nbsp;    }</b>
-&nbsp;
-&nbsp;    @Test
-&nbsp;    public void newScoreEqualsLastHighScore() {
-<b class="fc">&nbsp;        GameData gameData = new GameData();</b>
-<b class="fc">&nbsp;        gameData.init();</b>
-<b class="fc">&nbsp;        int lowestScore = gameData.getScores()[GameData.MAX_SCORES-1].getScore();</b>
-<b class="fc">&nbsp;        Score highScore = new Score(&quot;name&quot;, lowestScore);</b>
-<b class="fc">&nbsp;        assertFalse(gameData.isHighScore(highScore));</b>
+&nbsp;    public void compareEqualScores(){
+<b class="fc">&nbsp;        Score score1 = new Score(&quot;name&quot;, 10);</b>
+<b class="fc">&nbsp;        Score score2 = new Score(&quot;name&quot;, 10);</b>
+<b class="fc">&nbsp;        assertEquals(0, score1.compareTo(score2));</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;}
 </code>

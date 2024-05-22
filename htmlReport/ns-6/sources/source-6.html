@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
-  <title>Coverage Report > SettingsMenu</title>
+  <title>Coverage Report > PlayerNameScreen</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,7 +22,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.heshus.game.screens.states</a>
 </div>
 
-<h1>Coverage Summary for Class: SettingsMenu (com.heshus.game.screens.states)</h1>
+<h1>Coverage Summary for Class: PlayerNameScreen (com.heshus.game.screens.states)</h1>
 
 <table class="coverageStats">
 
@@ -38,13 +38,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">SettingsMenu</td>
+  <td class="name">PlayerNameScreen</td>
 <td class="coverageStat">
   <span class="percent">
     0%
   </span>
   <span class="absValue">
-    (0/7)
+    (0/6)
   </span>
 </td>
 <td class="coverageStat">
@@ -52,12 +52,12 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/76)
+    (0/36)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">SettingsMenu$1</td>
+    <td class="name">PlayerNameScreen$1</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -71,83 +71,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/5)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">SettingsMenu$2</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/6)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">SettingsMenu$3</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/6)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">SettingsMenu$4</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/3)
-  </span>
-</td>
-  </tr>
-  <tr>
-    <td class="name">SettingsMenu$5</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/7)
+    (0/8)
   </span>
 </td>
   </tr>
@@ -158,7 +82,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/17)
+    (0/8)
   </span>
 </td>
 <td class="coverageStat">
@@ -166,7 +90,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/103)
+    (0/44)
   </span>
 </td>
 </tr>
@@ -186,251 +110,118 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.badlogic.gdx.graphics.Texture;
 &nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
 &nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
-&nbsp;import com.badlogic.gdx.math.Vector2;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.InputListener;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.ui.*;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 &nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
+&nbsp;import com.heshus.game.engine.HesHusGame;
+&nbsp;import com.heshus.game.engine.Play;
 &nbsp;
-&nbsp;import java.util.ArrayList;
-&nbsp;
-&nbsp;import static com.heshus.game.engine.HesHusGame.settings;
-&nbsp;import static com.heshus.game.engine.Play.state;
 &nbsp;/**
-&nbsp; * Loads, draws and controls buttons to make a settings menu
+&nbsp; * Allows the player to enter their name into a {@link TextField},
+&nbsp; * which will then be used by the leaderboard after.
 &nbsp; */
-<b class="nc">&nbsp;public class SettingsMenu {</b>
-&nbsp;    private final BitmapFont font;
+<b class="nc">&nbsp;public class PlayerNameScreen {</b>
+&nbsp;    private BitmapFont font;
 &nbsp;    private final Stage stage;
-&nbsp;    private final int returnState;//state to go back to once done
-&nbsp;    private final TextButton returnButton;
-&nbsp;    private final TextButton applyButton;
-&nbsp;    private final Table table;
 &nbsp;    private final Camera camera;
-&nbsp;    private final CheckBox fullScreenCheckbox;
-&nbsp;    private final ArrayList&lt;Vector2&gt; supportedResolutions;
-&nbsp;    private int resolutionSelectIndex;
-&nbsp;    private TextButton.TextButtonStyle textButtonStyle;
-&nbsp;    private CheckBox.CheckBoxStyle checkBoxStyle;
-&nbsp;    private TextButton.TextButtonStyle squareButtonStyle;
-&nbsp;    private final Table resolutionTable;
-&nbsp;    private final TextButton leftButton;
-&nbsp;    private final TextButton rightButton;
-&nbsp;    private final TextButton resolutionButton;
+&nbsp;    private final Table table;
 &nbsp;    private final Sound clickSound;
+&nbsp;    private Texture buttonTexture;
+&nbsp;    private TextButton.TextButtonStyle textButtonStyle;
+&nbsp;    private final TextField enterName;
+&nbsp;    private final Skin skin;
 &nbsp;
+&nbsp;    public static final String SKIN = &quot;UI/uiskin.json&quot;;
 &nbsp;    public static final String CLICK = &quot;Sounds/switch2.ogg&quot;;
-&nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
-&nbsp;    public static final String BUTTON_UNCHECKED = &quot;UI/unchecked.png&quot;;
-&nbsp;    public static final String BUTTON_CHECKED = &quot;UI/checked.png&quot;;
 &nbsp;    public static final String BUTTON = &quot;UI/button_up.png&quot;;
-&nbsp;
+&nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Initialises everything!
-&nbsp;     * @param returnState this is the state that gets set when return or apply is clicked!
-&nbsp;     * @param camera camera to help with drawing
-&nbsp;     * @param viewport viewport to help with drawing
-&nbsp;     * @param scale a scale for all the buttons
+&nbsp;     * Create a playerNameScreen instance, setting up the table layout also
+&nbsp;     * @param game The base game instance
+&nbsp;     * @param camera The camera used to view the starting main menu
+&nbsp;     * @param viewport The viewport associated with the menu camera
 &nbsp;     */
-<b class="nc">&nbsp;    public SettingsMenu(int returnState, Camera camera, ExtendViewport viewport, float scale) {</b>
-<b class="nc">&nbsp;        this.returnState = returnState;</b>
+<b class="nc">&nbsp;    public PlayerNameScreen(HesHusGame game, Camera camera, ExtendViewport viewport) {</b>
 <b class="nc">&nbsp;        this.camera = camera;</b>
-&nbsp;        //sound on click
+<b class="nc">&nbsp;        this.stage = new Stage(viewport);</b>
+&nbsp;
+<b class="nc">&nbsp;        skin = new Skin(Gdx.files.internal(SKIN));</b>
 <b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));</b>
+<b class="nc">&nbsp;        setupFont();</b>
+<b class="nc">&nbsp;        setButtonStyle();</b>
 &nbsp;
-&nbsp;        //All resolutions that will be in settings menu
-<b class="nc">&nbsp;        supportedResolutions = new ArrayList&lt;&gt;();</b>
-<b class="nc">&nbsp;        supportedResolutions.add(new Vector2(1024,576));</b>
-<b class="nc">&nbsp;        supportedResolutions.add(new Vector2(1280,720));</b>
-<b class="nc">&nbsp;        supportedResolutions.add(new Vector2(1600, 900));</b>
-<b class="nc">&nbsp;        supportedResolutions.add(new Vector2(1920, 1080));</b>
-<b class="nc">&nbsp;        resolutionSelectIndex = supportedResolutions.indexOf(new Vector2(settings.getInteger(&quot;windowWidth&quot;),settings.getInteger(&quot;windowHeight&quot;)));//gets index of arraylist matching current resolution</b>
-&nbsp;        
-&nbsp;        //Set up font
-<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
-<b class="nc">&nbsp;        font.getData().setScale(.5F*scale);</b>
-<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
+<b class="nc">&nbsp;        Label title = new Label(&quot;Enter your name:&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;        TextButton button = new TextButton(&quot;PLAY&quot;, textButtonStyle);</b>
+<b class="nc">&nbsp;        enterName = new TextField(&quot;&quot;, skin);</b>
+<b class="nc">&nbsp;        enterName.setMessageText(&quot;Max 10 characters&quot;);</b>
+<b class="nc">&nbsp;        enterName.setScale(0.8f);</b>
 &nbsp;
-&nbsp;        //BUTTONS//
-&nbsp;        //set styles//
-<b class="nc">&nbsp;        buttonStyles();</b>
-&nbsp;
-&nbsp;        //Apply button
-<b class="nc">&nbsp;        applyButton = new TextButton(&quot;Apply&quot;, textButtonStyle);</b>
-<b class="nc">&nbsp;        applyButton.setTransform(true);</b>
-<b class="nc">&nbsp;        applyButton.padBottom(6);</b>
-&nbsp;
-&nbsp;        //Buttons for resolution. We have a left and right button that increment an index through an array of supported variables.
-<b class="nc">&nbsp;        resolutionTable = new Table();</b>
-<b class="nc">&nbsp;        String resolution = settings.getInteger(&quot;windowWidth&quot;) +&quot; X &quot;+ settings.getInteger(&quot;windowHeight&quot;);//set button text to current resolution</b>
-<b class="nc">&nbsp;        resolutionButton = new TextButton(resolution, squareButtonStyle);</b>
-<b class="nc">&nbsp;        leftButton = new TextButton(&quot;&lt;&quot;,textButtonStyle);</b>
-<b class="nc">&nbsp;        rightButton = new TextButton(&quot;&gt;&quot;,textButtonStyle);</b>
-&nbsp;
-&nbsp;        //Checkbox for fullscreen
-<b class="nc">&nbsp;        fullScreenCheckbox = new CheckBox(&quot;Fullscreen&quot;, checkBoxStyle);</b>
-<b class="nc">&nbsp;        fullScreenCheckbox.setChecked(settings.getBoolean(&quot;isFullScreen&quot;));</b>
-<b class="nc">&nbsp;        fullScreenCheckbox.setTransform(true);</b>
-&nbsp;
-&nbsp;        //small single row table for resolution buttons (so we can have different column sizes from rest of table)
-<b class="nc">&nbsp;        resolutionTable.add(leftButton).width(leftButton.getWidth()*scale/3).height(leftButton.getHeight()*scale).padRight(2*scale);</b>
-<b class="nc">&nbsp;        resolutionTable.add(resolutionButton).width(resolutionButton.getWidth()*2).height(resolutionButton.getHeight()*scale).padRight(2*scale);</b>
-<b class="nc">&nbsp;        resolutionTable.add(rightButton).width(leftButton.getWidth()*scale/3).height(rightButton.getHeight()*scale).padLeft(2*scale);</b>
-&nbsp;
-&nbsp;        //Return button:
-<b class="nc">&nbsp;        returnButton = new TextButton(&quot;Return&quot;, textButtonStyle); //Set the button up</b>
-<b class="nc">&nbsp;        returnButton.padBottom(6);</b>
-<b class="nc">&nbsp;        returnButton.setTransform(true);</b>
-&nbsp;
-<b class="nc">&nbsp;        buttonsOnClickLogic();</b>
-&nbsp;        //Table combining it all! phew...
 <b class="nc">&nbsp;        table = new Table();</b>
-<b class="nc">&nbsp;        table.add(returnButton).width(returnButton.getWidth()*scale).height(returnButton.getHeight()*scale).padBottom(3*scale);</b>
-<b class="nc">&nbsp;        table.row();</b>
-<b class="nc">&nbsp;        table.add(fullScreenCheckbox).width(fullScreenCheckbox.getWidth()*scale).height(fullScreenCheckbox.getHeight()*scale).padLeft(10*scale).padBottom(3*scale);</b>
-<b class="nc">&nbsp;        table.row();</b>
-<b class="nc">&nbsp;        table.add(resolutionTable).padBottom(3*scale);</b>
-<b class="nc">&nbsp;        table.row();</b>
-<b class="nc">&nbsp;        table.add(applyButton).width(applyButton.getWidth()*scale).height(applyButton.getHeight()*scale).padBottom(3*scale);</b>
-<b class="nc">&nbsp;        stage = new Stage(viewport);</b>
 <b class="nc">&nbsp;        stage.addActor(table);</b>
-&nbsp;    }
+&nbsp;        // Arrange table
+<b class="nc">&nbsp;        table.add(title).fillX().center();</b>
+<b class="nc">&nbsp;        table.row().pad(10, 0, 10, 0);</b>
+<b class="nc">&nbsp;        table.add(enterName).center();</b>
+<b class="nc">&nbsp;        table.row().pad(0, 0, 10, 0);</b>
+<b class="nc">&nbsp;        table.add(button).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight());</b>
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Sets up inputlisteners that then do all the logic and play a Sound that when a button is clicked
-&nbsp;     */
-&nbsp;    private void buttonsOnClickLogic(){
-&nbsp;        //APPLY BUTTON
-<b class="nc">&nbsp;        applyButton.addListener(new InputListener() {</b>
+&nbsp;        // Add input listener to the button
+<b class="nc">&nbsp;        button.addListener(new InputListener() {</b>
+&nbsp;            @Override
 &nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 <b class="nc">&nbsp;                clickSound.play();</b>
-<b class="nc">&nbsp;                applySettings();</b>
-<b class="nc">&nbsp;                state = returnState;</b>
-<b class="nc">&nbsp;                return false;</b>
-&nbsp;            }
-&nbsp;        });
-&nbsp;
-&nbsp;        //RESOLUTION BUTTONS//
-&nbsp;        //LEFT
-<b class="nc">&nbsp;        leftButton.addListener(new InputListener() {</b>
-&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-<b class="nc">&nbsp;                clickSound.play();</b>
-&nbsp;
-<b class="nc">&nbsp;                if (resolutionSelectIndex&gt;0) {//makes sure index not out of range</b>
-<b class="nc">&nbsp;                    resolutionSelectIndex--;</b>
-<b class="nc">&nbsp;                    resolutionButton.setText((int) supportedResolutions.get(resolutionSelectIndex).x +&quot; X &quot;+ (int) supportedResolutions.get(resolutionSelectIndex).y);//horrific line, just updates text on resolution button</b>
-&nbsp;                }
-<b class="nc">&nbsp;                return false;</b>
-&nbsp;            }
-&nbsp;        });
-&nbsp;        //RIGHT
-<b class="nc">&nbsp;        rightButton.addListener(new InputListener() {</b>
-&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-<b class="nc">&nbsp;                clickSound.play();</b>
-&nbsp;
-<b class="nc">&nbsp;                if (resolutionSelectIndex+1&lt;supportedResolutions.size()){// makes sure index not out of range</b>
-<b class="nc">&nbsp;                    resolutionSelectIndex++;</b>
-<b class="nc">&nbsp;                    resolutionButton.setText((int) supportedResolutions.get(resolutionSelectIndex).x +&quot; X &quot;+ (int) supportedResolutions.get(resolutionSelectIndex).y);//horrific line, just updates text on resolution button</b>
-&nbsp;                }
-<b class="nc">&nbsp;                return false;</b>
-&nbsp;            }
-&nbsp;        });
-&nbsp;
-&nbsp;        //FULLSCREEN
-<b class="nc">&nbsp;        fullScreenCheckbox.addListener(new InputListener() {</b>
-&nbsp;            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-<b class="nc">&nbsp;                clickSound.play();</b>
-&nbsp;
-&nbsp;                //if its full screen, we shouldn&#39;t see windowed resolution select
-<b class="nc">&nbsp;                resolutionTable.setVisible(fullScreenCheckbox.isChecked());</b>
-&nbsp;            }
-&nbsp;        });
-&nbsp;
-&nbsp;        //RETURN
-<b class="nc">&nbsp;        returnButton.addListener(new InputListener() {</b>
-&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-<b class="nc">&nbsp;                clickSound.play();</b>
-&nbsp;
-&nbsp;                //reset buttons to values found in settings (it would be weird to reopen settings to see fullscreen checked if the game was windowed)
-<b class="nc">&nbsp;                resolutionSelectIndex = supportedResolutions.indexOf(new Vector2(settings.getInteger(&quot;windowWidth&quot;),settings.getInteger(&quot;windowHeight&quot;)));</b>
-<b class="nc">&nbsp;                fullScreenCheckbox.setChecked(settings.getBoolean(&quot;isFullScreen&quot;));</b>
-<b class="nc">&nbsp;                resolutionButton.setText(((int) supportedResolutions.get(resolutionSelectIndex).x) +&quot; X &quot;+ (int) supportedResolutions.get(resolutionSelectIndex).y);//horrific line, just updates text on resolution button</b>
-<b class="nc">&nbsp;                state = returnState;</b>
-<b class="nc">&nbsp;                return false;</b>
+&nbsp;                // Only continue if they have entered a name and it is no more than 10 characters long
+<b class="nc">&nbsp;                if ((!enterName.getText().isEmpty()) &amp;&amp; (enterName.getText().length() &lt;= 10)) {</b>
+<b class="nc">&nbsp;                    game.playerName = enterName.getText();</b>
+<b class="nc">&nbsp;                    Play.state = Play.GAME_PLAYER_SELECT;</b>
+<b class="nc">&nbsp;                    dispose();</b>
+<b class="nc">&nbsp;                    return true;</b>
+<b class="nc">&nbsp;                } else { return false; }</b>
 &nbsp;            }
 &nbsp;        });
 &nbsp;    }
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Set up button styles!
-&nbsp;     */
-&nbsp;    private void buttonStyles(){
-&nbsp;        //Set basic text button style (the blue one)
-<b class="nc">&nbsp;        Texture buttonTexture = new Texture(BUTTON);</b>
+&nbsp;    private void setButtonStyle() {
+<b class="nc">&nbsp;        buttonTexture = new Texture(BUTTON);</b>
 <b class="nc">&nbsp;        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
-<b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);</b>
-<b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );</b>
-&nbsp;
-&nbsp;        //Set up a checkboxstyle, unchecked and checked
-<b class="nc">&nbsp;        Texture uncheckedBoxTex = new Texture(BUTTON_UNCHECKED);//first the drawable of unchecked</b>
-<b class="nc">&nbsp;        TextureRegion uncheckedBoxTextureRegion = new TextureRegion(uncheckedBoxTex, uncheckedBoxTex.getWidth(), uncheckedBoxTex.getHeight());</b>
-<b class="nc">&nbsp;        TextureRegionDrawable uncheckedBoxTextureRegionDrawable =new TextureRegionDrawable(uncheckedBoxTextureRegion);</b>
-<b class="nc">&nbsp;        Texture checkedBoxTex = new Texture(BUTTON_CHECKED);//then checked</b>
-<b class="nc">&nbsp;        TextureRegion checkedBoxTextureRegion = new TextureRegion(checkedBoxTex, checkedBoxTex.getWidth(), checkedBoxTex.getHeight());</b>
-<b class="nc">&nbsp;        TextureRegionDrawable checkedBoxTextureRegionDrawable =new TextureRegionDrawable(checkedBoxTextureRegion);</b>
-<b class="nc">&nbsp;        checkBoxStyle = new CheckBox.CheckBoxStyle(uncheckedBoxTextureRegionDrawable, checkedBoxTextureRegionDrawable, font, Color.BLACK );</b>
-&nbsp;
-&nbsp;        //Throw in a cheeky square button //oppa button style
-<b class="nc">&nbsp;        squareButtonStyle = new TextButton.TextButtonStyle(uncheckedBoxTextureRegionDrawable, uncheckedBoxTextureRegionDrawable, uncheckedBoxTextureRegionDrawable, font );</b>
-&nbsp;
-&nbsp;        //add more styles here
+<b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
+<b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * settings is a Preferences class (from libgdx)
+&nbsp;     * Set up the font for the UI, with a given scale
 &nbsp;     */
-&nbsp;    private void applySettings() {
-&nbsp;        //settings is a static Preferences class (from libgdx), basically a hash map. gets stored by
-<b class="nc">&nbsp;        settings.putBoolean (&quot;isFullScreen&quot;,fullScreenCheckbox.isChecked());</b>
-<b class="nc">&nbsp;        settings.putInteger(&quot;windowWidth&quot;, (int) supportedResolutions.get(resolutionSelectIndex).x);</b>
-<b class="nc">&nbsp;        settings.putInteger(&quot;windowHeight&quot;, (int) supportedResolutions.get(resolutionSelectIndex).y);</b>
-&nbsp;
-<b class="nc">&nbsp;        int width = settings.getInteger(&quot;windowWidth&quot;);</b>
-<b class="nc">&nbsp;        int height = settings.getInteger(&quot;windowHeight&quot;);</b>
-&nbsp;
-<b class="nc">&nbsp;        if (settings.getBoolean(&quot;isFullScreen&quot;)){</b>
-<b class="nc">&nbsp;            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());</b>
-&nbsp;        }
-&nbsp;        else{
-<b class="nc">&nbsp;            Gdx.graphics.setWindowedMode(width, height);</b>
-&nbsp;        }
-&nbsp;        //!!if this isn&#39;t called settings WON&#39;T change!!//
-<b class="nc">&nbsp;        settings.flush();</b>
+&nbsp;    private void setupFont() {
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        font.getData().setScale((float) 0.5);</b>
+<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Update logic, draw all buttons
+&nbsp;     * Update the current view to focus on this class&#39; instance
 &nbsp;     */
 &nbsp;    public void update() {
-&nbsp;        //resolution control is just for windowed, so should not be displayed if fullscreen is checked
-<b class="nc">&nbsp;        resolutionTable.setVisible(!fullScreenCheckbox.isChecked());</b>
-&nbsp;        //intercept all inputs
 <b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
 <b class="nc">&nbsp;        table.setPosition(camera.position.x, camera.position.y);</b>
 <b class="nc">&nbsp;        stage.draw();</b>
 &nbsp;    }
+&nbsp;
 &nbsp;    /**
-&nbsp;     * Should be called to release all resources
+&nbsp;     * Dispose of all textures
 &nbsp;     */
-&nbsp;    public void dispose(){
+&nbsp;    public void dispose() {
 <b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        skin.dispose();</b>
 <b class="nc">&nbsp;        font.dispose();</b>
+<b class="nc">&nbsp;        buttonTexture.dispose();</b>
 <b class="nc">&nbsp;        clickSound.dispose();</b>
 &nbsp;    }
-&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -455,7 +246,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

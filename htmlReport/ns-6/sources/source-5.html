@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
-  <title>Coverage Report > PlayerNameScreen</title>
+  <title>Coverage Report > PauseMenu</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,7 +22,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">com.heshus.game.screens.states</a>
 </div>
 
-<h1>Coverage Summary for Class: PlayerNameScreen (com.heshus.game.screens.states)</h1>
+<h1>Coverage Summary for Class: PauseMenu (com.heshus.game.screens.states)</h1>
 
 <table class="coverageStats">
 
@@ -38,7 +38,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">PlayerNameScreen</td>
+  <td class="name">PauseMenu</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -52,12 +52,69 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/36)
+    (0/38)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">PlayerNameScreen$1</td>
+    <td class="name">PauseMenu$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PauseMenu$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PauseMenu$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PauseMenu$3$1</td>
 <td class="coverageStat">
   <span class="percent">
     0%
@@ -71,7 +128,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/8)
+    (0/2)
   </span>
 </td>
   </tr>
@@ -82,7 +139,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/8)
+    (0/17)
   </span>
 </td>
 <td class="coverageStat">
@@ -90,7 +147,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/44)
+    (0/53)
   </span>
 </td>
 </tr>
@@ -113,116 +170,155 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.InputListener;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
-&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.*;
-&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
-&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 &nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import com.badlogic.gdx.utils.Timer;
 &nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
-&nbsp;import com.heshus.game.engine.HesHusGame;
-&nbsp;import com.heshus.game.engine.Play;
+&nbsp;
+&nbsp;import static com.heshus.game.engine.Play.*;
 &nbsp;
 &nbsp;/**
-&nbsp; * Allows the player to enter their name into a {@link TextField},
-&nbsp; * which will then be used by the leaderboard after.
+&nbsp; * Loads, draws and controls buttons to make a pause menu
 &nbsp; */
-<b class="nc">&nbsp;public class PlayerNameScreen {</b>
-&nbsp;    private BitmapFont font;
+<b class="nc">&nbsp;public class PauseMenu{</b>
 &nbsp;    private final Stage stage;
-&nbsp;    private final Camera camera;
+&nbsp;    private final Texture buttonTexture;
+&nbsp;    private final TextButton resumeButton;
+&nbsp;    private final TextButton quitButton;
+&nbsp;    private final TextButton settingsButton;
 &nbsp;    private final Table table;
+&nbsp;    private Table areYouSure;
 &nbsp;    private final Sound clickSound;
-&nbsp;    private Texture buttonTexture;
-&nbsp;    private TextButton.TextButtonStyle textButtonStyle;
-&nbsp;    private final TextField enterName;
-&nbsp;    private final Skin skin;
 &nbsp;
-&nbsp;    public static final String SKIN = &quot;UI/uiskin.json&quot;;
 &nbsp;    public static final String CLICK = &quot;Sounds/switch2.ogg&quot;;
-&nbsp;    public static final String BUTTON = &quot;UI/button_up.png&quot;;
 &nbsp;    public static final String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
+&nbsp;    public static final String BUTTON = &quot;UI/button_up.png&quot;;
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Create a playerNameScreen instance, setting up the table layout also
-&nbsp;     * @param game The base game instance
-&nbsp;     * @param camera The camera used to view the starting main menu
-&nbsp;     * @param viewport The viewport associated with the menu camera
+&nbsp;     * Create the pause menu, which is used in the play game
+&nbsp;     * @param viewport
+&nbsp;     * @param camera
 &nbsp;     */
-<b class="nc">&nbsp;    public PlayerNameScreen(HesHusGame game, Camera camera, ExtendViewport viewport) {</b>
-<b class="nc">&nbsp;        this.camera = camera;</b>
-<b class="nc">&nbsp;        this.stage = new Stage(viewport);</b>
-&nbsp;
-<b class="nc">&nbsp;        skin = new Skin(Gdx.files.internal(SKIN));</b>
+<b class="nc">&nbsp;    public PauseMenu(ExtendViewport viewport, Camera camera) {</b>
+&nbsp;        //set up font
+<b class="nc">&nbsp;        BitmapFont font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        font.getData().setScale(1.5F);</b>
+<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
+&nbsp;        //sound on click
 <b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));</b>
-<b class="nc">&nbsp;        setupFont();</b>
-<b class="nc">&nbsp;        setButtonStyle();</b>
 &nbsp;
-<b class="nc">&nbsp;        Label title = new Label(&quot;Enter your name:&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
-<b class="nc">&nbsp;        TextButton button = new TextButton(&quot;PLAY&quot;, textButtonStyle);</b>
-<b class="nc">&nbsp;        enterName = new TextField(&quot;&quot;, skin);</b>
-<b class="nc">&nbsp;        enterName.setMessageText(&quot;Max 10 characters&quot;);</b>
-<b class="nc">&nbsp;        enterName.setScale(0.8f);</b>
-&nbsp;
-<b class="nc">&nbsp;        table = new Table();</b>
-<b class="nc">&nbsp;        stage.addActor(table);</b>
-&nbsp;        // Arrange table
-<b class="nc">&nbsp;        table.add(title).fillX().center();</b>
-<b class="nc">&nbsp;        table.row().pad(10, 0, 10, 0);</b>
-<b class="nc">&nbsp;        table.add(enterName).center();</b>
-<b class="nc">&nbsp;        table.row().pad(0, 0, 10, 0);</b>
-<b class="nc">&nbsp;        table.add(button).center().width(buttonTexture.getWidth()).height(buttonTexture.getHeight());</b>
-&nbsp;
-&nbsp;        // Add input listener to the button
-<b class="nc">&nbsp;        button.addListener(new InputListener() {</b>
-&nbsp;            @Override
-&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-<b class="nc">&nbsp;                clickSound.play();</b>
-&nbsp;                // Only continue if they have entered a name and it is no more than 10 characters long
-<b class="nc">&nbsp;                if ((!enterName.getText().isEmpty()) &amp;&amp; (enterName.getText().length() &lt;= 10)) {</b>
-<b class="nc">&nbsp;                    game.playerName = enterName.getText();</b>
-<b class="nc">&nbsp;                    Play.state = Play.GAME_PLAYER_SELECT;</b>
-<b class="nc">&nbsp;                    dispose();</b>
-<b class="nc">&nbsp;                    return true;</b>
-<b class="nc">&nbsp;                } else { return false; }</b>
-&nbsp;            }
-&nbsp;        });
-&nbsp;    }
-&nbsp;
-&nbsp;    private void setButtonStyle() {
+&nbsp;        //BUTTONS
+&nbsp;        //set textbuttonstyle
 <b class="nc">&nbsp;        buttonTexture = new Texture(BUTTON);</b>
 <b class="nc">&nbsp;        TextureRegion buttonTextureRegion = new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
 <b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable = new TextureRegionDrawable(buttonTextureRegion);</b>
-<b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, this.font);</b>
-&nbsp;    }
+<b class="nc">&nbsp;        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font);</b>
+&nbsp;        //set button sizes
+<b class="nc">&nbsp;        float buttonScale = 2;</b>
+<b class="nc">&nbsp;        int buttonHeight = (int) (buttonTexture.getHeight() * buttonScale);</b>
+<b class="nc">&nbsp;        int buttonWidth = (int) (buttonTexture.getWidth() * buttonScale);</b>
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Set up the font for the UI, with a given scale
-&nbsp;     */
-&nbsp;    private void setupFont() {
-<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
-<b class="nc">&nbsp;        font.getData().setScale((float) 0.5);</b>
-<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
-&nbsp;    }
+&nbsp;        //Resume button:
+<b class="nc">&nbsp;        resumeButton = new TextButton(&quot;RESUME!!&quot;, textButtonStyle);</b>
+<b class="nc">&nbsp;        resumeButton.padBottom(10);</b>
+&nbsp;        //Settings button:
+<b class="nc">&nbsp;        settingsButton = new TextButton(&quot;SETTINGS&quot;, textButtonStyle);</b>
+<b class="nc">&nbsp;        settingsButton.padBottom(10);</b>
+&nbsp;        //Quit button:
+<b class="nc">&nbsp;        quitButton = new TextButton(&quot;QUIT :(&quot;, textButtonStyle);</b>
+<b class="nc">&nbsp;        quitButton.padBottom(10);</b>
 &nbsp;
+&nbsp;        //sets up what happens when buttons clicked
+<b class="nc">&nbsp;        buttonsOnClickLogic();</b>
+&nbsp;
+&nbsp;        //Table to store buttons
+<b class="nc">&nbsp;        table = new Table();</b>
+<b class="nc">&nbsp;        table.add(resumeButton).width(buttonWidth).height(buttonHeight).padBottom((float) buttonHeight /5);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(settingsButton).width(buttonWidth).height(buttonHeight).padBottom((float) buttonHeight /5);</b>
+<b class="nc">&nbsp;        table.row();</b>
+<b class="nc">&nbsp;        table.add(quitButton).width(buttonWidth).height(buttonHeight).padBottom((float) buttonHeight /5);</b>
+&nbsp;
+<b class="nc">&nbsp;        stage = new Stage(viewport);</b>
+&nbsp;        //Add the table to the stage to perform rendering and take input.
+<b class="nc">&nbsp;        stage.addActor(table);</b>
+&nbsp;    }
 &nbsp;    /**
-&nbsp;     * Update the current view to focus on this class&#39; instance
+&nbsp;     * Draws everything!
 &nbsp;     */
-&nbsp;    public void update() {
-<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
-<b class="nc">&nbsp;        table.setPosition(camera.position.x, camera.position.y);</b>
+&nbsp;    public void draw(){
 <b class="nc">&nbsp;        stage.draw();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Dispose of all textures
+&nbsp;     * Sets up what happens when each button is clicked
 &nbsp;     */
-&nbsp;    public void dispose() {
-<b class="nc">&nbsp;        stage.dispose();</b>
-<b class="nc">&nbsp;        skin.dispose();</b>
-<b class="nc">&nbsp;        font.dispose();</b>
-<b class="nc">&nbsp;        buttonTexture.dispose();</b>
-<b class="nc">&nbsp;        clickSound.dispose();</b>
+&nbsp;    private void buttonsOnClickLogic(){
+<b class="nc">&nbsp;        resumeButton.addListener(new InputListener() {</b>
+&nbsp;            @Override
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;            @Override
+&nbsp;            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = GAME_RUNNING;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        settingsButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;            //set state to GAME_SETTINGS if clicked, in Play this results in a SettingsMenu being drawn instead of PauseMenu
+&nbsp;            @Override
+&nbsp;            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                super.touchUp(event, x, y, pointer, button); // Call the superclass method</b>
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = GAME_SETTINGS;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+<b class="nc">&nbsp;        quitButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;            @Override
+&nbsp;            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+&nbsp;                //Timer to allow sound to play without getting cutoff
+<b class="nc">&nbsp;                Timer.schedule(new Timer.Task() {</b>
+&nbsp;
+&nbsp;                    public void run() {
+<b class="nc">&nbsp;                        Gdx.app.exit();</b>
+&nbsp;                    }
+&nbsp;                }, 0.5f); // 0.5 seconds delay
+&nbsp;            }
+&nbsp;        });
 &nbsp;    }
+&nbsp;    /**
+&nbsp;     * Grabs input, moves table to centre of screen
+&nbsp;     * @param camera camera to set position to
+&nbsp;     */
+&nbsp;    public void update(Camera camera){
+<b class="nc">&nbsp;        Gdx.input.setInputProcessor(stage);</b>
+<b class="nc">&nbsp;        table.setPosition(camera.position.x, camera.position.y);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Should be called to release all resources
+&nbsp;     */
+&nbsp;    public void dispose(){
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        buttonTexture.dispose();</b>
+<b class="nc">&nbsp;        buttonTexture.dispose();</b>
+<b class="nc">&nbsp;        if (clickSound != null) clickSound.dispose();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
 &nbsp;}
+&nbsp;
 </code>
 </pre>
 </div>
@@ -246,7 +342,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

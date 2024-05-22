@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    70%
+    72.7%
   </span>
   <span class="absValue">
-    (7/10)
+    (8/11)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    73.5%
+    76.9%
   </span>
   <span class="absValue">
-    (50/68)
+    (60/78)
   </span>
 </td>
 </tr>
@@ -90,6 +90,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import com.heshus.game.engine.Play;
 &nbsp;import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 &nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
 &nbsp;/**
 &nbsp; * Manages all activities in the game that the player can perform
 &nbsp; * by introducing property tags to the tiled map the player interacts with each property tag
@@ -104,6 +106,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    private String activityText = &quot;&quot;;</b>
 <b class="fc">&nbsp;    private final Vector2 textPosition = new Vector2();</b>
 &nbsp;
+&nbsp;    private int studied;
+&nbsp;
 <b class="fc">&nbsp;    GlyphLayout layout = new GlyphLayout();</b>
 &nbsp;
 &nbsp;    /**
@@ -113,6 +117,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    public ActivityManager(MapLayer layer, DayManager dayManager) {</b>
 <b class="fc">&nbsp;        this.layer = layer;</b>
 <b class="fc">&nbsp;        this.dayManager = dayManager;</b>
+<b class="fc">&nbsp;        this.studied = 0;</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    // todo: Modification - method now checks the newly added activities layer and gets a selected activity&#39;s properties
@@ -168,6 +173,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;                    dayManager.incrementEatScore((String) activityProperties.get(&quot;place&quot;));</b>
 <b class="fc">&nbsp;                    break;</b>
 &nbsp;                case &quot;study&quot;:
+<b class="fc">&nbsp;                    studied++;</b>
 <b class="fc">&nbsp;                    dayManager.incrementStudyScore((String) activityProperties.get(&quot;place&quot;)); //Pass in description tile attribute when thats implemented</b>
 <b class="fc">&nbsp;                    break;</b>
 &nbsp;                case &quot;recreation&quot;:
@@ -177,6 +183,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;                    // if the game is not over the avatar will move to the next day and reset their energy
 <b class="fc">&nbsp;                    if (!dayManager.getGameOver()) {</b>
 <b class="fc">&nbsp;                        dayManager.incrementDay();</b>
+<b class="fc">&nbsp;                        studied = 0;</b>
 &nbsp;                    }
 &nbsp;                    break;
 &nbsp;            }
@@ -185,14 +192,30 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;            holdText = &quot;You&#39;re too tired for that, you should sleep&quot;;</b>
 <b class="fc">&nbsp;        } else if (dayManager.getTime() + activityProperties.get(&quot;time&quot;, int.class) &gt; 24) {</b>
 <b class="fc">&nbsp;            holdText = &quot;It&#39;s getting late, you should go to bed&quot;;</b>
+<b class="fc">&nbsp;        } else if (cantStudy()) {</b>
+<b class="fc">&nbsp;            holdText = &quot;You cannot study any more today&quot;;</b>
 <b class="nc">&nbsp;        } else { holdText = &quot;You should get some sleep&quot;; }</b>
 <b class="fc">&nbsp;        layout.setText(Play.getFont(), holdText);</b>
 <b class="fc">&nbsp;        setText(holdText, Math.round(x / 16) * 16 + 8 - (layout.width / 2), Math.round(y / 16) * 16);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    private boolean validActivity(MapProperties activityProperties) {
-<b class="fc">&nbsp;        return (dayManager.getEnergy() - activityProperties.get(&quot;energy&quot;, int.class) &gt;= 0) &amp;&amp;</b>
-<b class="fc">&nbsp;                (dayManager.getTime() + activityProperties.get(&quot;time&quot;, int.class) &lt;= 24);</b>
+&nbsp;        // Can only study twice if they didn&#39;t study previous day
+<b class="fc">&nbsp;        if (cantStudy() &amp;&amp; Objects.equals(activityProperties.get(&quot;activity&quot;, String.class), &quot;study&quot;)) {</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        boolean enoughEnergy = dayManager.getEnergy() - activityProperties.get(&quot;energy&quot;, int.class) &gt;= 0;</b>
+<b class="fc">&nbsp;        boolean enoughTime = dayManager.getTime() + activityProperties.get(&quot;time&quot;, int.class) &lt;= 24;</b>
+&nbsp;
+<b class="fc">&nbsp;        return enoughEnergy &amp;&amp; enoughTime;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @return boolean indicating whether the player can study or not
+&nbsp;     */
+&nbsp;    private boolean cantStudy() {
+<b class="fc">&nbsp;        return (dayManager.getDaysOfNoStudy() &lt;= 0 || studied &gt; 1) &amp;&amp;</b>
+<b class="fc">&nbsp;                (dayManager.getDaysOfNoStudy() != 0 || studied != 0);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
@@ -274,7 +297,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

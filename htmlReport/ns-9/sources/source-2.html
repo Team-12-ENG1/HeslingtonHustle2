@@ -55,7 +55,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (9/9)
+    (10/10)
   </span>
 </td>
 <td class="coverageStat">
@@ -63,7 +63,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (75/75)
+    (85/85)
   </span>
 </td>
 </tr>
@@ -156,6 +156,21 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        DayManager dm2 = runweek(eatArray, studyArray2, recArray);</b>
 &nbsp;
 <b class="fc">&nbsp;        assertTrue(dm1.calculateScore() &gt; dm2.calculateScore());</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
+&nbsp;    public void normalPlayScoreTest(){
+<b class="fc">&nbsp;        DayManager dm = new DayManager();</b>
+<b class="fc">&nbsp;        int[] studyArray = {1,1,1,1,1,1,1};</b>
+<b class="fc">&nbsp;        int[] eatArray = {3,3,3,3,3,3,3};</b>
+<b class="fc">&nbsp;        int[] recArray = {1,1,1,1,0,1,1};</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; studyArray.length; i++) {</b>
+<b class="fc">&nbsp;            runDay(dm, eatArray[i], studyArray[i], recArray[i]);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        int score = dm.calculateScore();</b>
+<b class="fc">&nbsp;        assertTrue(dm.calculateScore()&gt;40);</b>
+<b class="fc">&nbsp;        assertTrue(dm.calculateScore()&lt;=100);</b>
+&nbsp;
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    //Test for FR_STREAKS
@@ -251,7 +266,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

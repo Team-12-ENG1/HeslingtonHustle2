@@ -55,15 +55,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (19/19)
+    (20/20)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    99.1%
   </span>
   <span class="absValue">
-    (102/102)
+    (112/113)
   </span>
 </td>
 </tr>
@@ -235,6 +235,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    @Test
+&nbsp;    public void invariantMovement(){
+<b class="fc">&nbsp;        Player player = init();</b>
+<b class="fc">&nbsp;        player.setX(76);</b>
+<b class="fc">&nbsp;        player.setY(76);</b>
+<b class="fc">&nbsp;        player.keyDown(Input.Keys.D);</b>
+<b class="fc">&nbsp;        player.update(0.01f);</b>
+<b class="fc">&nbsp;        player.update(0.01f);</b>
+<b class="fc">&nbsp;        float x = player.getX();</b>
+<b class="fc">&nbsp;        player.setX(76);</b>
+<b class="fc">&nbsp;        player.update(0.02f);</b>
+<b class="fc">&nbsp;        assertEquals(x, player.getX(), 0.01);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    @Test
 &nbsp;    public void collisionLargeDelta(){
 <b class="fc">&nbsp;        Player player = init();</b>
 <b class="fc">&nbsp;        player.setX(118);</b>
@@ -272,7 +286,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>

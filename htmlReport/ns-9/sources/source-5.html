@@ -98,10 +98,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;public class SaveTests {</b>
 &nbsp;
 &nbsp;    //mock objects to simulate the behaviour of real objects in the tests
-&nbsp;    private FileHandle mockFileHandle;
-&nbsp;    private Files mockFiles;
-&nbsp;    private Json mockJson;
-&nbsp;    private GameData mockGameData;
+&nbsp;    private FileHandle mockFileHandle; //mock object for handling file operations
+&nbsp;    private Files mockFiles;//mock object for managing file system operations
+&nbsp;    private Json mockJson;//mock object for JSON serialization and deserialization
+&nbsp;    private GameData mockGameData; //Mock object representing the game´s data
 &nbsp;
 &nbsp;    @Before //Run before each test to set up the necessary objects
 &nbsp;    public void setup() {
@@ -119,12 +119,22 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @Test
 &nbsp;    public void SaveTestSuccess() {
 &nbsp;        /*testing the save method*/
+&nbsp;        /*when mockFiles.local is called with any string argument, it should return &quot;mockFileHandle
+&nbsp;        This simulates the creation of a file handle for a local file&quot;*/
 <b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
 &nbsp;
+&nbsp;        /*This line converts the &quot;gd&quot; (game data) object to a JSON string using the &quot;json&quot; utility
+&nbsp;        * The resulting JSON string is stored in the &quot;expectedJsonString&quot; variable, representing
+&nbsp;        * the expected output of the serialization process*/
 <b class="fc">&nbsp;        String expectedJsonString = json.toJson(gd);</b>
 &nbsp;
-<b class="fc">&nbsp;        Save.save(&quot;testPath&quot;);</b>
+&nbsp;        /*Calling the method to serialize the game data (gd) to a JSON string and write the file
+&nbsp;        * at specified path */
+<b class="fc">&nbsp;        Save.save(&quot;Path&quot;);</b>
 &nbsp;
+&nbsp;        /*Verifies that the &quot;writeString&quot; method of &quot;mockFileHandle&quot; was called with &quot;expectedJsonString&quot;
+&nbsp;        * and &quot;false&quot; as argument. This confirms that the save operation attempted to write the correct
+&nbsp;        * JSOn string to the file appending to the existing content*/
 <b class="fc">&nbsp;        verify(mockFileHandle).writeString(expectedJsonString, false);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
@@ -132,6 +142,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void SaveTestException() {
 &nbsp;        /*testing the save method when an Exception occurs*/
 <b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;
 <b class="fc">&nbsp;        doThrow(new RuntimeException(&quot;Test Exception&quot;)).when(mockFileHandle).writeString(anyString(), eq(false));</b>
 &nbsp;
 <b class="fc">&nbsp;        Save.save(&quot;testPath&quot;);</b>
@@ -141,28 +152,36 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @Test
 &nbsp;    public void LoadTestSuccess() {
+&nbsp;        /*Simulating the creation of a file handle for a local file*/
 <b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;        /*simulates the presence of the file*/
 <b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(true);</b>
+&nbsp;        /*when &quot;fromJson&quot; is called with &quot;GameData.class&quot; and the mock file handle as arguments,
+&nbsp;        * is should return &quot;mockGameData&quot;. Simulating the deserialization of the game from the file*/
 <b class="fc">&nbsp;        when(mockJson.fromJson(eq(GameData.class), eq(mockFileHandle))).thenReturn(mockGameData);</b>
 &nbsp;
 <b class="fc">&nbsp;        Save.load(&quot;testPath&quot;);</b>
 &nbsp;
+&nbsp;        /*Confirms that the game data was successfully loaded and assigned to the &quot;gd&quot; field*/
 <b class="fc">&nbsp;        assertNotNull(gd);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    @Test
 &nbsp;    public void LoadTestFileNotExists() {
 <b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;        //false: simulating the absence of the file
 <b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(false);</b>
 &nbsp;
 <b class="fc">&nbsp;        Save.load(&quot;testPath&quot;);</b>
-&nbsp;
+&nbsp;        //Confirms that the &quot;gd&quot; field was not left uninitialized despite the absence of the file
 <b class="fc">&nbsp;        assertNotNull(gd);</b>
+&nbsp;        /*Verifies that there was no attempt on reading a non-existing file*/
 <b class="fc">&nbsp;        verify(mockFileHandle, never()).readString();</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    @Test
 &nbsp;    public void LoadTestException() {
+&nbsp;        //Testing the load method when an exception occurs
 <b class="fc">&nbsp;        when(mockFiles.local(anyString())).thenReturn(mockFileHandle);</b>
 <b class="fc">&nbsp;        doThrow(new RuntimeException(&quot;Test Exception&quot;)).when(mockFileHandle).readString();</b>
 &nbsp;
@@ -173,7 +192,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @Test
 &nbsp;    public void SaveFileExistsTest() {
+&nbsp;        /*It checks is the saveFileExists method correctly identifies the presence of a save file*/
 <b class="fc">&nbsp;        when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;        //return true as if the file exists
 <b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(true);</b>
 &nbsp;
 <b class="fc">&nbsp;        assertTrue(Save.saveFileExists());</b>
@@ -182,6 +203,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    @Test
 &nbsp;    public void SaveFileNotExistsTest() {
 <b class="fc">&nbsp;        when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);</b>
+&nbsp;        //return false as if the file doesn´t exist 
 <b class="fc">&nbsp;        when(mockFileHandle.exists()).thenReturn(false);</b>
 &nbsp;
 <b class="fc">&nbsp;        assertFalse(Save.saveFileExists());</b>
@@ -212,7 +234,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-22 12:39</div>
+    <div style="float:right;">generated on 2024-05-23 00:36</div>
 </div>
 </body>
 </html>
