@@ -50,8 +50,6 @@ public class MainMenuScreen implements Screen {
     Label gameTitle;
     Label howToTitle;
     Label instructions;
-    Label instructions2;
-    Label instructions3;
     private final Stage stage;
     private final Table mainTable;
     private final Table howToTable;
