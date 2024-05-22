@@ -115,7 +115,9 @@ public class SaveTests {
 
     @Test
     public void SaveFileExistsTest() {
+        /*It checks is the saveFileExists method correctly identifies the presence of a save file*/
         when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);
+        //return true as if the file exists
         when(mockFileHandle.exists()).thenReturn(true);
 
         assertTrue(Save.saveFileExists());
@@ -124,6 +126,7 @@ public class SaveTests {
     @Test
     public void SaveFileNotExistsTest() {
         when(mockFiles.internal(anyString())).thenReturn(mockFileHandle);
+        //return false as if the file doesn´t exist 
         when(mockFileHandle.exists()).thenReturn(false);
 
         assertFalse(Save.saveFileExists());
