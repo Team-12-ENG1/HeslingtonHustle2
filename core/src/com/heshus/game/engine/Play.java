@@ -45,6 +45,7 @@ public class Play implements Screen {
     public static final int GAME_LEADERBOARD = 5;
     public static final int GAME_PLAYER_NAME = 6;
     public static final int GAME_PLAYER_SELECT = 7;
+    public static final int GAME_CREDITS = 8;
 
     public static int state;
     private final HesHusGame game;
