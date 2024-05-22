@@ -1,0 +1,642 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MainMenuScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.screens.states</a>
+</div>
+
+<h1>Coverage Summary for Class: MainMenuScreen (com.heshus.game.screens.states)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainMenuScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/120)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MainMenuScreen$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainMenuScreen$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/147)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.screens.states;
+&nbsp;
+&nbsp;import com.badlogic.gdx.ApplicationListener;
+&nbsp;import com.badlogic.gdx.Game;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Screen;
+&nbsp;import com.badlogic.gdx.audio.Sound;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.OrthographicCamera;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+&nbsp;import com.badlogic.gdx.maps.tiled.TiledMap;
+&nbsp;import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+&nbsp;import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+&nbsp;import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputEvent;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.InputListener;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+&nbsp;import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+&nbsp;import com.badlogic.gdx.utils.ScreenUtils;
+&nbsp;import com.badlogic.gdx.utils.Timer;
+&nbsp;import com.badlogic.gdx.utils.viewport.ExtendViewport;
+&nbsp;import com.heshus.game.editor.CustomiseSprite;
+&nbsp;import com.heshus.game.engine.HesHusGame;
+&nbsp;import com.heshus.game.engine.Play;
+&nbsp;
+&nbsp;import static com.heshus.game.engine.Play.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Displays buttons to quit, start new game, change settings with a background of the game map.
+&nbsp; * It implements {@link Screen} to display it to the user.
+&nbsp; */
+<b class="nc">&nbsp;public class MainMenuScreen implements Screen {</b>
+&nbsp;
+&nbsp;    final HesHusGame game;
+&nbsp;    private final ExtendViewport extendViewport;
+&nbsp;    private final OrthographicCamera camera;
+&nbsp;    private final OrthogonalTiledMapRenderer renderer;
+&nbsp;    int mapPixelWidth;
+&nbsp;    int mapPixelHeight;
+&nbsp;    BitmapFont font;
+&nbsp;    TextButton settingsButton;
+&nbsp;    TextButton quitButton;
+&nbsp;    TextButton leaderboardButton;
+&nbsp;    TextButton newButton;
+&nbsp;    TextButton creditsButton;
+&nbsp;    Label gameTitle;
+&nbsp;    Label howToTitle;
+&nbsp;    Label instructions;
+&nbsp;    private final Stage stage;
+&nbsp;    private final Table mainTable;
+&nbsp;    private final Table howToTable;
+&nbsp;    private TextButton.TextButtonStyle textButtonStyle;
+&nbsp;    private TextButton.TextButtonStyle newGameTextButtonStyle;
+&nbsp;    // Different views
+&nbsp;    private final SettingsMenu settingsMenu;
+&nbsp;    private final PlayerNameScreen playerNameScreen;
+&nbsp;    private final CustomiseSprite customiseSprite;
+&nbsp;    private final LeaderboardScreen leaderboardScreen;
+&nbsp;    private final CreditsScreen credits;
+&nbsp;    int xSpeed;
+&nbsp;    int ySpeed;
+&nbsp;    private Sound clickSound;
+&nbsp;    private final TextButton gotItButton;
+&nbsp;    private boolean isNewGameClicked;
+&nbsp;    public final static String FONT = &quot;Fonts/monogram/pixel.fnt&quot;;
+&nbsp;    public final static String BUTTON = &quot;UI/button_up.png&quot;;
+&nbsp;    public final static String BUTTON_WIDE = &quot;UI/wide_button.png&quot;;
+&nbsp;    public final static String CLICK = &quot;Sounds/switch2.ogg&quot;;
+&nbsp;
+&nbsp;    /**
+&nbsp;    *Constructor initiates variables and sets up listeners for buttons
+&nbsp;    * @param game instance of central class HesHusGame
+&nbsp;    * */
+<b class="nc">&nbsp;    public MainMenuScreen(final HesHusGame game) {</b>
+<b class="nc">&nbsp;        this.game = game;</b>
+<b class="nc">&nbsp;        state = GAME_MAINMENU;</b>
+&nbsp;        //Map for background initialisation
+&nbsp;
+<b class="nc">&nbsp;        TiledMap map = new TmxMapLoader().load(Play.MAP);</b>
+&nbsp;
+<b class="nc">&nbsp;        renderer = new OrthogonalTiledMapRenderer(map, 1);</b>
+<b class="nc">&nbsp;        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);</b>
+<b class="nc">&nbsp;        mapPixelWidth = layer.getWidth() * layer.getTileWidth() ; //just calculate the width and height of tilemap</b>
+<b class="nc">&nbsp;        mapPixelHeight = layer.getHeight() * layer.getTileHeight();</b>
+&nbsp;
+&nbsp;        //Camera initialisation
+<b class="nc">&nbsp;        camera = new OrthographicCamera();</b>
+<b class="nc">&nbsp;        camera.setToOrtho(false, 400, 225); //must be same ratio as screen or black lines between tiles can appear</b>
+<b class="nc">&nbsp;        camera.position.x=0;</b>
+<b class="nc">&nbsp;        camera.position.y=0;</b>
+<b class="nc">&nbsp;        xSpeed=1;//we will move camera by these each frame</b>
+<b class="nc">&nbsp;        ySpeed=1;</b>
+<b class="nc">&nbsp;        extendViewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);</b>
+&nbsp;
+&nbsp;        //set up font
+<b class="nc">&nbsp;        font = new BitmapFont(Gdx.files.internal(FONT), false);</b>
+<b class="nc">&nbsp;        font.getData().setScale(.5F);</b>
+<b class="nc">&nbsp;        font.setColor(Color.BLACK);</b>
+&nbsp;
+&nbsp;        //BUTTONS
+&nbsp;        //set style
+<b class="nc">&nbsp;        initialiseTextButtonStyles();</b>
+&nbsp;
+&nbsp;        //Settings button:
+<b class="nc">&nbsp;        settingsButton = new TextButton(&quot;SETTINGS&quot;, textButtonStyle); //Set the button up</b>
+<b class="nc">&nbsp;        settingsButton.padBottom(7);//center text in graphic</b>
+<b class="nc">&nbsp;        settingsButton.setScale(1F);</b>
+&nbsp;
+&nbsp;        //Leaderboard button:
+<b class="nc">&nbsp;        leaderboardButton = new TextButton(&quot;LEADERBOARD&quot;, textButtonStyle); //Set the button up</b>
+<b class="nc">&nbsp;        leaderboardButton.padBottom(6);//center text in graphic</b>
+&nbsp;
+&nbsp;        // Credits button
+<b class="nc">&nbsp;        creditsButton = new TextButton(&quot;CREDITS&quot;, textButtonStyle);</b>
+<b class="nc">&nbsp;        creditsButton.padBottom(6);</b>
+&nbsp;
+&nbsp;        //Quit button:
+<b class="nc">&nbsp;        quitButton = new TextButton(&quot;QUIT :(&quot;, textButtonStyle); //Set the button up</b>
+<b class="nc">&nbsp;        quitButton.padBottom(6);</b>
+&nbsp;
+&nbsp;        //New Game button
+<b class="nc">&nbsp;        newButton = new TextButton(&quot;NEW GAME!!&quot;, newGameTextButtonStyle); //Set the button up</b>
+<b class="nc">&nbsp;        newButton.padBottom(6);</b>
+&nbsp;
+&nbsp;        //Got it! button for controls popup
+<b class="nc">&nbsp;        gotItButton = new TextButton(&quot;Got it!&quot;, textButtonStyle); //Set the button up</b>
+<b class="nc">&nbsp;        gotItButton.padBottom(6);</b>
+&nbsp;
+&nbsp;        // Game Title label
+<b class="nc">&nbsp;        gameTitle = new Label(&quot;Heslington Hustle&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+&nbsp;
+&nbsp;        //set logic
+<b class="nc">&nbsp;        buttonsOnClickLogic();</b>
+&nbsp;
+&nbsp;        //Add everything to a table! (the main menu table)
+<b class="nc">&nbsp;        mainTable = new Table();</b>
+<b class="nc">&nbsp;        mainTable.add(gameTitle).colspan(4).padBottom(6);</b>
+<b class="nc">&nbsp;        mainTable.row();</b>
+<b class="nc">&nbsp;        mainTable.add(newButton).colspan(4).padBottom(3);</b>
+<b class="nc">&nbsp;        mainTable.row();</b>
+&nbsp;        // Added leaderboard button
+<b class="nc">&nbsp;        mainTable.add(leaderboardButton).padRight(3);</b>
+<b class="nc">&nbsp;        mainTable.add(settingsButton).padRight(3);</b>
+<b class="nc">&nbsp;        mainTable.add(creditsButton);</b>
+<b class="nc">&nbsp;        mainTable.row();</b>
+<b class="nc">&nbsp;        mainTable.add(quitButton).padTop(3).colspan(3);</b>
+<b class="nc">&nbsp;        mainTable.setFillParent(true);</b>
+<b class="nc">&nbsp;        stage = new Stage(extendViewport);</b>
+<b class="nc">&nbsp;        stage.addActor(mainTable);</b>
+&nbsp;
+&nbsp;        //We draw this instead of mainTable when settingsButton is clicked
+<b class="nc">&nbsp;        settingsMenu = new SettingsMenu(state, camera, extendViewport, 1);</b>
+&nbsp;
+&nbsp;        // New: added player name view to the main menu
+<b class="nc">&nbsp;        playerNameScreen = new PlayerNameScreen(this.game, camera, extendViewport);</b>
+&nbsp;
+&nbsp;        // New: added leaderboard view
+<b class="nc">&nbsp;        leaderboardScreen = new LeaderboardScreen(state, camera, extendViewport);</b>
+&nbsp;
+&nbsp;        // New: added customise sprite view
+<b class="nc">&nbsp;        customiseSprite = new CustomiseSprite(this.game, camera, extendViewport);</b>
+&nbsp;
+&nbsp;        // New: added credits
+<b class="nc">&nbsp;        credits = new CreditsScreen(state, camera, extendViewport);</b>
+&nbsp;
+<b class="nc">&nbsp;        howToTable = instructionTable();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Table instructionTable() {
+&nbsp;        final Table howToTable;
+&nbsp;        // Make a how to play table
+<b class="nc">&nbsp;        howToTable = new Table();</b>
+&nbsp;
+<b class="nc">&nbsp;        howToTitle = new Label(&quot;How to play:&quot;, new Label.LabelStyle(font, Color.WHITE));</b>
+<b class="nc">&nbsp;        instructions = new Label(&quot;Complete a variety of recreational, educational and dietary activities &quot; +</b>
+&nbsp;                &quot;to get through the last week before exams!\n&quot; +
+&nbsp;                &quot;P or Esc to pause, E to interact with activities (they have their\nname above them). &quot; +
+&nbsp;                &quot;Use WASD or arrow keys to move.&quot;, new Label.LabelStyle(font, Color.WHITE));
+<b class="nc">&nbsp;        instructions.setWrap(true);</b>
+&nbsp;
+&nbsp;        // Arrange table
+<b class="nc">&nbsp;        howToTable.setFillParent(true);</b>
+<b class="nc">&nbsp;        howToTable.add(howToTitle).padBottom(6);</b>
+<b class="nc">&nbsp;        howToTable.row();</b>
+<b class="nc">&nbsp;        howToTable.add(instructions).fill().width(300);</b>
+<b class="nc">&nbsp;        howToTable.row();</b>
+<b class="nc">&nbsp;        howToTable.add(gotItButton).center();</b>
+<b class="nc">&nbsp;        howToTable.setVisible(false);</b>
+<b class="nc">&nbsp;        stage.addActor(howToTable);</b>
+<b class="nc">&nbsp;        return howToTable;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * sets up what happens when each button is clicked(could be in constructor but seems easier to read this way)
+&nbsp;     */
+&nbsp;    private void buttonsOnClickLogic() {
+&nbsp;        //QUIT BUTTON: Quits (delay for the sound to play)
+<b class="nc">&nbsp;        quitButton.addListener(new InputListener() {</b>
+&nbsp;            @Override
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                return true;</b>
+&nbsp;            }
+&nbsp;            @Override
+&nbsp;            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                Timer.schedule(new Timer.Task() {</b>
+&nbsp;                    @Override
+&nbsp;                    public void run() {
+<b class="nc">&nbsp;                        Gdx.app.exit();</b>
+&nbsp;                    }
+&nbsp;                }, 0.5f);
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        //NEWGAME BUTTON: Pops up controls, and the gotIt confirmation button
+<b class="nc">&nbsp;        newButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                isNewGameClicked=true;</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        //SETTINGS BUTTON: sets state to settings if clicked!
+<b class="nc">&nbsp;        settingsButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = GAME_SETTINGS;</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        //LEADERBOARD BUTTON: sets state to leaderboard if clicked!
+<b class="nc">&nbsp;        leaderboardButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = GAME_LEADERBOARD;</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Credits button
+<b class="nc">&nbsp;        creditsButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+<b class="nc">&nbsp;                state = GAME_CREDITS;</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        //GOTITBUTTON: confirms player knows controls
+<b class="nc">&nbsp;        gotItButton.addListener(new InputListener() {</b>
+&nbsp;            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+<b class="nc">&nbsp;                clickSound.play();</b>
+&nbsp;                // New: change the play state to player name (change the view)
+<b class="nc">&nbsp;                state = GAME_PLAYER_NAME;</b>
+<b class="nc">&nbsp;                dispose();</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * set button styles
+&nbsp;     */
+&nbsp;    private void initialiseTextButtonStyles() {
+<b class="nc">&nbsp;        Texture buttonTexture = new Texture(BUTTON);</b>
+<b class="nc">&nbsp;        TextureRegion buttonTextureRegion= new TextureRegion(buttonTexture, buttonTexture.getWidth(), buttonTexture.getHeight());</b>
+<b class="nc">&nbsp;        TextureRegionDrawable buttonTextureRegionDrawable =new TextureRegionDrawable(buttonTextureRegion);</b>
+<b class="nc">&nbsp;        textButtonStyle = new TextButton.TextButtonStyle(buttonTextureRegionDrawable, buttonTextureRegionDrawable, buttonTextureRegionDrawable, font );</b>
+<b class="nc">&nbsp;        Texture newButtonTexture = new Texture(BUTTON_WIDE);</b>
+<b class="nc">&nbsp;        TextureRegion newButtonTextureRegion= new TextureRegion(newButtonTexture, newButtonTexture.getWidth(), newButtonTexture.getHeight());</b>
+<b class="nc">&nbsp;        TextureRegionDrawable newButtonTextureRegionDrawable =new TextureRegionDrawable(newButtonTextureRegion);</b>
+<b class="nc">&nbsp;        newGameTextButtonStyle = new TextButton.TextButtonStyle(newButtonTextureRegionDrawable, newButtonTextureRegionDrawable, newButtonTextureRegionDrawable, font );</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Called when this screen becomes the current screen for a {@link Game}.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void show() {
+<b class="nc">&nbsp;        clickSound = Gdx.audio.newSound(Gdx.files.internal(CLICK));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Called when the screen should render itself.
+&nbsp;     * Renders
+&nbsp;     * @param delta The time in seconds since the last render.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void render(float delta) {
+<b class="nc">&nbsp;            ScreenUtils.clear(0, 0.2f, 0, 1);</b>
+&nbsp;            //only one input processor-button input listeners won&#39;t work without this (but you could multiplex it if needed)
+<b class="nc">&nbsp;            Gdx.input.setInputProcessor(stage);</b>
+&nbsp;
+&nbsp;            //draws tilemap
+<b class="nc">&nbsp;            renderer.setView(camera);</b>
+<b class="nc">&nbsp;            renderer.render();</b>
+&nbsp;
+<b class="nc">&nbsp;            switch (state) {</b>
+&nbsp;                case (GAME_MAINMENU):
+<b class="nc">&nbsp;                    game.batch.begin();</b>
+<b class="nc">&nbsp;                    if (isNewGameClicked) {</b>
+<b class="nc">&nbsp;                        mainTable.setVisible(false);</b>
+<b class="nc">&nbsp;                        howToTable.setPosition(camera.position.x - camera.viewportWidth / 2, camera.position.y - camera.viewportHeight / 2);</b>
+<b class="nc">&nbsp;                        howToTable.setVisible(true);</b>
+<b class="nc">&nbsp;                        stage.draw();</b>
+&nbsp;                    }
+&nbsp;                    else {
+&nbsp;                        //update position of table to middle of screen and draw
+<b class="nc">&nbsp;                        mainTable.setPosition(camera.position.x - camera.viewportWidth / 2, camera.position.y - camera.viewportHeight / 2);</b>
+<b class="nc">&nbsp;                        stage.draw();//draws all buttons!</b>
+&nbsp;                    }
+<b class="nc">&nbsp;                    game.batch.end();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case(GAME_SETTINGS):
+&nbsp;                    //draws and updates settingsMenu
+<b class="nc">&nbsp;                    settingsMenu.update();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case (GAME_LEADERBOARD):
+<b class="nc">&nbsp;                    leaderboardScreen.update();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case (GAME_PLAYER_NAME):
+<b class="nc">&nbsp;                    playerNameScreen.update();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case (GAME_PLAYER_SELECT):
+<b class="nc">&nbsp;                    customiseSprite.update();</b>
+<b class="nc">&nbsp;                    break;</b>
+&nbsp;                case (GAME_CREDITS):
+<b class="nc">&nbsp;                    credits.update();</b>
+&nbsp;                    break;
+&nbsp;            }
+&nbsp;
+&nbsp;            //moving camera
+<b class="nc">&nbsp;            camera.position.x+=xSpeed;</b>
+<b class="nc">&nbsp;            camera.position.y+=ySpeed;</b>
+&nbsp;            //&quot;bounce&quot; camera if it&#39;s about to show out of the map! (if the Tiledmap has a yOffSet or xOffSet will probably break)
+<b class="nc">&nbsp;            if(camera.position.y+ySpeed + camera.viewportHeight/2&gt;= mapPixelHeight ||camera.position.y+ySpeed- camera.viewportHeight/2&lt;=0 ){</b>
+<b class="nc">&nbsp;                ySpeed*=-1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if(camera.position.x+xSpeed + camera.viewportWidth/2&gt;= mapPixelWidth ||camera.position.x+xSpeed- camera.viewportWidth/2&lt;=0 ){</b>
+<b class="nc">&nbsp;                xSpeed*=-1;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            camera.update();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @param width
+&nbsp;     * @param height
+&nbsp;     * @see ApplicationListener#resize(int, int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void resize(int width, int height) {
+<b class="nc">&nbsp;        extendViewport.update(width,height); //updates size of window for viewport when things get resized, rounds up to the nearest tilewidth</b>
+<b class="nc">&nbsp;        camera.update();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see ApplicationListener#pause()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void pause() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see ApplicationListener#resume()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void resume() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Called when this screen is no longer the current screen for a {@link Game}.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void hide() {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Called when this screen should release all resources.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void dispose() {
+<b class="nc">&nbsp;        stage.dispose();</b>
+<b class="nc">&nbsp;        settingsMenu.dispose();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-23 00:38</div>
+</div>
+</body>
+</html>

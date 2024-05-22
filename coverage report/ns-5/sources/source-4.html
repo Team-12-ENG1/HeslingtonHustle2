@@ -1,0 +1,161 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > GameData</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.manager</a>
+</div>
+
+<h1>Coverage Summary for Class: GameData (com.heshus.game.manager)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameData</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (4/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (10/15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GameData$$EnhancerByMockitoWithCGLIB$$1e89b7da</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (4/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (10/15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.manager;
+&nbsp;
+&nbsp;import java.util.Arrays;
+&nbsp;import java.util.Collections;
+&nbsp;
+&nbsp;/**
+&nbsp; * Handles the leaderboard, which is an array of {@link Score} instances.
+&nbsp; */
+&nbsp;public class GameData {
+&nbsp;    public static final int MAX_SCORES = 10;
+&nbsp;    private Score[] scores;
+&nbsp;
+<b class="fc">&nbsp;    public GameData() {</b>
+<b class="fc">&nbsp;        scores = new Score[MAX_SCORES];</b>
+<b class="fc">&nbsp;        init();</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    // Create a blank scores list
+&nbsp;    public void init() {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; MAX_SCORES; i++) {</b>
+<b class="fc">&nbsp;            scores[i] = new Score(&quot;player&quot;+String.valueOf(i), (i+1)*10);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        Arrays.sort(scores, Collections.reverseOrder());</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    // Getter and setter for the leaderboard scores
+&nbsp;    public Score[] getScores() {
+<b class="fc">&nbsp;        return scores;</b>
+&nbsp;    }
+&nbsp;    public void setScores(Score[] scores) {
+<b class="nc">&nbsp;        this.scores = scores;</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Check whether a given player&#39;s score qualifies to be on the leaderboard
+&nbsp;     * @param score A player&#39;s score
+&nbsp;     * @return A boolean indicating if the player&#39;s score qualifies to be on the leaderboard
+&nbsp;     */
+<b class="fc">&nbsp;    public boolean isHighScore(Score score) { return score.getScore() &gt; scores[MAX_SCORES-1].getScore(); }</b>
+&nbsp;
+&nbsp;    public void addHighScore(Score score) {
+<b class="nc">&nbsp;        scores[MAX_SCORES-1] = score;</b>
+&nbsp;        // Get a descending scores array
+<b class="nc">&nbsp;        Arrays.sort(scores);</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-23 00:38</div>
+</div>
+</body>
+</html>

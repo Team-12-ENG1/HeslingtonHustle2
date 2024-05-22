@@ -1,0 +1,303 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ActivityManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.heshus.game.manager</a>
+</div>
+
+<h1>Coverage Summary for Class: ActivityManager (com.heshus.game.manager)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ActivityManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72.7%
+  </span>
+  <span class="absValue">
+    (8/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76.9%
+  </span>
+  <span class="absValue">
+    (60/78)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.heshus.game.manager;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Input;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;import com.badlogic.gdx.maps.MapLayer;
+&nbsp;import com.badlogic.gdx.maps.MapObjects;
+&nbsp;import com.badlogic.gdx.maps.MapProperties;
+&nbsp;import com.badlogic.gdx.maps.objects.RectangleMapObject;
+&nbsp;import com.badlogic.gdx.math.Rectangle;
+&nbsp;import com.badlogic.gdx.math.Vector2;
+&nbsp;import com.heshus.game.engine.Play;
+&nbsp;import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+&nbsp;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;/**
+&nbsp; * Manages all activities in the game that the player can perform
+&nbsp; * by introducing property tags to the tiled map the player interacts with each property tag
+&nbsp; * and according to what the type of activity is the player&#39;s energy and time is incremented or decremented
+&nbsp; * Manages how the activities are performed, why they are performed and energy/time constraints
+&nbsp; * Displays text whenever a task is completed
+&nbsp; */
+&nbsp;public class ActivityManager {
+&nbsp;    private final MapLayer layer;
+&nbsp;    private final DayManager dayManager;
+&nbsp;
+<b class="fc">&nbsp;    private String activityText = &quot;&quot;;</b>
+<b class="fc">&nbsp;    private final Vector2 textPosition = new Vector2();</b>
+&nbsp;
+&nbsp;    private int studied;
+&nbsp;
+<b class="fc">&nbsp;    GlyphLayout layout = new GlyphLayout();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for ActivityManager
+&nbsp;     * @param layer layer that controls collision and activity logic
+&nbsp;     */
+<b class="fc">&nbsp;    public ActivityManager(MapLayer layer, DayManager dayManager) {</b>
+<b class="fc">&nbsp;        this.layer = layer;</b>
+<b class="fc">&nbsp;        this.dayManager = dayManager;</b>
+<b class="fc">&nbsp;        this.studied = 0;</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    // todo: Modification - method now checks the newly added activities layer and gets a selected activity&#39;s properties
+&nbsp;    /**
+&nbsp;     * Checks whether and which activity is performed based on location of player
+&nbsp;     */
+&nbsp;    public void checkActivity(Rectangle playerBoundRect, boolean justPressedE, float x, float y) {
+&nbsp;
+<b class="fc">&nbsp;        MapProperties activityProperties = null;</b>
+&nbsp;        // Check all activities
+<b class="fc">&nbsp;        MapObjects objects = layer.getObjects();</b>
+&nbsp;        // In activity area and they press E
+<b class="fc">&nbsp;        for (RectangleMapObject rectActivity : objects.getByType(RectangleMapObject.class)) {</b>
+&nbsp;
+<b class="fc">&nbsp;            if (playerBoundRect.overlaps(rectActivity.getRectangle()) &amp;&amp; justPressedE) {</b>
+<b class="fc">&nbsp;                activityProperties = rectActivity.getProperties();</b>
+<b class="fc">&nbsp;                performActivity(activityProperties, x, y);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        // New: Dev buttons, (m , . /) perform eat/recreation/study/sleep
+&nbsp;        // Eat
+<b class="fc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {</b>
+<b class="nc">&nbsp;            decrementEnergy(10);</b>
+<b class="nc">&nbsp;            dayManager.incrementEatScore(&quot;cafe&quot;);</b>
+<b class="nc">&nbsp;            incrementTime(1);</b>
+<b class="fc">&nbsp;        } else if (Gdx.input.isKeyJustPressed(Input.Keys.COMMA)) {</b>
+&nbsp;            // Recreation
+<b class="nc">&nbsp;            decrementEnergy(35);</b>
+<b class="nc">&nbsp;            dayManager.incrementRecreationalScore(&quot;ducks&quot;);</b>
+<b class="nc">&nbsp;            incrementTime(2);</b>
+<b class="fc">&nbsp;        } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {</b>
+&nbsp;            // Study
+<b class="nc">&nbsp;            decrementEnergy(40);</b>
+<b class="nc">&nbsp;            dayManager.incrementStudyScore(&quot;library&quot;);</b>
+<b class="nc">&nbsp;            incrementTime(4);</b>
+<b class="fc">&nbsp;        } else if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {</b>
+&nbsp;            // Sleep
+&nbsp;            // if the game is not over the avatar will move to the next day and reset their energy
+<b class="nc">&nbsp;            if (!dayManager.getGameOver()) {</b>
+<b class="nc">&nbsp;                dayManager.incrementDay();</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;    }</b>
+&nbsp;    //We can also use this to tinker with different locations having different effects
+&nbsp;    private void performActivity(MapProperties activityProperties, float x, float y) {
+<b class="fc">&nbsp;        String holdText = &quot;&quot;;</b>
+<b class="fc">&nbsp;        if(validActivity(activityProperties)) {</b>
+<b class="fc">&nbsp;            decrementEnergy(activityProperties.get(&quot;energy&quot;, int.class));</b>
+<b class="fc">&nbsp;            incrementTime(activityProperties.get(&quot;time&quot;, int.class));</b>
+<b class="fc">&nbsp;            switch (activityProperties.get(&quot;activity&quot;, String.class)) {</b>
+&nbsp;                case &quot;eat&quot;:
+<b class="fc">&nbsp;                    dayManager.incrementEatScore((String) activityProperties.get(&quot;place&quot;));</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                case &quot;study&quot;:
+<b class="fc">&nbsp;                    studied++;</b>
+<b class="fc">&nbsp;                    dayManager.incrementStudyScore((String) activityProperties.get(&quot;place&quot;)); //Pass in description tile attribute when thats implemented</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                case &quot;recreation&quot;:
+<b class="fc">&nbsp;                    dayManager.incrementRecreationalScore((String) activityProperties.get(&quot;place&quot;));</b>
+<b class="fc">&nbsp;                    break;</b>
+&nbsp;                case &quot;sleep&quot;:
+&nbsp;                    // if the game is not over the avatar will move to the next day and reset their energy
+<b class="fc">&nbsp;                    if (!dayManager.getGameOver()) {</b>
+<b class="fc">&nbsp;                        dayManager.incrementDay();</b>
+<b class="fc">&nbsp;                        studied = 0;</b>
+&nbsp;                    }
+&nbsp;                    break;
+&nbsp;            }
+<b class="fc">&nbsp;            holdText = &quot;You &quot; + activityProperties.get(&quot;description&quot;, String.class);</b>
+<b class="fc">&nbsp;        } else if (dayManager.getEnergy() - activityProperties.get(&quot;energy&quot;, int.class) &lt; 0) {</b>
+<b class="fc">&nbsp;            holdText = &quot;You&#39;re too tired for that, you should sleep&quot;;</b>
+<b class="fc">&nbsp;        } else if (dayManager.getTime() + activityProperties.get(&quot;time&quot;, int.class) &gt; 24) {</b>
+<b class="fc">&nbsp;            holdText = &quot;It&#39;s getting late, you should go to bed&quot;;</b>
+<b class="fc">&nbsp;        } else if (cantStudy()) {</b>
+<b class="fc">&nbsp;            holdText = &quot;You cannot study any more today&quot;;</b>
+<b class="nc">&nbsp;        } else { holdText = &quot;You should get some sleep&quot;; }</b>
+<b class="fc">&nbsp;        layout.setText(Play.getFont(), holdText);</b>
+<b class="fc">&nbsp;        setText(holdText, Math.round(x / 16) * 16 + 8 - (layout.width / 2), Math.round(y / 16) * 16);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    private boolean validActivity(MapProperties activityProperties) {
+&nbsp;        // Can only study twice if they didn&#39;t study previous day
+<b class="fc">&nbsp;        if (cantStudy() &amp;&amp; Objects.equals(activityProperties.get(&quot;activity&quot;, String.class), &quot;study&quot;)) {</b>
+<b class="fc">&nbsp;            return false;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        boolean enoughEnergy = dayManager.getEnergy() - activityProperties.get(&quot;energy&quot;, int.class) &gt;= 0;</b>
+<b class="fc">&nbsp;        boolean enoughTime = dayManager.getTime() + activityProperties.get(&quot;time&quot;, int.class) &lt;= 24;</b>
+&nbsp;
+<b class="fc">&nbsp;        return enoughEnergy &amp;&amp; enoughTime;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @return boolean indicating whether the player can study or not
+&nbsp;     */
+&nbsp;    private boolean cantStudy() {
+<b class="fc">&nbsp;        return (dayManager.getDaysOfNoStudy() &lt;= 0 || studied &gt; 1) &amp;&amp;</b>
+<b class="fc">&nbsp;                (dayManager.getDaysOfNoStudy() != 0 || studied != 0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Decrement the player&#39;s energy
+&nbsp;     * @param energy value to decrease energy by
+&nbsp;     */
+&nbsp;    private void decrementEnergy(int energy) {
+<b class="fc">&nbsp;        dayManager.setEnergy(dayManager.getEnergy() - energy);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Increases the current day&#39;s time
+&nbsp;     * @param setTime value to increase time by
+&nbsp;     */
+&nbsp;    private void incrementTime(int setTime) {
+<b class="fc">&nbsp;        float newTime = dayManager.getTime() + setTime;</b>
+<b class="fc">&nbsp;        dayManager.setTime(newTime);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     *
+&nbsp;     * @param text to be displayed
+&nbsp;     * @param x horizontal position of text
+&nbsp;     * @param y vertical position of text
+&nbsp;     */
+&nbsp;
+&nbsp;    public void setText(String text, float x, float y){
+<b class="fc">&nbsp;        activityText = text;</b>
+<b class="fc">&nbsp;        textPosition.set(x, y + 40);</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the current text needing to be displayed
+&nbsp;     * @return text
+&nbsp;     */
+&nbsp;    public String getText(){
+<b class="nc">&nbsp;        return activityText;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the position to display the text
+&nbsp;     * @return position to display text
+&nbsp;     */
+&nbsp;    public Vector2 getTextPosition() {
+<b class="nc">&nbsp;        return textPosition;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Draws a text bubble above current text position (usually the current cell)
+&nbsp;     * @param batch instance of spritebatch
+&nbsp;     * @param font instance of font
+&nbsp;     */
+&nbsp;    public void drawTextBubble(SpriteBatch batch, BitmapFont font){
+<b class="nc">&nbsp;        font.setColor(new Color(Color.BLACK));</b>
+<b class="nc">&nbsp;        font.draw(batch, activityText, textPosition.x, textPosition.y + 37);</b>
+<b class="nc">&nbsp;        font.setColor(new Color(Color.WHITE));</b>
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-05-23 00:38</div>
+</div>
+</body>
+</html>
