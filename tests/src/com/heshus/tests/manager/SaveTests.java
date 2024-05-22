@@ -75,29 +75,36 @@ public class SaveTests {
 
     @Test
     public void LoadTestSuccess() {
-
+        /*Simulating the creation of a file handle for a local file*/
         when(mockFiles.local(anyString())).thenReturn(mockFileHandle);
+        /*simulates the presence of the file*/
         when(mockFileHandle.exists()).thenReturn(true);
+        /*when "fromJson" is called with "GameData.class" and the mock file handle as arguments,
+        * is should return "mockGameData". Simulating the deserialization of the game from the file*/
         when(mockJson.fromJson(eq(GameData.class), eq(mockFileHandle))).thenReturn(mockGameData);
 
         Save.load("testPath");
 
+        /*Confirms that the game data was successfully loaded and assigned to the "gd" field*/
         assertNotNull(gd);
     }
 
     @Test
     public void LoadTestFileNotExists() {
         when(mockFiles.local(anyString())).thenReturn(mockFileHandle);
+        //false: simulating the absence of the file
         when(mockFileHandle.exists()).thenReturn(false);
 
         Save.load("testPath");
-
+        //Confirms that the "gd" field was not left uninitialized despite the absence of the file
         assertNotNull(gd);
+        /*Verifies that there was no attempt on reading a non-existing file*/
         verify(mockFileHandle, never()).readString();
     }
 
     @Test
     public void LoadTestException() {
+        //Testing the load method when an exception occurs
         when(mockFiles.local(anyString())).thenReturn(mockFileHandle);
         doThrow(new RuntimeException("Test Exception")).when(mockFileHandle).readString();
 
