@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
   <title>Coverage Report > DayManagerTests</title>
   <style type="text/css">
     @import "../../css/coverage.css";
@@ -37,10 +37,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
-  Branch, %
-</th>
-<th class="coverageStat 
-">
   Line, %
 </th>
 </tr>
@@ -60,14 +56,6 @@ Current scope:     <a href="../../index.html">all classes</a>
   </span>
   <span class="absValue">
     (9/9)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    82.1%
-  </span>
-  <span class="absValue">
-    (23/28)
   </span>
 </td>
 <td class="coverageStat">
@@ -139,7 +127,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        int[] recArray = {1, 1, 1, 1, 1, 1, 1};</b>
 <b class="fc">&nbsp;        DayManager dm = runweek(eatArray, studyArray, recArray);</b>
 &nbsp;
-<b class="pc">&nbsp;        assertTrue(&quot;Passes when missing 2 days of study fails the player&quot;,30 &gt; dm.calculateScore());</b>
+<b class="fc">&nbsp;        assertTrue(&quot;Passes when missing 2 days of study fails the player&quot;,30 &gt; dm.calculateScore());</b>
 &nbsp;
 <b class="fc">&nbsp;    }</b>
 &nbsp;
@@ -149,7 +137,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        int[] studyArray = new int[]{1, 0, 1, 1, 1, 1, 1};</b>
 <b class="fc">&nbsp;        int[] recArray = new int[]{1, 1, 1, 1, 1, 1, 1};</b>
 <b class="fc">&nbsp;        DayManager dm = runweek(eatArray, studyArray, recArray);</b>
-<b class="pc">&nbsp;        assertTrue(&quot;Passes when missing one day of study does not fail the player,&quot;,dm.calculateScore() &gt; 40);</b>
+<b class="fc">&nbsp;        assertTrue(&quot;Passes when missing one day of study does not fail the player,&quot;,dm.calculateScore() &gt; 40);</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;
@@ -167,7 +155,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;        //represents a case of over-studying where the score should be decreased
 <b class="fc">&nbsp;        DayManager dm2 = runweek(eatArray, studyArray2, recArray);</b>
 &nbsp;
-<b class="pc">&nbsp;        assertTrue(dm1.calculateScore() &gt; dm2.calculateScore());</b>
+<b class="fc">&nbsp;        assertTrue(dm1.calculateScore() &gt; dm2.calculateScore());</b>
 <b class="fc">&nbsp;    }</b>
 &nbsp;
 &nbsp;    //Test for FR_STREAKS
@@ -222,7 +210,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private void runDay(DayManager dm, int eat, int study, int rec){
 <b class="fc">&nbsp;        boolean dayover = false;</b>
 <b class="fc">&nbsp;        while (!dayover){</b>
-<b class="pc">&nbsp;            if (eat &gt; 0){</b>
+<b class="fc">&nbsp;            if (eat &gt; 0){</b>
 <b class="fc">&nbsp;                dm.incrementEatScore(&quot;placeholder&quot;);</b>
 <b class="fc">&nbsp;                eat--;</b>
 &nbsp;            }
@@ -234,7 +222,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;                dm.incrementRecreationalScore(&quot;placeholder&quot;);</b>
 <b class="fc">&nbsp;                rec--;</b>
 &nbsp;            }
-<b class="pc">&nbsp;            dayover = (rec==0)&amp;&amp;(study==0)&amp;&amp;(eat==0);</b>
+<b class="fc">&nbsp;            dayover = (rec==0)&amp;&amp;(study==0)&amp;&amp;(eat==0);</b>
 &nbsp;        }
 <b class="fc">&nbsp;        dm.incrementDay();</b>
 <b class="fc">&nbsp;    }</b>
@@ -263,7 +251,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2024-05-19 21:46</div>
+    <div style="float:right;">generated on 2024-05-22 12:39</div>
 </div>
 </body>
 </html>
