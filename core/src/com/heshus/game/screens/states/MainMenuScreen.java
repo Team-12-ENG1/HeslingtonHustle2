@@ -50,6 +50,8 @@ public class MainMenuScreen implements Screen {
     Label gameTitle;
     Label howToTitle;
     Label instructions;
+    Label instructions2;
+    Label instructions3;
     private final Stage stage;
     private final Table mainTable;
     private final Table howToTable;
@@ -167,15 +169,19 @@ public class MainMenuScreen implements Screen {
         howToTable = new Table();
 
         howToTitle = new Label("How to play:", new Label.LabelStyle(font, Color.WHITE));
-        instructions = new Label("P or Esc to pause,E to interact\nWASD or Arrowkeys to move", new Label.LabelStyle(font, Color.WHITE));
+        instructions = new Label("Complete a variety of recreational, educational and dietary activities " +
+                "to get through the last week before exams!\n" +
+                "P or Esc to pause, E to interact with activities (they have their\nname above them). " +
+                "Use WASD or arrow keys to move.", new Label.LabelStyle(font, Color.WHITE));
+        instructions.setWrap(true);
 
         // Arrange table
+        howToTable.setFillParent(true);
         howToTable.add(howToTitle).padBottom(6);
         howToTable.row();
-        howToTable.add(instructions).center().padBottom(6);
+        howToTable.add(instructions).fill().width(300);
         howToTable.row();
         howToTable.add(gotItButton).center();
-        howToTable.setFillParent(true);
         howToTable.setVisible(false);
         stage.addActor(howToTable);
         return howToTable;
